@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BreedTool Web</title>
-  <style>
-    body { font-family: system-ui, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
-    .iv-group { margin: 15px 0; }
-    pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeMMO Breeding Planner</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .hidden { display: none; }
+        #output { margin-top: 20px; background: #f5f5f5; padding: 15px; border-radius: 5px; }
+        pre { white-space: pre-wrap; }
+    </style>
 </head>
 <body>
-  <h1>PokeMMO Breeding Planner</h1>
-
-  <div>
-    <label>Target Species: <input type="text" id="species" value="gastly" placeholder="e.g. gastly"></label>
-    <br><br>
+    <h1>PokeMMO Breeding Planner</h1>
     
-    <div class="iv-group">
-      <strong>Select IVs Needed (31):</strong><br>
-      <label><input type="checkbox" value="hp" class="iv-check"> HP</label>
-      <label><input type="checkbox" value="atk" class="iv-check"> Atk</label>
-      <label><input type="checkbox" value="def" class="iv-check"> Def</label>
-      <label><input type="checkbox" value="spa" class="iv-check"> SpA</label>
-      <label><input type="checkbox" value="spd" class="iv-check"> SpD</label>
-      <label><input type="checkbox" value="spe" class="iv-check"> Spe</label>
+    <div>
+        <label>Target Species: <input type="text" id="targetSpecies" value="Tyranitar"></label>
     </div>
+    <br>
+    <div>
+        <strong>Select IVs Needed (31):</strong><br>
+        <label><input type="checkbox" class="iv-check" value="hp" checked> HP</label>
+        <label><input type="checkbox" class="iv-check" value="atk" checked> Atk</label>
+        <label><input type="checkbox" class="iv-check" value="def" checked> Def</label>
+        <label><input type="checkbox" class="iv-check" value="spa"> SpA</label>
+        <label><input type="checkbox" class="iv-check" value="spd" checked> SpD</label>
+        <label><input type="checkbox" class="iv-check" value="spe" checked> Spe</label>
+    </div>
+    <br>
+    <div>
+        <label><input type="checkbox" id="lockNature"> Lock Nature?</label>
+        <input type="text" id="natureName" class="hidden" placeholder="e.g., Adamant">
+    </div>
+    <br>
+    <button id="calcBtn" disabled>Calculate Breeding Plan</button>
     
-    <label><input type="checkbox" id="want-nature"> Lock Nature?</label>
-    <br><br>
-    <button id="calculate-btn">Calculate Breeding Plan</button>
-  </div>
+    <div id="output">Loading species database...</div>
 
-  <pre id="output">Loading species database...</pre>
-
-  <script type="module" src="app.js">
-  </script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
