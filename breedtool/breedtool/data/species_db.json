@@ -1,0 +1,9919 @@
+{
+ "bulbasaur": {
+  "id": 1,
+  "name": "Bulbasaur",
+  "identifier": "bulbasaur",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ivysaur": {
+  "id": 2,
+  "name": "Ivysaur",
+  "identifier": "ivysaur",
+  "generation": 1,
+  "evolves_from_id": 1,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "venusaur": {
+  "id": 3,
+  "name": "Venusaur",
+  "identifier": "venusaur",
+  "generation": 1,
+  "evolves_from_id": 2,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "charmander": {
+  "id": 4,
+  "name": "Charmander",
+  "identifier": "charmander",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "charmeleon": {
+  "id": 5,
+  "name": "Charmeleon",
+  "identifier": "charmeleon",
+  "generation": 1,
+  "evolves_from_id": 4,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "charizard": {
+  "id": 6,
+  "name": "Charizard",
+  "identifier": "charizard",
+  "generation": 1,
+  "evolves_from_id": 5,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "squirtle": {
+  "id": 7,
+  "name": "Squirtle",
+  "identifier": "squirtle",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wartortle": {
+  "id": 8,
+  "name": "Wartortle",
+  "identifier": "wartortle",
+  "generation": 1,
+  "evolves_from_id": 7,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "blastoise": {
+  "id": 9,
+  "name": "Blastoise",
+  "identifier": "blastoise",
+  "generation": 1,
+  "evolves_from_id": 8,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "caterpie": {
+  "id": 10,
+  "name": "Caterpie",
+  "identifier": "caterpie",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "metapod": {
+  "id": 11,
+  "name": "Metapod",
+  "identifier": "metapod",
+  "generation": 1,
+  "evolves_from_id": 10,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "butterfree": {
+  "id": 12,
+  "name": "Butterfree",
+  "identifier": "butterfree",
+  "generation": 1,
+  "evolves_from_id": 11,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "weedle": {
+  "id": 13,
+  "name": "Weedle",
+  "identifier": "weedle",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kakuna": {
+  "id": 14,
+  "name": "Kakuna",
+  "identifier": "kakuna",
+  "generation": 1,
+  "evolves_from_id": 13,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "beedrill": {
+  "id": 15,
+  "name": "Beedrill",
+  "identifier": "beedrill",
+  "generation": 1,
+  "evolves_from_id": 14,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pidgey": {
+  "id": 16,
+  "name": "Pidgey",
+  "identifier": "pidgey",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pidgeotto": {
+  "id": 17,
+  "name": "Pidgeotto",
+  "identifier": "pidgeotto",
+  "generation": 1,
+  "evolves_from_id": 16,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pidgeot": {
+  "id": 18,
+  "name": "Pidgeot",
+  "identifier": "pidgeot",
+  "generation": 1,
+  "evolves_from_id": 17,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rattata": {
+  "id": 19,
+  "name": "Rattata",
+  "identifier": "rattata",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "raticate": {
+  "id": 20,
+  "name": "Raticate",
+  "identifier": "raticate",
+  "generation": 1,
+  "evolves_from_id": 19,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "spearow": {
+  "id": 21,
+  "name": "Spearow",
+  "identifier": "spearow",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "fearow": {
+  "id": 22,
+  "name": "Fearow",
+  "identifier": "fearow",
+  "generation": 1,
+  "evolves_from_id": 21,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ekans": {
+  "id": 23,
+  "name": "Ekans",
+  "identifier": "ekans",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "arbok": {
+  "id": 24,
+  "name": "Arbok",
+  "identifier": "arbok",
+  "generation": 1,
+  "evolves_from_id": 23,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pikachu": {
+  "id": 25,
+  "name": "Pikachu",
+  "identifier": "pikachu",
+  "generation": 1,
+  "evolves_from_id": 172,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "raichu": {
+  "id": 26,
+  "name": "Raichu",
+  "identifier": "raichu",
+  "generation": 1,
+  "evolves_from_id": 25,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sandshrew": {
+  "id": 27,
+  "name": "Sandshrew",
+  "identifier": "sandshrew",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sandslash": {
+  "id": 28,
+  "name": "Sandslash",
+  "identifier": "sandslash",
+  "generation": 1,
+  "evolves_from_id": 27,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nidoran-f": {
+  "id": 29,
+  "name": "Nidoran\u2640",
+  "identifier": "nidoran-f",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nidorina": {
+  "id": 30,
+  "name": "Nidorina",
+  "identifier": "nidorina",
+  "generation": 1,
+  "evolves_from_id": 29,
+  "gender_rate": 8,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nidoqueen": {
+  "id": 31,
+  "name": "Nidoqueen",
+  "identifier": "nidoqueen",
+  "generation": 1,
+  "evolves_from_id": 30,
+  "gender_rate": 8,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nidoran-m": {
+  "id": 32,
+  "name": "Nidoran\u2642",
+  "identifier": "nidoran-m",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nidorino": {
+  "id": 33,
+  "name": "Nidorino",
+  "identifier": "nidorino",
+  "generation": 1,
+  "evolves_from_id": 32,
+  "gender_rate": 0,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nidoking": {
+  "id": 34,
+  "name": "Nidoking",
+  "identifier": "nidoking",
+  "generation": 1,
+  "evolves_from_id": 33,
+  "gender_rate": 0,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "clefairy": {
+  "id": 35,
+  "name": "Clefairy",
+  "identifier": "clefairy",
+  "generation": 1,
+  "evolves_from_id": 173,
+  "gender_rate": 6,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "clefable": {
+  "id": 36,
+  "name": "Clefable",
+  "identifier": "clefable",
+  "generation": 1,
+  "evolves_from_id": 35,
+  "gender_rate": 6,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vulpix": {
+  "id": 37,
+  "name": "Vulpix",
+  "identifier": "vulpix",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ninetales": {
+  "id": 38,
+  "name": "Ninetales",
+  "identifier": "ninetales",
+  "generation": 1,
+  "evolves_from_id": 37,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "jigglypuff": {
+  "id": 39,
+  "name": "Jigglypuff",
+  "identifier": "jigglypuff",
+  "generation": 1,
+  "evolves_from_id": 174,
+  "gender_rate": 6,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wigglytuff": {
+  "id": 40,
+  "name": "Wigglytuff",
+  "identifier": "wigglytuff",
+  "generation": 1,
+  "evolves_from_id": 39,
+  "gender_rate": 6,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zubat": {
+  "id": 41,
+  "name": "Zubat",
+  "identifier": "zubat",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "golbat": {
+  "id": 42,
+  "name": "Golbat",
+  "identifier": "golbat",
+  "generation": 1,
+  "evolves_from_id": 41,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "oddish": {
+  "id": 43,
+  "name": "Oddish",
+  "identifier": "oddish",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gloom": {
+  "id": 44,
+  "name": "Gloom",
+  "identifier": "gloom",
+  "generation": 1,
+  "evolves_from_id": 43,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vileplume": {
+  "id": 45,
+  "name": "Vileplume",
+  "identifier": "vileplume",
+  "generation": 1,
+  "evolves_from_id": 44,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "paras": {
+  "id": 46,
+  "name": "Paras",
+  "identifier": "paras",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "parasect": {
+  "id": 47,
+  "name": "Parasect",
+  "identifier": "parasect",
+  "generation": 1,
+  "evolves_from_id": 46,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "venonat": {
+  "id": 48,
+  "name": "Venonat",
+  "identifier": "venonat",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "venomoth": {
+  "id": 49,
+  "name": "Venomoth",
+  "identifier": "venomoth",
+  "generation": 1,
+  "evolves_from_id": 48,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "diglett": {
+  "id": 50,
+  "name": "Diglett",
+  "identifier": "diglett",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dugtrio": {
+  "id": 51,
+  "name": "Dugtrio",
+  "identifier": "dugtrio",
+  "generation": 1,
+  "evolves_from_id": 50,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "meowth": {
+  "id": 52,
+  "name": "Meowth",
+  "identifier": "meowth",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "persian": {
+  "id": 53,
+  "name": "Persian",
+  "identifier": "persian",
+  "generation": 1,
+  "evolves_from_id": 52,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "psyduck": {
+  "id": 54,
+  "name": "Psyduck",
+  "identifier": "psyduck",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "golduck": {
+  "id": 55,
+  "name": "Golduck",
+  "identifier": "golduck",
+  "generation": 1,
+  "evolves_from_id": 54,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mankey": {
+  "id": 56,
+  "name": "Mankey",
+  "identifier": "mankey",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "primeape": {
+  "id": 57,
+  "name": "Primeape",
+  "identifier": "primeape",
+  "generation": 1,
+  "evolves_from_id": 56,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "growlithe": {
+  "id": 58,
+  "name": "Growlithe",
+  "identifier": "growlithe",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "arcanine": {
+  "id": 59,
+  "name": "Arcanine",
+  "identifier": "arcanine",
+  "generation": 1,
+  "evolves_from_id": 58,
+  "gender_rate": 2,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "poliwag": {
+  "id": 60,
+  "name": "Poliwag",
+  "identifier": "poliwag",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "poliwhirl": {
+  "id": 61,
+  "name": "Poliwhirl",
+  "identifier": "poliwhirl",
+  "generation": 1,
+  "evolves_from_id": 60,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "poliwrath": {
+  "id": 62,
+  "name": "Poliwrath",
+  "identifier": "poliwrath",
+  "generation": 1,
+  "evolves_from_id": 61,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "abra": {
+  "id": 63,
+  "name": "Abra",
+  "identifier": "abra",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kadabra": {
+  "id": 64,
+  "name": "Kadabra",
+  "identifier": "kadabra",
+  "generation": 1,
+  "evolves_from_id": 63,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "alakazam": {
+  "id": 65,
+  "name": "Alakazam",
+  "identifier": "alakazam",
+  "generation": 1,
+  "evolves_from_id": 64,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "machop": {
+  "id": 66,
+  "name": "Machop",
+  "identifier": "machop",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "machoke": {
+  "id": 67,
+  "name": "Machoke",
+  "identifier": "machoke",
+  "generation": 1,
+  "evolves_from_id": 66,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "machamp": {
+  "id": 68,
+  "name": "Machamp",
+  "identifier": "machamp",
+  "generation": 1,
+  "evolves_from_id": 67,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bellsprout": {
+  "id": 69,
+  "name": "Bellsprout",
+  "identifier": "bellsprout",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "weepinbell": {
+  "id": 70,
+  "name": "Weepinbell",
+  "identifier": "weepinbell",
+  "generation": 1,
+  "evolves_from_id": 69,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "victreebel": {
+  "id": 71,
+  "name": "Victreebel",
+  "identifier": "victreebel",
+  "generation": 1,
+  "evolves_from_id": 70,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tentacool": {
+  "id": 72,
+  "name": "Tentacool",
+  "identifier": "tentacool",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tentacruel": {
+  "id": 73,
+  "name": "Tentacruel",
+  "identifier": "tentacruel",
+  "generation": 1,
+  "evolves_from_id": 72,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "geodude": {
+  "id": 74,
+  "name": "Geodude",
+  "identifier": "geodude",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "graveler": {
+  "id": 75,
+  "name": "Graveler",
+  "identifier": "graveler",
+  "generation": 1,
+  "evolves_from_id": 74,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "golem": {
+  "id": 76,
+  "name": "Golem",
+  "identifier": "golem",
+  "generation": 1,
+  "evolves_from_id": 75,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ponyta": {
+  "id": 77,
+  "name": "Ponyta",
+  "identifier": "ponyta",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rapidash": {
+  "id": 78,
+  "name": "Rapidash",
+  "identifier": "rapidash",
+  "generation": 1,
+  "evolves_from_id": 77,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "slowpoke": {
+  "id": 79,
+  "name": "Slowpoke",
+  "identifier": "slowpoke",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "slowbro": {
+  "id": 80,
+  "name": "Slowbro",
+  "identifier": "slowbro",
+  "generation": 1,
+  "evolves_from_id": 79,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magnemite": {
+  "id": 81,
+  "name": "Magnemite",
+  "identifier": "magnemite",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magneton": {
+  "id": 82,
+  "name": "Magneton",
+  "identifier": "magneton",
+  "generation": 1,
+  "evolves_from_id": 81,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "farfetchd": {
+  "id": 83,
+  "name": "Farfetch\u2019d",
+  "identifier": "farfetchd",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "doduo": {
+  "id": 84,
+  "name": "Doduo",
+  "identifier": "doduo",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dodrio": {
+  "id": 85,
+  "name": "Dodrio",
+  "identifier": "dodrio",
+  "generation": 1,
+  "evolves_from_id": 84,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "seel": {
+  "id": 86,
+  "name": "Seel",
+  "identifier": "seel",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dewgong": {
+  "id": 87,
+  "name": "Dewgong",
+  "identifier": "dewgong",
+  "generation": 1,
+  "evolves_from_id": 86,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "grimer": {
+  "id": 88,
+  "name": "Grimer",
+  "identifier": "grimer",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "muk": {
+  "id": 89,
+  "name": "Muk",
+  "identifier": "muk",
+  "generation": 1,
+  "evolves_from_id": 88,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shellder": {
+  "id": 90,
+  "name": "Shellder",
+  "identifier": "shellder",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cloyster": {
+  "id": 91,
+  "name": "Cloyster",
+  "identifier": "cloyster",
+  "generation": 1,
+  "evolves_from_id": 90,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gastly": {
+  "id": 92,
+  "name": "Gastly",
+  "identifier": "gastly",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "haunter": {
+  "id": 93,
+  "name": "Haunter",
+  "identifier": "haunter",
+  "generation": 1,
+  "evolves_from_id": 92,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gengar": {
+  "id": 94,
+  "name": "Gengar",
+  "identifier": "gengar",
+  "generation": 1,
+  "evolves_from_id": 93,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "onix": {
+  "id": 95,
+  "name": "Onix",
+  "identifier": "onix",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "drowzee": {
+  "id": 96,
+  "name": "Drowzee",
+  "identifier": "drowzee",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hypno": {
+  "id": 97,
+  "name": "Hypno",
+  "identifier": "hypno",
+  "generation": 1,
+  "evolves_from_id": 96,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "krabby": {
+  "id": 98,
+  "name": "Krabby",
+  "identifier": "krabby",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kingler": {
+  "id": 99,
+  "name": "Kingler",
+  "identifier": "kingler",
+  "generation": 1,
+  "evolves_from_id": 98,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "voltorb": {
+  "id": 100,
+  "name": "Voltorb",
+  "identifier": "voltorb",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "electrode": {
+  "id": 101,
+  "name": "Electrode",
+  "identifier": "electrode",
+  "generation": 1,
+  "evolves_from_id": 100,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "exeggcute": {
+  "id": 102,
+  "name": "Exeggcute",
+  "identifier": "exeggcute",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "exeggutor": {
+  "id": 103,
+  "name": "Exeggutor",
+  "identifier": "exeggutor",
+  "generation": 1,
+  "evolves_from_id": 102,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cubone": {
+  "id": 104,
+  "name": "Cubone",
+  "identifier": "cubone",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "marowak": {
+  "id": 105,
+  "name": "Marowak",
+  "identifier": "marowak",
+  "generation": 1,
+  "evolves_from_id": 104,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hitmonlee": {
+  "id": 106,
+  "name": "Hitmonlee",
+  "identifier": "hitmonlee",
+  "generation": 1,
+  "evolves_from_id": 236,
+  "gender_rate": 0,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hitmonchan": {
+  "id": 107,
+  "name": "Hitmonchan",
+  "identifier": "hitmonchan",
+  "generation": 1,
+  "evolves_from_id": 236,
+  "gender_rate": 0,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lickitung": {
+  "id": 108,
+  "name": "Lickitung",
+  "identifier": "lickitung",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "koffing": {
+  "id": 109,
+  "name": "Koffing",
+  "identifier": "koffing",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "weezing": {
+  "id": 110,
+  "name": "Weezing",
+  "identifier": "weezing",
+  "generation": 1,
+  "evolves_from_id": 109,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rhyhorn": {
+  "id": 111,
+  "name": "Rhyhorn",
+  "identifier": "rhyhorn",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rhydon": {
+  "id": 112,
+  "name": "Rhydon",
+  "identifier": "rhydon",
+  "generation": 1,
+  "evolves_from_id": 111,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chansey": {
+  "id": 113,
+  "name": "Chansey",
+  "identifier": "chansey",
+  "generation": 1,
+  "evolves_from_id": 440,
+  "gender_rate": 8,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tangela": {
+  "id": 114,
+  "name": "Tangela",
+  "identifier": "tangela",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kangaskhan": {
+  "id": 115,
+  "name": "Kangaskhan",
+  "identifier": "kangaskhan",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "horsea": {
+  "id": 116,
+  "name": "Horsea",
+  "identifier": "horsea",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "seadra": {
+  "id": 117,
+  "name": "Seadra",
+  "identifier": "seadra",
+  "generation": 1,
+  "evolves_from_id": 116,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "goldeen": {
+  "id": 118,
+  "name": "Goldeen",
+  "identifier": "goldeen",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "seaking": {
+  "id": 119,
+  "name": "Seaking",
+  "identifier": "seaking",
+  "generation": 1,
+  "evolves_from_id": 118,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "staryu": {
+  "id": 120,
+  "name": "Staryu",
+  "identifier": "staryu",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "starmie": {
+  "id": 121,
+  "name": "Starmie",
+  "identifier": "starmie",
+  "generation": 1,
+  "evolves_from_id": 120,
+  "gender_rate": -1,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mr-mime": {
+  "id": 122,
+  "name": "Mr. Mime",
+  "identifier": "mr-mime",
+  "generation": 1,
+  "evolves_from_id": 439,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "scyther": {
+  "id": 123,
+  "name": "Scyther",
+  "identifier": "scyther",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "jynx": {
+  "id": 124,
+  "name": "Jynx",
+  "identifier": "jynx",
+  "generation": 1,
+  "evolves_from_id": 238,
+  "gender_rate": 8,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "electabuzz": {
+  "id": 125,
+  "name": "Electabuzz",
+  "identifier": "electabuzz",
+  "generation": 1,
+  "evolves_from_id": 239,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magmar": {
+  "id": 126,
+  "name": "Magmar",
+  "identifier": "magmar",
+  "generation": 1,
+  "evolves_from_id": 240,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pinsir": {
+  "id": 127,
+  "name": "Pinsir",
+  "identifier": "pinsir",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tauros": {
+  "id": 128,
+  "name": "Tauros",
+  "identifier": "tauros",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magikarp": {
+  "id": 129,
+  "name": "Magikarp",
+  "identifier": "magikarp",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gyarados": {
+  "id": 130,
+  "name": "Gyarados",
+  "identifier": "gyarados",
+  "generation": 1,
+  "evolves_from_id": 129,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lapras": {
+  "id": 131,
+  "name": "Lapras",
+  "identifier": "lapras",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ditto": {
+  "id": 132,
+  "name": "Ditto",
+  "identifier": "ditto",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "ditto"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "eevee": {
+  "id": 133,
+  "name": "Eevee",
+  "identifier": "eevee",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vaporeon": {
+  "id": 134,
+  "name": "Vaporeon",
+  "identifier": "vaporeon",
+  "generation": 1,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "jolteon": {
+  "id": 135,
+  "name": "Jolteon",
+  "identifier": "jolteon",
+  "generation": 1,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "flareon": {
+  "id": 136,
+  "name": "Flareon",
+  "identifier": "flareon",
+  "generation": 1,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "porygon": {
+  "id": 137,
+  "name": "Porygon",
+  "identifier": "porygon",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "omanyte": {
+  "id": 138,
+  "name": "Omanyte",
+  "identifier": "omanyte",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "omastar": {
+  "id": 139,
+  "name": "Omastar",
+  "identifier": "omastar",
+  "generation": 1,
+  "evolves_from_id": 138,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kabuto": {
+  "id": 140,
+  "name": "Kabuto",
+  "identifier": "kabuto",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kabutops": {
+  "id": 141,
+  "name": "Kabutops",
+  "identifier": "kabutops",
+  "generation": 1,
+  "evolves_from_id": 140,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "aerodactyl": {
+  "id": 142,
+  "name": "Aerodactyl",
+  "identifier": "aerodactyl",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "snorlax": {
+  "id": 143,
+  "name": "Snorlax",
+  "identifier": "snorlax",
+  "generation": 1,
+  "evolves_from_id": 446,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "articuno": {
+  "id": 144,
+  "name": "Articuno",
+  "identifier": "articuno",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "zapdos": {
+  "id": 145,
+  "name": "Zapdos",
+  "identifier": "zapdos",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "moltres": {
+  "id": 146,
+  "name": "Moltres",
+  "identifier": "moltres",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "dratini": {
+  "id": 147,
+  "name": "Dratini",
+  "identifier": "dratini",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dragonair": {
+  "id": 148,
+  "name": "Dragonair",
+  "identifier": "dragonair",
+  "generation": 1,
+  "evolves_from_id": 147,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dragonite": {
+  "id": 149,
+  "name": "Dragonite",
+  "identifier": "dragonite",
+  "generation": 1,
+  "evolves_from_id": 148,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mewtwo": {
+  "id": 150,
+  "name": "Mewtwo",
+  "identifier": "mewtwo",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "mew": {
+  "id": 151,
+  "name": "Mew",
+  "identifier": "mew",
+  "generation": 1,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "chikorita": {
+  "id": 152,
+  "name": "Chikorita",
+  "identifier": "chikorita",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bayleef": {
+  "id": 153,
+  "name": "Bayleef",
+  "identifier": "bayleef",
+  "generation": 2,
+  "evolves_from_id": 152,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "meganium": {
+  "id": 154,
+  "name": "Meganium",
+  "identifier": "meganium",
+  "generation": 2,
+  "evolves_from_id": 153,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cyndaquil": {
+  "id": 155,
+  "name": "Cyndaquil",
+  "identifier": "cyndaquil",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "quilava": {
+  "id": 156,
+  "name": "Quilava",
+  "identifier": "quilava",
+  "generation": 2,
+  "evolves_from_id": 155,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "typhlosion": {
+  "id": 157,
+  "name": "Typhlosion",
+  "identifier": "typhlosion",
+  "generation": 2,
+  "evolves_from_id": 156,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "totodile": {
+  "id": 158,
+  "name": "Totodile",
+  "identifier": "totodile",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "croconaw": {
+  "id": 159,
+  "name": "Croconaw",
+  "identifier": "croconaw",
+  "generation": 2,
+  "evolves_from_id": 158,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "feraligatr": {
+  "id": 160,
+  "name": "Feraligatr",
+  "identifier": "feraligatr",
+  "generation": 2,
+  "evolves_from_id": 159,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sentret": {
+  "id": 161,
+  "name": "Sentret",
+  "identifier": "sentret",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "furret": {
+  "id": 162,
+  "name": "Furret",
+  "identifier": "furret",
+  "generation": 2,
+  "evolves_from_id": 161,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hoothoot": {
+  "id": 163,
+  "name": "Hoothoot",
+  "identifier": "hoothoot",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "noctowl": {
+  "id": 164,
+  "name": "Noctowl",
+  "identifier": "noctowl",
+  "generation": 2,
+  "evolves_from_id": 163,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ledyba": {
+  "id": 165,
+  "name": "Ledyba",
+  "identifier": "ledyba",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ledian": {
+  "id": 166,
+  "name": "Ledian",
+  "identifier": "ledian",
+  "generation": 2,
+  "evolves_from_id": 165,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "spinarak": {
+  "id": 167,
+  "name": "Spinarak",
+  "identifier": "spinarak",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ariados": {
+  "id": 168,
+  "name": "Ariados",
+  "identifier": "ariados",
+  "generation": 2,
+  "evolves_from_id": 167,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "crobat": {
+  "id": 169,
+  "name": "Crobat",
+  "identifier": "crobat",
+  "generation": 2,
+  "evolves_from_id": 42,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chinchou": {
+  "id": 170,
+  "name": "Chinchou",
+  "identifier": "chinchou",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lanturn": {
+  "id": 171,
+  "name": "Lanturn",
+  "identifier": "lanturn",
+  "generation": 2,
+  "evolves_from_id": 170,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pichu": {
+  "id": 172,
+  "name": "Pichu",
+  "identifier": "pichu",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cleffa": {
+  "id": 173,
+  "name": "Cleffa",
+  "identifier": "cleffa",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "igglybuff": {
+  "id": 174,
+  "name": "Igglybuff",
+  "identifier": "igglybuff",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "togepi": {
+  "id": 175,
+  "name": "Togepi",
+  "identifier": "togepi",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "togetic": {
+  "id": 176,
+  "name": "Togetic",
+  "identifier": "togetic",
+  "generation": 2,
+  "evolves_from_id": 175,
+  "gender_rate": 1,
+  "egg_groups": [
+   "flying",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "natu": {
+  "id": 177,
+  "name": "Natu",
+  "identifier": "natu",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "xatu": {
+  "id": 178,
+  "name": "Xatu",
+  "identifier": "xatu",
+  "generation": 2,
+  "evolves_from_id": 177,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mareep": {
+  "id": 179,
+  "name": "Mareep",
+  "identifier": "mareep",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "flaaffy": {
+  "id": 180,
+  "name": "Flaaffy",
+  "identifier": "flaaffy",
+  "generation": 2,
+  "evolves_from_id": 179,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ampharos": {
+  "id": 181,
+  "name": "Ampharos",
+  "identifier": "ampharos",
+  "generation": 2,
+  "evolves_from_id": 180,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bellossom": {
+  "id": 182,
+  "name": "Bellossom",
+  "identifier": "bellossom",
+  "generation": 2,
+  "evolves_from_id": 44,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "marill": {
+  "id": 183,
+  "name": "Marill",
+  "identifier": "marill",
+  "generation": 2,
+  "evolves_from_id": 298,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "azumarill": {
+  "id": 184,
+  "name": "Azumarill",
+  "identifier": "azumarill",
+  "generation": 2,
+  "evolves_from_id": 183,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sudowoodo": {
+  "id": 185,
+  "name": "Sudowoodo",
+  "identifier": "sudowoodo",
+  "generation": 2,
+  "evolves_from_id": 438,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "politoed": {
+  "id": 186,
+  "name": "Politoed",
+  "identifier": "politoed",
+  "generation": 2,
+  "evolves_from_id": 61,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hoppip": {
+  "id": 187,
+  "name": "Hoppip",
+  "identifier": "hoppip",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "skiploom": {
+  "id": 188,
+  "name": "Skiploom",
+  "identifier": "skiploom",
+  "generation": 2,
+  "evolves_from_id": 187,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "jumpluff": {
+  "id": 189,
+  "name": "Jumpluff",
+  "identifier": "jumpluff",
+  "generation": 2,
+  "evolves_from_id": 188,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "aipom": {
+  "id": 190,
+  "name": "Aipom",
+  "identifier": "aipom",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sunkern": {
+  "id": 191,
+  "name": "Sunkern",
+  "identifier": "sunkern",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sunflora": {
+  "id": 192,
+  "name": "Sunflora",
+  "identifier": "sunflora",
+  "generation": 2,
+  "evolves_from_id": 191,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "yanma": {
+  "id": 193,
+  "name": "Yanma",
+  "identifier": "yanma",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wooper": {
+  "id": 194,
+  "name": "Wooper",
+  "identifier": "wooper",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "quagsire": {
+  "id": 195,
+  "name": "Quagsire",
+  "identifier": "quagsire",
+  "generation": 2,
+  "evolves_from_id": 194,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "espeon": {
+  "id": 196,
+  "name": "Espeon",
+  "identifier": "espeon",
+  "generation": 2,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "umbreon": {
+  "id": 197,
+  "name": "Umbreon",
+  "identifier": "umbreon",
+  "generation": 2,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "murkrow": {
+  "id": 198,
+  "name": "Murkrow",
+  "identifier": "murkrow",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "slowking": {
+  "id": 199,
+  "name": "Slowking",
+  "identifier": "slowking",
+  "generation": 2,
+  "evolves_from_id": 79,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "misdreavus": {
+  "id": 200,
+  "name": "Misdreavus",
+  "identifier": "misdreavus",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "unown": {
+  "id": 201,
+  "name": "Unown",
+  "identifier": "unown",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wobbuffet": {
+  "id": 202,
+  "name": "Wobbuffet",
+  "identifier": "wobbuffet",
+  "generation": 2,
+  "evolves_from_id": 360,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "girafarig": {
+  "id": 203,
+  "name": "Girafarig",
+  "identifier": "girafarig",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pineco": {
+  "id": 204,
+  "name": "Pineco",
+  "identifier": "pineco",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "forretress": {
+  "id": 205,
+  "name": "Forretress",
+  "identifier": "forretress",
+  "generation": 2,
+  "evolves_from_id": 204,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dunsparce": {
+  "id": 206,
+  "name": "Dunsparce",
+  "identifier": "dunsparce",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gligar": {
+  "id": 207,
+  "name": "Gligar",
+  "identifier": "gligar",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "steelix": {
+  "id": 208,
+  "name": "Steelix",
+  "identifier": "steelix",
+  "generation": 2,
+  "evolves_from_id": 95,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "snubbull": {
+  "id": 209,
+  "name": "Snubbull",
+  "identifier": "snubbull",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "granbull": {
+  "id": 210,
+  "name": "Granbull",
+  "identifier": "granbull",
+  "generation": 2,
+  "evolves_from_id": 209,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "qwilfish": {
+  "id": 211,
+  "name": "Qwilfish",
+  "identifier": "qwilfish",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "scizor": {
+  "id": 212,
+  "name": "Scizor",
+  "identifier": "scizor",
+  "generation": 2,
+  "evolves_from_id": 123,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shuckle": {
+  "id": 213,
+  "name": "Shuckle",
+  "identifier": "shuckle",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "heracross": {
+  "id": 214,
+  "name": "Heracross",
+  "identifier": "heracross",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sneasel": {
+  "id": 215,
+  "name": "Sneasel",
+  "identifier": "sneasel",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "teddiursa": {
+  "id": 216,
+  "name": "Teddiursa",
+  "identifier": "teddiursa",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ursaring": {
+  "id": 217,
+  "name": "Ursaring",
+  "identifier": "ursaring",
+  "generation": 2,
+  "evolves_from_id": 216,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "slugma": {
+  "id": 218,
+  "name": "Slugma",
+  "identifier": "slugma",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magcargo": {
+  "id": 219,
+  "name": "Magcargo",
+  "identifier": "magcargo",
+  "generation": 2,
+  "evolves_from_id": 218,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swinub": {
+  "id": 220,
+  "name": "Swinub",
+  "identifier": "swinub",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "piloswine": {
+  "id": 221,
+  "name": "Piloswine",
+  "identifier": "piloswine",
+  "generation": 2,
+  "evolves_from_id": 220,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "corsola": {
+  "id": 222,
+  "name": "Corsola",
+  "identifier": "corsola",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "remoraid": {
+  "id": 223,
+  "name": "Remoraid",
+  "identifier": "remoraid",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "octillery": {
+  "id": 224,
+  "name": "Octillery",
+  "identifier": "octillery",
+  "generation": 2,
+  "evolves_from_id": 223,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "delibird": {
+  "id": 225,
+  "name": "Delibird",
+  "identifier": "delibird",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mantine": {
+  "id": 226,
+  "name": "Mantine",
+  "identifier": "mantine",
+  "generation": 2,
+  "evolves_from_id": 458,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "skarmory": {
+  "id": 227,
+  "name": "Skarmory",
+  "identifier": "skarmory",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "houndour": {
+  "id": 228,
+  "name": "Houndour",
+  "identifier": "houndour",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "houndoom": {
+  "id": 229,
+  "name": "Houndoom",
+  "identifier": "houndoom",
+  "generation": 2,
+  "evolves_from_id": 228,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kingdra": {
+  "id": 230,
+  "name": "Kingdra",
+  "identifier": "kingdra",
+  "generation": 2,
+  "evolves_from_id": 117,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "phanpy": {
+  "id": 231,
+  "name": "Phanpy",
+  "identifier": "phanpy",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "donphan": {
+  "id": 232,
+  "name": "Donphan",
+  "identifier": "donphan",
+  "generation": 2,
+  "evolves_from_id": 231,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "porygon2": {
+  "id": 233,
+  "name": "Porygon2",
+  "identifier": "porygon2",
+  "generation": 2,
+  "evolves_from_id": 137,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "stantler": {
+  "id": 234,
+  "name": "Stantler",
+  "identifier": "stantler",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "smeargle": {
+  "id": 235,
+  "name": "Smeargle",
+  "identifier": "smeargle",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tyrogue": {
+  "id": 236,
+  "name": "Tyrogue",
+  "identifier": "tyrogue",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hitmontop": {
+  "id": 237,
+  "name": "Hitmontop",
+  "identifier": "hitmontop",
+  "generation": 2,
+  "evolves_from_id": 236,
+  "gender_rate": 0,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "smoochum": {
+  "id": 238,
+  "name": "Smoochum",
+  "identifier": "smoochum",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "elekid": {
+  "id": 239,
+  "name": "Elekid",
+  "identifier": "elekid",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magby": {
+  "id": 240,
+  "name": "Magby",
+  "identifier": "magby",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "miltank": {
+  "id": 241,
+  "name": "Miltank",
+  "identifier": "miltank",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "blissey": {
+  "id": 242,
+  "name": "Blissey",
+  "identifier": "blissey",
+  "generation": 2,
+  "evolves_from_id": 113,
+  "gender_rate": 8,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "raikou": {
+  "id": 243,
+  "name": "Raikou",
+  "identifier": "raikou",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "entei": {
+  "id": 244,
+  "name": "Entei",
+  "identifier": "entei",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "suicune": {
+  "id": 245,
+  "name": "Suicune",
+  "identifier": "suicune",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "larvitar": {
+  "id": 246,
+  "name": "Larvitar",
+  "identifier": "larvitar",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pupitar": {
+  "id": 247,
+  "name": "Pupitar",
+  "identifier": "pupitar",
+  "generation": 2,
+  "evolves_from_id": 246,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tyranitar": {
+  "id": 248,
+  "name": "Tyranitar",
+  "identifier": "tyranitar",
+  "generation": 2,
+  "evolves_from_id": 247,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lugia": {
+  "id": 249,
+  "name": "Lugia",
+  "identifier": "lugia",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "ho-oh": {
+  "id": 250,
+  "name": "Ho-Oh",
+  "identifier": "ho-oh",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "celebi": {
+  "id": 251,
+  "name": "Celebi",
+  "identifier": "celebi",
+  "generation": 2,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "treecko": {
+  "id": 252,
+  "name": "Treecko",
+  "identifier": "treecko",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "grovyle": {
+  "id": 253,
+  "name": "Grovyle",
+  "identifier": "grovyle",
+  "generation": 3,
+  "evolves_from_id": 252,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sceptile": {
+  "id": 254,
+  "name": "Sceptile",
+  "identifier": "sceptile",
+  "generation": 3,
+  "evolves_from_id": 253,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "torchic": {
+  "id": 255,
+  "name": "Torchic",
+  "identifier": "torchic",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "combusken": {
+  "id": 256,
+  "name": "Combusken",
+  "identifier": "combusken",
+  "generation": 3,
+  "evolves_from_id": 255,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "blaziken": {
+  "id": 257,
+  "name": "Blaziken",
+  "identifier": "blaziken",
+  "generation": 3,
+  "evolves_from_id": 256,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mudkip": {
+  "id": 258,
+  "name": "Mudkip",
+  "identifier": "mudkip",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "marshtomp": {
+  "id": 259,
+  "name": "Marshtomp",
+  "identifier": "marshtomp",
+  "generation": 3,
+  "evolves_from_id": 258,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swampert": {
+  "id": 260,
+  "name": "Swampert",
+  "identifier": "swampert",
+  "generation": 3,
+  "evolves_from_id": 259,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "poochyena": {
+  "id": 261,
+  "name": "Poochyena",
+  "identifier": "poochyena",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mightyena": {
+  "id": 262,
+  "name": "Mightyena",
+  "identifier": "mightyena",
+  "generation": 3,
+  "evolves_from_id": 261,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zigzagoon": {
+  "id": 263,
+  "name": "Zigzagoon",
+  "identifier": "zigzagoon",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "linoone": {
+  "id": 264,
+  "name": "Linoone",
+  "identifier": "linoone",
+  "generation": 3,
+  "evolves_from_id": 263,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wurmple": {
+  "id": 265,
+  "name": "Wurmple",
+  "identifier": "wurmple",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "silcoon": {
+  "id": 266,
+  "name": "Silcoon",
+  "identifier": "silcoon",
+  "generation": 3,
+  "evolves_from_id": 265,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "beautifly": {
+  "id": 267,
+  "name": "Beautifly",
+  "identifier": "beautifly",
+  "generation": 3,
+  "evolves_from_id": 266,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cascoon": {
+  "id": 268,
+  "name": "Cascoon",
+  "identifier": "cascoon",
+  "generation": 3,
+  "evolves_from_id": 265,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dustox": {
+  "id": 269,
+  "name": "Dustox",
+  "identifier": "dustox",
+  "generation": 3,
+  "evolves_from_id": 268,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lotad": {
+  "id": 270,
+  "name": "Lotad",
+  "identifier": "lotad",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lombre": {
+  "id": 271,
+  "name": "Lombre",
+  "identifier": "lombre",
+  "generation": 3,
+  "evolves_from_id": 270,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ludicolo": {
+  "id": 272,
+  "name": "Ludicolo",
+  "identifier": "ludicolo",
+  "generation": 3,
+  "evolves_from_id": 271,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "seedot": {
+  "id": 273,
+  "name": "Seedot",
+  "identifier": "seedot",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nuzleaf": {
+  "id": 274,
+  "name": "Nuzleaf",
+  "identifier": "nuzleaf",
+  "generation": 3,
+  "evolves_from_id": 273,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shiftry": {
+  "id": 275,
+  "name": "Shiftry",
+  "identifier": "shiftry",
+  "generation": 3,
+  "evolves_from_id": 274,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "taillow": {
+  "id": 276,
+  "name": "Taillow",
+  "identifier": "taillow",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swellow": {
+  "id": 277,
+  "name": "Swellow",
+  "identifier": "swellow",
+  "generation": 3,
+  "evolves_from_id": 276,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wingull": {
+  "id": 278,
+  "name": "Wingull",
+  "identifier": "wingull",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pelipper": {
+  "id": 279,
+  "name": "Pelipper",
+  "identifier": "pelipper",
+  "generation": 3,
+  "evolves_from_id": 278,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ralts": {
+  "id": 280,
+  "name": "Ralts",
+  "identifier": "ralts",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kirlia": {
+  "id": 281,
+  "name": "Kirlia",
+  "identifier": "kirlia",
+  "generation": 3,
+  "evolves_from_id": 280,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gardevoir": {
+  "id": 282,
+  "name": "Gardevoir",
+  "identifier": "gardevoir",
+  "generation": 3,
+  "evolves_from_id": 281,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "surskit": {
+  "id": 283,
+  "name": "Surskit",
+  "identifier": "surskit",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "masquerain": {
+  "id": 284,
+  "name": "Masquerain",
+  "identifier": "masquerain",
+  "generation": 3,
+  "evolves_from_id": 283,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shroomish": {
+  "id": 285,
+  "name": "Shroomish",
+  "identifier": "shroomish",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "breloom": {
+  "id": 286,
+  "name": "Breloom",
+  "identifier": "breloom",
+  "generation": 3,
+  "evolves_from_id": 285,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "slakoth": {
+  "id": 287,
+  "name": "Slakoth",
+  "identifier": "slakoth",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vigoroth": {
+  "id": 288,
+  "name": "Vigoroth",
+  "identifier": "vigoroth",
+  "generation": 3,
+  "evolves_from_id": 287,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "slaking": {
+  "id": 289,
+  "name": "Slaking",
+  "identifier": "slaking",
+  "generation": 3,
+  "evolves_from_id": 288,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nincada": {
+  "id": 290,
+  "name": "Nincada",
+  "identifier": "nincada",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ninjask": {
+  "id": 291,
+  "name": "Ninjask",
+  "identifier": "ninjask",
+  "generation": 3,
+  "evolves_from_id": 290,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shedinja": {
+  "id": 292,
+  "name": "Shedinja",
+  "identifier": "shedinja",
+  "generation": 3,
+  "evolves_from_id": 290,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "whismur": {
+  "id": 293,
+  "name": "Whismur",
+  "identifier": "whismur",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "loudred": {
+  "id": 294,
+  "name": "Loudred",
+  "identifier": "loudred",
+  "generation": 3,
+  "evolves_from_id": 293,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "exploud": {
+  "id": 295,
+  "name": "Exploud",
+  "identifier": "exploud",
+  "generation": 3,
+  "evolves_from_id": 294,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "makuhita": {
+  "id": 296,
+  "name": "Makuhita",
+  "identifier": "makuhita",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hariyama": {
+  "id": 297,
+  "name": "Hariyama",
+  "identifier": "hariyama",
+  "generation": 3,
+  "evolves_from_id": 296,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "azurill": {
+  "id": 298,
+  "name": "Azurill",
+  "identifier": "azurill",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "nosepass": {
+  "id": 299,
+  "name": "Nosepass",
+  "identifier": "nosepass",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "skitty": {
+  "id": 300,
+  "name": "Skitty",
+  "identifier": "skitty",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "delcatty": {
+  "id": 301,
+  "name": "Delcatty",
+  "identifier": "delcatty",
+  "generation": 3,
+  "evolves_from_id": 300,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sableye": {
+  "id": 302,
+  "name": "Sableye",
+  "identifier": "sableye",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mawile": {
+  "id": 303,
+  "name": "Mawile",
+  "identifier": "mawile",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "aron": {
+  "id": 304,
+  "name": "Aron",
+  "identifier": "aron",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lairon": {
+  "id": 305,
+  "name": "Lairon",
+  "identifier": "lairon",
+  "generation": 3,
+  "evolves_from_id": 304,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "aggron": {
+  "id": 306,
+  "name": "Aggron",
+  "identifier": "aggron",
+  "generation": 3,
+  "evolves_from_id": 305,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "meditite": {
+  "id": 307,
+  "name": "Meditite",
+  "identifier": "meditite",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "medicham": {
+  "id": 308,
+  "name": "Medicham",
+  "identifier": "medicham",
+  "generation": 3,
+  "evolves_from_id": 307,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "electrike": {
+  "id": 309,
+  "name": "Electrike",
+  "identifier": "electrike",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "manectric": {
+  "id": 310,
+  "name": "Manectric",
+  "identifier": "manectric",
+  "generation": 3,
+  "evolves_from_id": 309,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "plusle": {
+  "id": 311,
+  "name": "Plusle",
+  "identifier": "plusle",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "minun": {
+  "id": 312,
+  "name": "Minun",
+  "identifier": "minun",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "volbeat": {
+  "id": 313,
+  "name": "Volbeat",
+  "identifier": "volbeat",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "bug",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "illumise": {
+  "id": 314,
+  "name": "Illumise",
+  "identifier": "illumise",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "bug",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "roselia": {
+  "id": 315,
+  "name": "Roselia",
+  "identifier": "roselia",
+  "generation": 3,
+  "evolves_from_id": 406,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gulpin": {
+  "id": 316,
+  "name": "Gulpin",
+  "identifier": "gulpin",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swalot": {
+  "id": 317,
+  "name": "Swalot",
+  "identifier": "swalot",
+  "generation": 3,
+  "evolves_from_id": 316,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "carvanha": {
+  "id": 318,
+  "name": "Carvanha",
+  "identifier": "carvanha",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sharpedo": {
+  "id": 319,
+  "name": "Sharpedo",
+  "identifier": "sharpedo",
+  "generation": 3,
+  "evolves_from_id": 318,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wailmer": {
+  "id": 320,
+  "name": "Wailmer",
+  "identifier": "wailmer",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wailord": {
+  "id": 321,
+  "name": "Wailord",
+  "identifier": "wailord",
+  "generation": 3,
+  "evolves_from_id": 320,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "numel": {
+  "id": 322,
+  "name": "Numel",
+  "identifier": "numel",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "camerupt": {
+  "id": 323,
+  "name": "Camerupt",
+  "identifier": "camerupt",
+  "generation": 3,
+  "evolves_from_id": 322,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "torkoal": {
+  "id": 324,
+  "name": "Torkoal",
+  "identifier": "torkoal",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "spoink": {
+  "id": 325,
+  "name": "Spoink",
+  "identifier": "spoink",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "grumpig": {
+  "id": 326,
+  "name": "Grumpig",
+  "identifier": "grumpig",
+  "generation": 3,
+  "evolves_from_id": 325,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "spinda": {
+  "id": 327,
+  "name": "Spinda",
+  "identifier": "spinda",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "trapinch": {
+  "id": 328,
+  "name": "Trapinch",
+  "identifier": "trapinch",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vibrava": {
+  "id": 329,
+  "name": "Vibrava",
+  "identifier": "vibrava",
+  "generation": 3,
+  "evolves_from_id": 328,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "flygon": {
+  "id": 330,
+  "name": "Flygon",
+  "identifier": "flygon",
+  "generation": 3,
+  "evolves_from_id": 329,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cacnea": {
+  "id": 331,
+  "name": "Cacnea",
+  "identifier": "cacnea",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cacturne": {
+  "id": 332,
+  "name": "Cacturne",
+  "identifier": "cacturne",
+  "generation": 3,
+  "evolves_from_id": 331,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swablu": {
+  "id": 333,
+  "name": "Swablu",
+  "identifier": "swablu",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "altaria": {
+  "id": 334,
+  "name": "Altaria",
+  "identifier": "altaria",
+  "generation": 3,
+  "evolves_from_id": 333,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zangoose": {
+  "id": 335,
+  "name": "Zangoose",
+  "identifier": "zangoose",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "seviper": {
+  "id": 336,
+  "name": "Seviper",
+  "identifier": "seviper",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lunatone": {
+  "id": 337,
+  "name": "Lunatone",
+  "identifier": "lunatone",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "solrock": {
+  "id": 338,
+  "name": "Solrock",
+  "identifier": "solrock",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "barboach": {
+  "id": 339,
+  "name": "Barboach",
+  "identifier": "barboach",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "whiscash": {
+  "id": 340,
+  "name": "Whiscash",
+  "identifier": "whiscash",
+  "generation": 3,
+  "evolves_from_id": 339,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "corphish": {
+  "id": 341,
+  "name": "Corphish",
+  "identifier": "corphish",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "crawdaunt": {
+  "id": 342,
+  "name": "Crawdaunt",
+  "identifier": "crawdaunt",
+  "generation": 3,
+  "evolves_from_id": 341,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "baltoy": {
+  "id": 343,
+  "name": "Baltoy",
+  "identifier": "baltoy",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "claydol": {
+  "id": 344,
+  "name": "Claydol",
+  "identifier": "claydol",
+  "generation": 3,
+  "evolves_from_id": 343,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lileep": {
+  "id": 345,
+  "name": "Lileep",
+  "identifier": "lileep",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cradily": {
+  "id": 346,
+  "name": "Cradily",
+  "identifier": "cradily",
+  "generation": 3,
+  "evolves_from_id": 345,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "anorith": {
+  "id": 347,
+  "name": "Anorith",
+  "identifier": "anorith",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "armaldo": {
+  "id": 348,
+  "name": "Armaldo",
+  "identifier": "armaldo",
+  "generation": 3,
+  "evolves_from_id": 347,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "feebas": {
+  "id": 349,
+  "name": "Feebas",
+  "identifier": "feebas",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "milotic": {
+  "id": 350,
+  "name": "Milotic",
+  "identifier": "milotic",
+  "generation": 3,
+  "evolves_from_id": 349,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "castform": {
+  "id": 351,
+  "name": "Castform",
+  "identifier": "castform",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kecleon": {
+  "id": 352,
+  "name": "Kecleon",
+  "identifier": "kecleon",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shuppet": {
+  "id": 353,
+  "name": "Shuppet",
+  "identifier": "shuppet",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "banette": {
+  "id": 354,
+  "name": "Banette",
+  "identifier": "banette",
+  "generation": 3,
+  "evolves_from_id": 353,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "duskull": {
+  "id": 355,
+  "name": "Duskull",
+  "identifier": "duskull",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dusclops": {
+  "id": 356,
+  "name": "Dusclops",
+  "identifier": "dusclops",
+  "generation": 3,
+  "evolves_from_id": 355,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tropius": {
+  "id": 357,
+  "name": "Tropius",
+  "identifier": "tropius",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chimecho": {
+  "id": 358,
+  "name": "Chimecho",
+  "identifier": "chimecho",
+  "generation": 3,
+  "evolves_from_id": 433,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "absol": {
+  "id": 359,
+  "name": "Absol",
+  "identifier": "absol",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wynaut": {
+  "id": 360,
+  "name": "Wynaut",
+  "identifier": "wynaut",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "snorunt": {
+  "id": 361,
+  "name": "Snorunt",
+  "identifier": "snorunt",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "glalie": {
+  "id": 362,
+  "name": "Glalie",
+  "identifier": "glalie",
+  "generation": 3,
+  "evolves_from_id": 361,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "spheal": {
+  "id": 363,
+  "name": "Spheal",
+  "identifier": "spheal",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sealeo": {
+  "id": 364,
+  "name": "Sealeo",
+  "identifier": "sealeo",
+  "generation": 3,
+  "evolves_from_id": 363,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "walrein": {
+  "id": 365,
+  "name": "Walrein",
+  "identifier": "walrein",
+  "generation": 3,
+  "evolves_from_id": 364,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "clamperl": {
+  "id": 366,
+  "name": "Clamperl",
+  "identifier": "clamperl",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "huntail": {
+  "id": 367,
+  "name": "Huntail",
+  "identifier": "huntail",
+  "generation": 3,
+  "evolves_from_id": 366,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gorebyss": {
+  "id": 368,
+  "name": "Gorebyss",
+  "identifier": "gorebyss",
+  "generation": 3,
+  "evolves_from_id": 366,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "relicanth": {
+  "id": 369,
+  "name": "Relicanth",
+  "identifier": "relicanth",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "luvdisc": {
+  "id": 370,
+  "name": "Luvdisc",
+  "identifier": "luvdisc",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bagon": {
+  "id": 371,
+  "name": "Bagon",
+  "identifier": "bagon",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shelgon": {
+  "id": 372,
+  "name": "Shelgon",
+  "identifier": "shelgon",
+  "generation": 3,
+  "evolves_from_id": 371,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "salamence": {
+  "id": 373,
+  "name": "Salamence",
+  "identifier": "salamence",
+  "generation": 3,
+  "evolves_from_id": 372,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "beldum": {
+  "id": 374,
+  "name": "Beldum",
+  "identifier": "beldum",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "metang": {
+  "id": 375,
+  "name": "Metang",
+  "identifier": "metang",
+  "generation": 3,
+  "evolves_from_id": 374,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "metagross": {
+  "id": 376,
+  "name": "Metagross",
+  "identifier": "metagross",
+  "generation": 3,
+  "evolves_from_id": 375,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "regirock": {
+  "id": 377,
+  "name": "Regirock",
+  "identifier": "regirock",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "regice": {
+  "id": 378,
+  "name": "Regice",
+  "identifier": "regice",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "registeel": {
+  "id": 379,
+  "name": "Registeel",
+  "identifier": "registeel",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "latias": {
+  "id": 380,
+  "name": "Latias",
+  "identifier": "latias",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "latios": {
+  "id": 381,
+  "name": "Latios",
+  "identifier": "latios",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "kyogre": {
+  "id": 382,
+  "name": "Kyogre",
+  "identifier": "kyogre",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "groudon": {
+  "id": 383,
+  "name": "Groudon",
+  "identifier": "groudon",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "rayquaza": {
+  "id": 384,
+  "name": "Rayquaza",
+  "identifier": "rayquaza",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "jirachi": {
+  "id": 385,
+  "name": "Jirachi",
+  "identifier": "jirachi",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "deoxys": {
+  "id": 386,
+  "name": "Deoxys",
+  "identifier": "deoxys",
+  "generation": 3,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "turtwig": {
+  "id": 387,
+  "name": "Turtwig",
+  "identifier": "turtwig",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "grotle": {
+  "id": 388,
+  "name": "Grotle",
+  "identifier": "grotle",
+  "generation": 4,
+  "evolves_from_id": 387,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "torterra": {
+  "id": 389,
+  "name": "Torterra",
+  "identifier": "torterra",
+  "generation": 4,
+  "evolves_from_id": 388,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chimchar": {
+  "id": 390,
+  "name": "Chimchar",
+  "identifier": "chimchar",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "monferno": {
+  "id": 391,
+  "name": "Monferno",
+  "identifier": "monferno",
+  "generation": 4,
+  "evolves_from_id": 390,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "infernape": {
+  "id": 392,
+  "name": "Infernape",
+  "identifier": "infernape",
+  "generation": 4,
+  "evolves_from_id": 391,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "piplup": {
+  "id": 393,
+  "name": "Piplup",
+  "identifier": "piplup",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "prinplup": {
+  "id": 394,
+  "name": "Prinplup",
+  "identifier": "prinplup",
+  "generation": 4,
+  "evolves_from_id": 393,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "empoleon": {
+  "id": 395,
+  "name": "Empoleon",
+  "identifier": "empoleon",
+  "generation": 4,
+  "evolves_from_id": 394,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "starly": {
+  "id": 396,
+  "name": "Starly",
+  "identifier": "starly",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "staravia": {
+  "id": 397,
+  "name": "Staravia",
+  "identifier": "staravia",
+  "generation": 4,
+  "evolves_from_id": 396,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "staraptor": {
+  "id": 398,
+  "name": "Staraptor",
+  "identifier": "staraptor",
+  "generation": 4,
+  "evolves_from_id": 397,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bidoof": {
+  "id": 399,
+  "name": "Bidoof",
+  "identifier": "bidoof",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bibarel": {
+  "id": 400,
+  "name": "Bibarel",
+  "identifier": "bibarel",
+  "generation": 4,
+  "evolves_from_id": 399,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kricketot": {
+  "id": 401,
+  "name": "Kricketot",
+  "identifier": "kricketot",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "kricketune": {
+  "id": 402,
+  "name": "Kricketune",
+  "identifier": "kricketune",
+  "generation": 4,
+  "evolves_from_id": 401,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shinx": {
+  "id": 403,
+  "name": "Shinx",
+  "identifier": "shinx",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "luxio": {
+  "id": 404,
+  "name": "Luxio",
+  "identifier": "luxio",
+  "generation": 4,
+  "evolves_from_id": 403,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "luxray": {
+  "id": 405,
+  "name": "Luxray",
+  "identifier": "luxray",
+  "generation": 4,
+  "evolves_from_id": 404,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "budew": {
+  "id": 406,
+  "name": "Budew",
+  "identifier": "budew",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "roserade": {
+  "id": 407,
+  "name": "Roserade",
+  "identifier": "roserade",
+  "generation": 4,
+  "evolves_from_id": 315,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cranidos": {
+  "id": 408,
+  "name": "Cranidos",
+  "identifier": "cranidos",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rampardos": {
+  "id": 409,
+  "name": "Rampardos",
+  "identifier": "rampardos",
+  "generation": 4,
+  "evolves_from_id": 408,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shieldon": {
+  "id": 410,
+  "name": "Shieldon",
+  "identifier": "shieldon",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bastiodon": {
+  "id": 411,
+  "name": "Bastiodon",
+  "identifier": "bastiodon",
+  "generation": 4,
+  "evolves_from_id": 410,
+  "gender_rate": 1,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "burmy": {
+  "id": 412,
+  "name": "Burmy",
+  "identifier": "burmy",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "wormadam": {
+  "id": 413,
+  "name": "Wormadam",
+  "identifier": "wormadam",
+  "generation": 4,
+  "evolves_from_id": 412,
+  "gender_rate": 8,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mothim": {
+  "id": 414,
+  "name": "Mothim",
+  "identifier": "mothim",
+  "generation": 4,
+  "evolves_from_id": 412,
+  "gender_rate": 0,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "combee": {
+  "id": 415,
+  "name": "Combee",
+  "identifier": "combee",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vespiquen": {
+  "id": 416,
+  "name": "Vespiquen",
+  "identifier": "vespiquen",
+  "generation": 4,
+  "evolves_from_id": 415,
+  "gender_rate": 8,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pachirisu": {
+  "id": 417,
+  "name": "Pachirisu",
+  "identifier": "pachirisu",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "buizel": {
+  "id": 418,
+  "name": "Buizel",
+  "identifier": "buizel",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "floatzel": {
+  "id": 419,
+  "name": "Floatzel",
+  "identifier": "floatzel",
+  "generation": 4,
+  "evolves_from_id": 418,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cherubi": {
+  "id": 420,
+  "name": "Cherubi",
+  "identifier": "cherubi",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cherrim": {
+  "id": 421,
+  "name": "Cherrim",
+  "identifier": "cherrim",
+  "generation": 4,
+  "evolves_from_id": 420,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shellos": {
+  "id": 422,
+  "name": "Shellos",
+  "identifier": "shellos",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gastrodon": {
+  "id": 423,
+  "name": "Gastrodon",
+  "identifier": "gastrodon",
+  "generation": 4,
+  "evolves_from_id": 422,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ambipom": {
+  "id": 424,
+  "name": "Ambipom",
+  "identifier": "ambipom",
+  "generation": 4,
+  "evolves_from_id": 190,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "drifloon": {
+  "id": 425,
+  "name": "Drifloon",
+  "identifier": "drifloon",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "drifblim": {
+  "id": 426,
+  "name": "Drifblim",
+  "identifier": "drifblim",
+  "generation": 4,
+  "evolves_from_id": 425,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "buneary": {
+  "id": 427,
+  "name": "Buneary",
+  "identifier": "buneary",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lopunny": {
+  "id": 428,
+  "name": "Lopunny",
+  "identifier": "lopunny",
+  "generation": 4,
+  "evolves_from_id": 427,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mismagius": {
+  "id": 429,
+  "name": "Mismagius",
+  "identifier": "mismagius",
+  "generation": 4,
+  "evolves_from_id": 200,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "honchkrow": {
+  "id": 430,
+  "name": "Honchkrow",
+  "identifier": "honchkrow",
+  "generation": 4,
+  "evolves_from_id": 198,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "glameow": {
+  "id": 431,
+  "name": "Glameow",
+  "identifier": "glameow",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "purugly": {
+  "id": 432,
+  "name": "Purugly",
+  "identifier": "purugly",
+  "generation": 4,
+  "evolves_from_id": 431,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chingling": {
+  "id": 433,
+  "name": "Chingling",
+  "identifier": "chingling",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "stunky": {
+  "id": 434,
+  "name": "Stunky",
+  "identifier": "stunky",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "skuntank": {
+  "id": 435,
+  "name": "Skuntank",
+  "identifier": "skuntank",
+  "generation": 4,
+  "evolves_from_id": 434,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bronzor": {
+  "id": 436,
+  "name": "Bronzor",
+  "identifier": "bronzor",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bronzong": {
+  "id": 437,
+  "name": "Bronzong",
+  "identifier": "bronzong",
+  "generation": 4,
+  "evolves_from_id": 436,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bonsly": {
+  "id": 438,
+  "name": "Bonsly",
+  "identifier": "bonsly",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mime-jr": {
+  "id": 439,
+  "name": "Mime Jr.",
+  "identifier": "mime-jr",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "happiny": {
+  "id": 440,
+  "name": "Happiny",
+  "identifier": "happiny",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chatot": {
+  "id": 441,
+  "name": "Chatot",
+  "identifier": "chatot",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "spiritomb": {
+  "id": 442,
+  "name": "Spiritomb",
+  "identifier": "spiritomb",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gible": {
+  "id": 443,
+  "name": "Gible",
+  "identifier": "gible",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gabite": {
+  "id": 444,
+  "name": "Gabite",
+  "identifier": "gabite",
+  "generation": 4,
+  "evolves_from_id": 443,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "garchomp": {
+  "id": 445,
+  "name": "Garchomp",
+  "identifier": "garchomp",
+  "generation": 4,
+  "evolves_from_id": 444,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "munchlax": {
+  "id": 446,
+  "name": "Munchlax",
+  "identifier": "munchlax",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "riolu": {
+  "id": 447,
+  "name": "Riolu",
+  "identifier": "riolu",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lucario": {
+  "id": 448,
+  "name": "Lucario",
+  "identifier": "lucario",
+  "generation": 4,
+  "evolves_from_id": 447,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hippopotas": {
+  "id": 449,
+  "name": "Hippopotas",
+  "identifier": "hippopotas",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hippowdon": {
+  "id": 450,
+  "name": "Hippowdon",
+  "identifier": "hippowdon",
+  "generation": 4,
+  "evolves_from_id": 449,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "skorupi": {
+  "id": 451,
+  "name": "Skorupi",
+  "identifier": "skorupi",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "drapion": {
+  "id": 452,
+  "name": "Drapion",
+  "identifier": "drapion",
+  "generation": 4,
+  "evolves_from_id": 451,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "croagunk": {
+  "id": 453,
+  "name": "Croagunk",
+  "identifier": "croagunk",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "toxicroak": {
+  "id": 454,
+  "name": "Toxicroak",
+  "identifier": "toxicroak",
+  "generation": 4,
+  "evolves_from_id": 453,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "carnivine": {
+  "id": 455,
+  "name": "Carnivine",
+  "identifier": "carnivine",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "finneon": {
+  "id": 456,
+  "name": "Finneon",
+  "identifier": "finneon",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lumineon": {
+  "id": 457,
+  "name": "Lumineon",
+  "identifier": "lumineon",
+  "generation": 4,
+  "evolves_from_id": 456,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mantyke": {
+  "id": 458,
+  "name": "Mantyke",
+  "identifier": "mantyke",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": true,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "snover": {
+  "id": 459,
+  "name": "Snover",
+  "identifier": "snover",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "abomasnow": {
+  "id": 460,
+  "name": "Abomasnow",
+  "identifier": "abomasnow",
+  "generation": 4,
+  "evolves_from_id": 459,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "weavile": {
+  "id": 461,
+  "name": "Weavile",
+  "identifier": "weavile",
+  "generation": 4,
+  "evolves_from_id": 215,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magnezone": {
+  "id": 462,
+  "name": "Magnezone",
+  "identifier": "magnezone",
+  "generation": 4,
+  "evolves_from_id": 82,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lickilicky": {
+  "id": 463,
+  "name": "Lickilicky",
+  "identifier": "lickilicky",
+  "generation": 4,
+  "evolves_from_id": 108,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rhyperior": {
+  "id": 464,
+  "name": "Rhyperior",
+  "identifier": "rhyperior",
+  "generation": 4,
+  "evolves_from_id": 112,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tangrowth": {
+  "id": 465,
+  "name": "Tangrowth",
+  "identifier": "tangrowth",
+  "generation": 4,
+  "evolves_from_id": 114,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "electivire": {
+  "id": 466,
+  "name": "Electivire",
+  "identifier": "electivire",
+  "generation": 4,
+  "evolves_from_id": 125,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "magmortar": {
+  "id": 467,
+  "name": "Magmortar",
+  "identifier": "magmortar",
+  "generation": 4,
+  "evolves_from_id": 126,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "togekiss": {
+  "id": 468,
+  "name": "Togekiss",
+  "identifier": "togekiss",
+  "generation": 4,
+  "evolves_from_id": 176,
+  "gender_rate": 1,
+  "egg_groups": [
+   "flying",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "yanmega": {
+  "id": 469,
+  "name": "Yanmega",
+  "identifier": "yanmega",
+  "generation": 4,
+  "evolves_from_id": 193,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "leafeon": {
+  "id": 470,
+  "name": "Leafeon",
+  "identifier": "leafeon",
+  "generation": 4,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "glaceon": {
+  "id": 471,
+  "name": "Glaceon",
+  "identifier": "glaceon",
+  "generation": 4,
+  "evolves_from_id": 133,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gliscor": {
+  "id": 472,
+  "name": "Gliscor",
+  "identifier": "gliscor",
+  "generation": 4,
+  "evolves_from_id": 207,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mamoswine": {
+  "id": 473,
+  "name": "Mamoswine",
+  "identifier": "mamoswine",
+  "generation": 4,
+  "evolves_from_id": 221,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "porygon-z": {
+  "id": 474,
+  "name": "Porygon-Z",
+  "identifier": "porygon-z",
+  "generation": 4,
+  "evolves_from_id": 233,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gallade": {
+  "id": 475,
+  "name": "Gallade",
+  "identifier": "gallade",
+  "generation": 4,
+  "evolves_from_id": 281,
+  "gender_rate": 0,
+  "egg_groups": [
+   "humanshape",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "probopass": {
+  "id": 476,
+  "name": "Probopass",
+  "identifier": "probopass",
+  "generation": 4,
+  "evolves_from_id": 299,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dusknoir": {
+  "id": 477,
+  "name": "Dusknoir",
+  "identifier": "dusknoir",
+  "generation": 4,
+  "evolves_from_id": 356,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "froslass": {
+  "id": 478,
+  "name": "Froslass",
+  "identifier": "froslass",
+  "generation": 4,
+  "evolves_from_id": 361,
+  "gender_rate": 8,
+  "egg_groups": [
+   "fairy",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rotom": {
+  "id": 479,
+  "name": "Rotom",
+  "identifier": "rotom",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "uxie": {
+  "id": 480,
+  "name": "Uxie",
+  "identifier": "uxie",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "mesprit": {
+  "id": 481,
+  "name": "Mesprit",
+  "identifier": "mesprit",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "azelf": {
+  "id": 482,
+  "name": "Azelf",
+  "identifier": "azelf",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "dialga": {
+  "id": 483,
+  "name": "Dialga",
+  "identifier": "dialga",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "palkia": {
+  "id": 484,
+  "name": "Palkia",
+  "identifier": "palkia",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "heatran": {
+  "id": 485,
+  "name": "Heatran",
+  "identifier": "heatran",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "regigigas": {
+  "id": 486,
+  "name": "Regigigas",
+  "identifier": "regigigas",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "giratina": {
+  "id": 487,
+  "name": "Giratina",
+  "identifier": "giratina",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "cresselia": {
+  "id": 488,
+  "name": "Cresselia",
+  "identifier": "cresselia",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "phione": {
+  "id": 489,
+  "name": "Phione",
+  "identifier": "phione",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "water1",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "manaphy": {
+  "id": 490,
+  "name": "Manaphy",
+  "identifier": "manaphy",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "water1",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "darkrai": {
+  "id": 491,
+  "name": "Darkrai",
+  "identifier": "darkrai",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "shaymin": {
+  "id": 492,
+  "name": "Shaymin",
+  "identifier": "shaymin",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "arceus": {
+  "id": 493,
+  "name": "Arceus",
+  "identifier": "arceus",
+  "generation": 4,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "victini": {
+  "id": 494,
+  "name": "Victini",
+  "identifier": "victini",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "snivy": {
+  "id": 495,
+  "name": "Snivy",
+  "identifier": "snivy",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "servine": {
+  "id": 496,
+  "name": "Servine",
+  "identifier": "servine",
+  "generation": 5,
+  "evolves_from_id": 495,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "serperior": {
+  "id": 497,
+  "name": "Serperior",
+  "identifier": "serperior",
+  "generation": 5,
+  "evolves_from_id": 496,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground",
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tepig": {
+  "id": 498,
+  "name": "Tepig",
+  "identifier": "tepig",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pignite": {
+  "id": 499,
+  "name": "Pignite",
+  "identifier": "pignite",
+  "generation": 5,
+  "evolves_from_id": 498,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "emboar": {
+  "id": 500,
+  "name": "Emboar",
+  "identifier": "emboar",
+  "generation": 5,
+  "evolves_from_id": 499,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "oshawott": {
+  "id": 501,
+  "name": "Oshawott",
+  "identifier": "oshawott",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dewott": {
+  "id": 502,
+  "name": "Dewott",
+  "identifier": "dewott",
+  "generation": 5,
+  "evolves_from_id": 501,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "samurott": {
+  "id": 503,
+  "name": "Samurott",
+  "identifier": "samurott",
+  "generation": 5,
+  "evolves_from_id": 502,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "patrat": {
+  "id": 504,
+  "name": "Patrat",
+  "identifier": "patrat",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "watchog": {
+  "id": 505,
+  "name": "Watchog",
+  "identifier": "watchog",
+  "generation": 5,
+  "evolves_from_id": 504,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lillipup": {
+  "id": 506,
+  "name": "Lillipup",
+  "identifier": "lillipup",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "herdier": {
+  "id": 507,
+  "name": "Herdier",
+  "identifier": "herdier",
+  "generation": 5,
+  "evolves_from_id": 506,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "stoutland": {
+  "id": 508,
+  "name": "Stoutland",
+  "identifier": "stoutland",
+  "generation": 5,
+  "evolves_from_id": 507,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "purrloin": {
+  "id": 509,
+  "name": "Purrloin",
+  "identifier": "purrloin",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "liepard": {
+  "id": 510,
+  "name": "Liepard",
+  "identifier": "liepard",
+  "generation": 5,
+  "evolves_from_id": 509,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pansage": {
+  "id": 511,
+  "name": "Pansage",
+  "identifier": "pansage",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "simisage": {
+  "id": 512,
+  "name": "Simisage",
+  "identifier": "simisage",
+  "generation": 5,
+  "evolves_from_id": 511,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pansear": {
+  "id": 513,
+  "name": "Pansear",
+  "identifier": "pansear",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "simisear": {
+  "id": 514,
+  "name": "Simisear",
+  "identifier": "simisear",
+  "generation": 5,
+  "evolves_from_id": 513,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "panpour": {
+  "id": 515,
+  "name": "Panpour",
+  "identifier": "panpour",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "simipour": {
+  "id": 516,
+  "name": "Simipour",
+  "identifier": "simipour",
+  "generation": 5,
+  "evolves_from_id": 515,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "munna": {
+  "id": 517,
+  "name": "Munna",
+  "identifier": "munna",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "musharna": {
+  "id": 518,
+  "name": "Musharna",
+  "identifier": "musharna",
+  "generation": 5,
+  "evolves_from_id": 517,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pidove": {
+  "id": 519,
+  "name": "Pidove",
+  "identifier": "pidove",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tranquill": {
+  "id": 520,
+  "name": "Tranquill",
+  "identifier": "tranquill",
+  "generation": 5,
+  "evolves_from_id": 519,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "unfezant": {
+  "id": 521,
+  "name": "Unfezant",
+  "identifier": "unfezant",
+  "generation": 5,
+  "evolves_from_id": 520,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "blitzle": {
+  "id": 522,
+  "name": "Blitzle",
+  "identifier": "blitzle",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zebstrika": {
+  "id": 523,
+  "name": "Zebstrika",
+  "identifier": "zebstrika",
+  "generation": 5,
+  "evolves_from_id": 522,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "roggenrola": {
+  "id": 524,
+  "name": "Roggenrola",
+  "identifier": "roggenrola",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "boldore": {
+  "id": 525,
+  "name": "Boldore",
+  "identifier": "boldore",
+  "generation": 5,
+  "evolves_from_id": 524,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gigalith": {
+  "id": 526,
+  "name": "Gigalith",
+  "identifier": "gigalith",
+  "generation": 5,
+  "evolves_from_id": 525,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "woobat": {
+  "id": 527,
+  "name": "Woobat",
+  "identifier": "woobat",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swoobat": {
+  "id": 528,
+  "name": "Swoobat",
+  "identifier": "swoobat",
+  "generation": 5,
+  "evolves_from_id": 527,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "drilbur": {
+  "id": 529,
+  "name": "Drilbur",
+  "identifier": "drilbur",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "excadrill": {
+  "id": 530,
+  "name": "Excadrill",
+  "identifier": "excadrill",
+  "generation": 5,
+  "evolves_from_id": 529,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "audino": {
+  "id": 531,
+  "name": "Audino",
+  "identifier": "audino",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "timburr": {
+  "id": 532,
+  "name": "Timburr",
+  "identifier": "timburr",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gurdurr": {
+  "id": 533,
+  "name": "Gurdurr",
+  "identifier": "gurdurr",
+  "generation": 5,
+  "evolves_from_id": 532,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "conkeldurr": {
+  "id": 534,
+  "name": "Conkeldurr",
+  "identifier": "conkeldurr",
+  "generation": 5,
+  "evolves_from_id": 533,
+  "gender_rate": 2,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tympole": {
+  "id": 535,
+  "name": "Tympole",
+  "identifier": "tympole",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "palpitoad": {
+  "id": 536,
+  "name": "Palpitoad",
+  "identifier": "palpitoad",
+  "generation": 5,
+  "evolves_from_id": 535,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "seismitoad": {
+  "id": 537,
+  "name": "Seismitoad",
+  "identifier": "seismitoad",
+  "generation": 5,
+  "evolves_from_id": 536,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "throh": {
+  "id": 538,
+  "name": "Throh",
+  "identifier": "throh",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sawk": {
+  "id": 539,
+  "name": "Sawk",
+  "identifier": "sawk",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sewaddle": {
+  "id": 540,
+  "name": "Sewaddle",
+  "identifier": "sewaddle",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swadloon": {
+  "id": 541,
+  "name": "Swadloon",
+  "identifier": "swadloon",
+  "generation": 5,
+  "evolves_from_id": 540,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "leavanny": {
+  "id": 542,
+  "name": "Leavanny",
+  "identifier": "leavanny",
+  "generation": 5,
+  "evolves_from_id": 541,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "venipede": {
+  "id": 543,
+  "name": "Venipede",
+  "identifier": "venipede",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "whirlipede": {
+  "id": 544,
+  "name": "Whirlipede",
+  "identifier": "whirlipede",
+  "generation": 5,
+  "evolves_from_id": 543,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "scolipede": {
+  "id": 545,
+  "name": "Scolipede",
+  "identifier": "scolipede",
+  "generation": 5,
+  "evolves_from_id": 544,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cottonee": {
+  "id": 546,
+  "name": "Cottonee",
+  "identifier": "cottonee",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "whimsicott": {
+  "id": 547,
+  "name": "Whimsicott",
+  "identifier": "whimsicott",
+  "generation": 5,
+  "evolves_from_id": 546,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant",
+   "fairy"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "petilil": {
+  "id": 548,
+  "name": "Petilil",
+  "identifier": "petilil",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lilligant": {
+  "id": 549,
+  "name": "Lilligant",
+  "identifier": "lilligant",
+  "generation": 5,
+  "evolves_from_id": 548,
+  "gender_rate": 8,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "basculin": {
+  "id": 550,
+  "name": "Basculin",
+  "identifier": "basculin",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sandile": {
+  "id": 551,
+  "name": "Sandile",
+  "identifier": "sandile",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "krokorok": {
+  "id": 552,
+  "name": "Krokorok",
+  "identifier": "krokorok",
+  "generation": 5,
+  "evolves_from_id": 551,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "krookodile": {
+  "id": 553,
+  "name": "Krookodile",
+  "identifier": "krookodile",
+  "generation": 5,
+  "evolves_from_id": 552,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "darumaka": {
+  "id": 554,
+  "name": "Darumaka",
+  "identifier": "darumaka",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "darmanitan": {
+  "id": 555,
+  "name": "Darmanitan",
+  "identifier": "darmanitan",
+  "generation": 5,
+  "evolves_from_id": 554,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "maractus": {
+  "id": 556,
+  "name": "Maractus",
+  "identifier": "maractus",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "dwebble": {
+  "id": 557,
+  "name": "Dwebble",
+  "identifier": "dwebble",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "crustle": {
+  "id": 558,
+  "name": "Crustle",
+  "identifier": "crustle",
+  "generation": 5,
+  "evolves_from_id": 557,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "scraggy": {
+  "id": 559,
+  "name": "Scraggy",
+  "identifier": "scraggy",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "scrafty": {
+  "id": 560,
+  "name": "Scrafty",
+  "identifier": "scrafty",
+  "generation": 5,
+  "evolves_from_id": 559,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sigilyph": {
+  "id": 561,
+  "name": "Sigilyph",
+  "identifier": "sigilyph",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "yamask": {
+  "id": 562,
+  "name": "Yamask",
+  "identifier": "yamask",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cofagrigus": {
+  "id": 563,
+  "name": "Cofagrigus",
+  "identifier": "cofagrigus",
+  "generation": 5,
+  "evolves_from_id": 562,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tirtouga": {
+  "id": 564,
+  "name": "Tirtouga",
+  "identifier": "tirtouga",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "carracosta": {
+  "id": 565,
+  "name": "Carracosta",
+  "identifier": "carracosta",
+  "generation": 5,
+  "evolves_from_id": 564,
+  "gender_rate": 1,
+  "egg_groups": [
+   "water1",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "archen": {
+  "id": 566,
+  "name": "Archen",
+  "identifier": "archen",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "flying",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "archeops": {
+  "id": 567,
+  "name": "Archeops",
+  "identifier": "archeops",
+  "generation": 5,
+  "evolves_from_id": 566,
+  "gender_rate": 1,
+  "egg_groups": [
+   "flying",
+   "water3"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "trubbish": {
+  "id": 568,
+  "name": "Trubbish",
+  "identifier": "trubbish",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "garbodor": {
+  "id": 569,
+  "name": "Garbodor",
+  "identifier": "garbodor",
+  "generation": 5,
+  "evolves_from_id": 568,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zorua": {
+  "id": 570,
+  "name": "Zorua",
+  "identifier": "zorua",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zoroark": {
+  "id": 571,
+  "name": "Zoroark",
+  "identifier": "zoroark",
+  "generation": 5,
+  "evolves_from_id": 570,
+  "gender_rate": 1,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "minccino": {
+  "id": 572,
+  "name": "Minccino",
+  "identifier": "minccino",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cinccino": {
+  "id": 573,
+  "name": "Cinccino",
+  "identifier": "cinccino",
+  "generation": 5,
+  "evolves_from_id": 572,
+  "gender_rate": 6,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gothita": {
+  "id": 574,
+  "name": "Gothita",
+  "identifier": "gothita",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 6,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gothorita": {
+  "id": 575,
+  "name": "Gothorita",
+  "identifier": "gothorita",
+  "generation": 5,
+  "evolves_from_id": 574,
+  "gender_rate": 6,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "gothitelle": {
+  "id": 576,
+  "name": "Gothitelle",
+  "identifier": "gothitelle",
+  "generation": 5,
+  "evolves_from_id": 575,
+  "gender_rate": 6,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "solosis": {
+  "id": 577,
+  "name": "Solosis",
+  "identifier": "solosis",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "duosion": {
+  "id": 578,
+  "name": "Duosion",
+  "identifier": "duosion",
+  "generation": 5,
+  "evolves_from_id": 577,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "reuniclus": {
+  "id": 579,
+  "name": "Reuniclus",
+  "identifier": "reuniclus",
+  "generation": 5,
+  "evolves_from_id": 578,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ducklett": {
+  "id": 580,
+  "name": "Ducklett",
+  "identifier": "ducklett",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "swanna": {
+  "id": 581,
+  "name": "Swanna",
+  "identifier": "swanna",
+  "generation": 5,
+  "evolves_from_id": 580,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vanillite": {
+  "id": 582,
+  "name": "Vanillite",
+  "identifier": "vanillite",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vanillish": {
+  "id": 583,
+  "name": "Vanillish",
+  "identifier": "vanillish",
+  "generation": 5,
+  "evolves_from_id": 582,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vanilluxe": {
+  "id": 584,
+  "name": "Vanilluxe",
+  "identifier": "vanilluxe",
+  "generation": 5,
+  "evolves_from_id": 583,
+  "gender_rate": 4,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "deerling": {
+  "id": 585,
+  "name": "Deerling",
+  "identifier": "deerling",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "sawsbuck": {
+  "id": 586,
+  "name": "Sawsbuck",
+  "identifier": "sawsbuck",
+  "generation": 5,
+  "evolves_from_id": 585,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "emolga": {
+  "id": 587,
+  "name": "Emolga",
+  "identifier": "emolga",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "karrablast": {
+  "id": 588,
+  "name": "Karrablast",
+  "identifier": "karrablast",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "escavalier": {
+  "id": 589,
+  "name": "Escavalier",
+  "identifier": "escavalier",
+  "generation": 5,
+  "evolves_from_id": 588,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "foongus": {
+  "id": 590,
+  "name": "Foongus",
+  "identifier": "foongus",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "amoonguss": {
+  "id": 591,
+  "name": "Amoonguss",
+  "identifier": "amoonguss",
+  "generation": 5,
+  "evolves_from_id": 590,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "frillish": {
+  "id": 592,
+  "name": "Frillish",
+  "identifier": "frillish",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "jellicent": {
+  "id": 593,
+  "name": "Jellicent",
+  "identifier": "jellicent",
+  "generation": 5,
+  "evolves_from_id": 592,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "alomomola": {
+  "id": 594,
+  "name": "Alomomola",
+  "identifier": "alomomola",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "water2"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "joltik": {
+  "id": 595,
+  "name": "Joltik",
+  "identifier": "joltik",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "galvantula": {
+  "id": 596,
+  "name": "Galvantula",
+  "identifier": "galvantula",
+  "generation": 5,
+  "evolves_from_id": 595,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ferroseed": {
+  "id": 597,
+  "name": "Ferroseed",
+  "identifier": "ferroseed",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "ferrothorn": {
+  "id": 598,
+  "name": "Ferrothorn",
+  "identifier": "ferrothorn",
+  "generation": 5,
+  "evolves_from_id": 597,
+  "gender_rate": 4,
+  "egg_groups": [
+   "plant",
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "klink": {
+  "id": 599,
+  "name": "Klink",
+  "identifier": "klink",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "klang": {
+  "id": 600,
+  "name": "Klang",
+  "identifier": "klang",
+  "generation": 5,
+  "evolves_from_id": 599,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "klinklang": {
+  "id": 601,
+  "name": "Klinklang",
+  "identifier": "klinklang",
+  "generation": 5,
+  "evolves_from_id": 600,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "tynamo": {
+  "id": 602,
+  "name": "Tynamo",
+  "identifier": "tynamo",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "eelektrik": {
+  "id": 603,
+  "name": "Eelektrik",
+  "identifier": "eelektrik",
+  "generation": 5,
+  "evolves_from_id": 602,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "eelektross": {
+  "id": 604,
+  "name": "Eelektross",
+  "identifier": "eelektross",
+  "generation": 5,
+  "evolves_from_id": 603,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "elgyem": {
+  "id": 605,
+  "name": "Elgyem",
+  "identifier": "elgyem",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "beheeyem": {
+  "id": 606,
+  "name": "Beheeyem",
+  "identifier": "beheeyem",
+  "generation": 5,
+  "evolves_from_id": 605,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "litwick": {
+  "id": 607,
+  "name": "Litwick",
+  "identifier": "litwick",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "lampent": {
+  "id": 608,
+  "name": "Lampent",
+  "identifier": "lampent",
+  "generation": 5,
+  "evolves_from_id": 607,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "chandelure": {
+  "id": 609,
+  "name": "Chandelure",
+  "identifier": "chandelure",
+  "generation": 5,
+  "evolves_from_id": 608,
+  "gender_rate": 4,
+  "egg_groups": [
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "axew": {
+  "id": 610,
+  "name": "Axew",
+  "identifier": "axew",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "fraxure": {
+  "id": 611,
+  "name": "Fraxure",
+  "identifier": "fraxure",
+  "generation": 5,
+  "evolves_from_id": 610,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "haxorus": {
+  "id": 612,
+  "name": "Haxorus",
+  "identifier": "haxorus",
+  "generation": 5,
+  "evolves_from_id": 611,
+  "gender_rate": 4,
+  "egg_groups": [
+   "monster",
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cubchoo": {
+  "id": 613,
+  "name": "Cubchoo",
+  "identifier": "cubchoo",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "beartic": {
+  "id": 614,
+  "name": "Beartic",
+  "identifier": "beartic",
+  "generation": 5,
+  "evolves_from_id": 613,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cryogonal": {
+  "id": 615,
+  "name": "Cryogonal",
+  "identifier": "cryogonal",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "shelmet": {
+  "id": 616,
+  "name": "Shelmet",
+  "identifier": "shelmet",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "accelgor": {
+  "id": 617,
+  "name": "Accelgor",
+  "identifier": "accelgor",
+  "generation": 5,
+  "evolves_from_id": 616,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "stunfisk": {
+  "id": 618,
+  "name": "Stunfisk",
+  "identifier": "stunfisk",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "water1",
+   "indeterminate"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mienfoo": {
+  "id": 619,
+  "name": "Mienfoo",
+  "identifier": "mienfoo",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mienshao": {
+  "id": 620,
+  "name": "Mienshao",
+  "identifier": "mienshao",
+  "generation": 5,
+  "evolves_from_id": 619,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground",
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "druddigon": {
+  "id": 621,
+  "name": "Druddigon",
+  "identifier": "druddigon",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon",
+   "monster"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "golett": {
+  "id": 622,
+  "name": "Golett",
+  "identifier": "golett",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "golurk": {
+  "id": 623,
+  "name": "Golurk",
+  "identifier": "golurk",
+  "generation": 5,
+  "evolves_from_id": 622,
+  "gender_rate": -1,
+  "egg_groups": [
+   "mineral"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "pawniard": {
+  "id": 624,
+  "name": "Pawniard",
+  "identifier": "pawniard",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bisharp": {
+  "id": 625,
+  "name": "Bisharp",
+  "identifier": "bisharp",
+  "generation": 5,
+  "evolves_from_id": 624,
+  "gender_rate": 4,
+  "egg_groups": [
+   "humanshape"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "bouffalant": {
+  "id": 626,
+  "name": "Bouffalant",
+  "identifier": "bouffalant",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "rufflet": {
+  "id": 627,
+  "name": "Rufflet",
+  "identifier": "rufflet",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "braviary": {
+  "id": 628,
+  "name": "Braviary",
+  "identifier": "braviary",
+  "generation": 5,
+  "evolves_from_id": 627,
+  "gender_rate": 0,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "vullaby": {
+  "id": 629,
+  "name": "Vullaby",
+  "identifier": "vullaby",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 8,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "mandibuzz": {
+  "id": 630,
+  "name": "Mandibuzz",
+  "identifier": "mandibuzz",
+  "generation": 5,
+  "evolves_from_id": 629,
+  "gender_rate": 8,
+  "egg_groups": [
+   "flying"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "heatmor": {
+  "id": 631,
+  "name": "Heatmor",
+  "identifier": "heatmor",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "ground"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "durant": {
+  "id": 632,
+  "name": "Durant",
+  "identifier": "durant",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "deino": {
+  "id": 633,
+  "name": "Deino",
+  "identifier": "deino",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "zweilous": {
+  "id": 634,
+  "name": "Zweilous",
+  "identifier": "zweilous",
+  "generation": 5,
+  "evolves_from_id": 633,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "hydreigon": {
+  "id": 635,
+  "name": "Hydreigon",
+  "identifier": "hydreigon",
+  "generation": 5,
+  "evolves_from_id": 634,
+  "gender_rate": 4,
+  "egg_groups": [
+   "dragon"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "larvesta": {
+  "id": 636,
+  "name": "Larvesta",
+  "identifier": "larvesta",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "volcarona": {
+  "id": 637,
+  "name": "Volcarona",
+  "identifier": "volcarona",
+  "generation": 5,
+  "evolves_from_id": 636,
+  "gender_rate": 4,
+  "egg_groups": [
+   "bug"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": false
+ },
+ "cobalion": {
+  "id": 638,
+  "name": "Cobalion",
+  "identifier": "cobalion",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "terrakion": {
+  "id": 639,
+  "name": "Terrakion",
+  "identifier": "terrakion",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "virizion": {
+  "id": 640,
+  "name": "Virizion",
+  "identifier": "virizion",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "tornadus": {
+  "id": 641,
+  "name": "Tornadus",
+  "identifier": "tornadus",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "thundurus": {
+  "id": 642,
+  "name": "Thundurus",
+  "identifier": "thundurus",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "reshiram": {
+  "id": 643,
+  "name": "Reshiram",
+  "identifier": "reshiram",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "zekrom": {
+  "id": 644,
+  "name": "Zekrom",
+  "identifier": "zekrom",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "landorus": {
+  "id": 645,
+  "name": "Landorus",
+  "identifier": "landorus",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": 0,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "kyurem": {
+  "id": 646,
+  "name": "Kyurem",
+  "identifier": "kyurem",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": true,
+  "is_mythical": false
+ },
+ "keldeo": {
+  "id": 647,
+  "name": "Keldeo",
+  "identifier": "keldeo",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "meloetta": {
+  "id": 648,
+  "name": "Meloetta",
+  "identifier": "meloetta",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ },
+ "genesect": {
+  "id": 649,
+  "name": "Genesect",
+  "identifier": "genesect",
+  "generation": 5,
+  "evolves_from_id": null,
+  "gender_rate": -1,
+  "egg_groups": [
+   "no-eggs"
+  ],
+  "can_breed": true,
+  "is_baby": false,
+  "is_legendary": false,
+  "is_mythical": true
+ }
+}
