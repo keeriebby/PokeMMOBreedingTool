@@ -8,7 +8,6 @@ const TreeNode = {
     template: `
         <div :class="['flex items-center justify-center', orientation === 'horizontal' ? 'flex-row space-x-12' : 'flex-col space-y-12']">
             <div class="relative">
-                <!-- Breed Node -->
                 <div v-if="node.type === 'breed'" :class="node.bred ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-gray-800 border-gray-700'" class="border-2 rounded-xl p-3 w-56 shadow-xl transition-all duration-300">
                     <div class="flex justify-between items-center mb-2 gap-2">
                         <span class="font-bold text-sm text-gray-200">{{ node.species }}</span>
@@ -24,7 +23,6 @@ const TreeNode = {
                     </div>
                 </div>
 
-                <!-- Leaf Node -->
                 <div v-if="node.type === 'leaf'" :class="node.bought ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#261c10] border-amber-600'" class="border-2 rounded-xl p-3 w-56 shadow-xl transition-all duration-300">
                     <div class="inline-block bg-emerald-800 text-white text-[10px] px-2 py-0.5 rounded-full font-bold mb-1">PURCHASE / CATCH</div>
                     <div class="font-bold text-sm text-gray-100 mb-1">{{ node.species }}</div>
@@ -53,9 +51,9 @@ const app = createApp({
         const dbLoaded = ref(false);
         const view = ref(window.innerWidth < 768 ? 'steps' : 'tree');
         const orientation = ref('horizontal');
-        const speciesInput = ref('Gastly');
-        const ivsInput = ref('31/x/31/x/31/31');
-        const natureInput = ref('Timid');
+        const speciesInput = ref('tyranitar');
+        const ivsInput = ref('31/31/31/x/31/31');
+        const natureInput = ref('adamant');
         const powerCost = ref(10000);
         const everstoneCost = ref(5000);
         const warnings = ref([]);
@@ -69,36 +67,31 @@ const app = createApp({
         const canvas = ref(null);
         const treeEl = ref(null);
 
-        // Load JSON database
         onMounted(async () => {
             try {
                 const response = await fetch('species_db.json');
-                if (!response.ok) throw new Error("Could not load species database");
+                if (!response.ok) throw new Error(`HTTP ${response.status}: Could not load species_db.json`);
                 const data = await response.json();
                 db = new SpeciesDB(data);
                 dbLoaded.value = true;
                 generatePlan();
             } catch (err) {
-                warnings.value = [`Failed to load species database: ${err.message}`];
+                warnings.value = [`Database Error: ${err.message}`];
             }
         });
 
-        // Parse user IV input string (e.g., "31/x/31/x/31/31") into array of IV keys
         const parseIVs = (str) => {
             const parts = str.split('/').map(p => p.trim().toLowerCase());
             const ivKeys = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
             if (parts.length === 6) {
                 return ivKeys.filter((_, idx) => parts[idx] === '31');
             }
-            return ['hp', 'atk', 'def', 'spd', 'spe']; // Default 5IV
+            return ['hp', 'atk', 'def', 'spd', 'spe'];
         };
 
-        // Helper to format nodes recursively into Vue tree structures
         const formatTreeNode = (node) => {
             if (!node) return null;
-            
             const ivStr = node.ivs ? node.ivs.map(i => i.toUpperCase()).join('/') : 'Any';
-            
             if (node.is_leaf || node.left === null) {
                 return {
                     type: 'leaf',
@@ -109,7 +102,6 @@ const app = createApp({
                     bought: false
                 };
             }
-
             return {
                 type: 'breed',
                 species: node.species ? node.species.name : 'Target',
@@ -122,7 +114,6 @@ const app = createApp({
             };
         };
 
-        // Recursively extract all base/leaf Pokémon for the shopping list
         const extractShoppingList = (node) => {
             if (!node) return [];
             if (node.is_leaf || node.left === null) {
@@ -138,7 +129,6 @@ const app = createApp({
             return [...extractShoppingList(node.left), ...extractShoppingList(node.right)];
         };
 
-        // Consolidate duplicate items in shopping list
         const groupShoppingList = (items) => {
             const map = new Map();
             items.forEach(item => {
@@ -152,7 +142,6 @@ const app = createApp({
             return Array.from(map.values());
         };
 
-        // Main Calculation Trigger
         const generatePlan = async () => {
             if (!db) return;
             loading.value = true;
@@ -165,17 +154,14 @@ const app = createApp({
                 const wantNature = !!natureInput.value.trim();
                 const natureName = wantNature ? natureInput.value.trim() : null;
 
-                // 1. Build & Assign Logic
                 const root = buildTree(requestedIVs, wantNature);
                 const hatch = db.hatchSpecies(targetSpecies);
                 const fodder = db.pickFodder(targetSpecies);
                 assignSpecies(root, hatch, fodder);
 
-                // 2. Calculations
                 const costs = costReport(root);
                 const rawPlan = renderPlan(root, hatch.name, natureName, costs.gender_costs, fodder.name);
 
-                // 3. Format Tree & Steps for Vue UI
                 treeData.value = formatTreeNode(root);
                 
                 steps.value = rawPlan.map((s, idx) => ({
@@ -195,7 +181,6 @@ const app = createApp({
                     gender_cost: s.gender_cost || 0
                 }));
 
-                // 4. Shopping List & Item Counts
                 const rawLeaves = extractShoppingList(root);
                 shoppingList.value = groupShoppingList(rawLeaves);
 
@@ -229,7 +214,6 @@ const app = createApp({
             }
         };
 
-        // Canvas & Zoom Controls
         const fit = async () => {
             if (view.value !== 'tree') return;
             scale.value = 1;
@@ -240,9 +224,7 @@ const app = createApp({
             scale.value = Math.max(0.25, Math.min(1, s));
         };
 
-        const zoomBy = (d) => { 
-            scale.value = Math.max(0.25, Math.min(1.5, +(scale.value + d).toFixed(2))); 
-        };
+        const zoomBy = (d) => { scale.value = Math.max(0.25, Math.min(1.5, +(scale.value + d).toFixed(2))); };
 
         let drag = null;
         const onDown = (e) => {
