@@ -21,7 +21,7 @@
 </head>
 <body class="bg-darkbg text-gray-100 min-h-screen font-sans">
 
-<div id="app" v-cloak class="p-3 sm:p-6 flex flex-col min-h-screen">
+<div id="app" v-cloak class="p-3 sm:p-6 flex flex-col min-h-screen max-w-7xl mx-auto">
 
     <!-- Header & Inputs -->
     <header class="bg-gray-900 p-3 sm:p-4 rounded-xl border border-gray-800 mb-3 shadow-lg space-y-3">
@@ -47,7 +47,7 @@
         <div v-for="w in warnings" :key="w">⚠ {{ w }}</div>
     </div>
 
-    <!-- Tree Toolbar -->
+    <!-- Tree Controls -->
     <div v-if="view === 'tree' && treeData" class="flex flex-wrap items-center gap-2 mb-2 text-sm">
         <div class="flex bg-gray-800 rounded-lg p-1">
             <button @click="orientation = 'horizontal'" :class="orientation === 'horizontal' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded transition">Horizontal</button>
@@ -59,18 +59,18 @@
             <button @click="zoomBy(0.1)" class="px-3 py-1 rounded text-gray-300 hover:bg-gray-700">+</button>
         </div>
         <button @click="fit" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">Fit to screen</button>
-        <span class="hidden sm:inline text-xs text-gray-500">Drag to pan</span>
+        <span class="hidden sm:inline text-xs text-gray-500">Drag canvas to pan</span>
     </div>
 
-    <!-- Workspace -->
+    <!-- Main Visual Canvas / Steps Container -->
     <main ref="canvas"
-          :class="view === 'tree' ? 'h-[70vh] overflow-auto flex grabbable border border-gray-800 rounded-xl bg-[#0d0d0f] shadow-inner' : ''"
+          :class="view === 'tree' ? 'h-[65vh] min-h-[400px] overflow-auto flex grabbable border border-gray-800 rounded-xl bg-[#0d0d0f] shadow-inner' : ''"
           class="mb-6"
           @mousedown="onDown" @mousemove="onMove" @mouseup="onUp" @mouseleave="onUp">
         
         <div v-if="!dbLoaded" class="m-auto text-emerald-400 animate-pulse">Loading species database...</div>
         <div v-else-if="loading" class="m-auto text-emerald-400 animate-pulse">Computing optimal breeding tree...</div>
-        <div v-else-if="!treeData" class="m-auto text-gray-500 p-6 text-center">Enter your target details above and click Generate Plan.</div>
+        <div v-else-if="!treeData" class="m-auto text-gray-500 p-6 text-center">Enter target species above and click Generate Plan.</div>
 
         <!-- Tree View -->
         <div v-else-if="view === 'tree'" ref="treeEl" class="m-auto w-max p-8" :style="{ zoom: scale }">
@@ -93,12 +93,12 @@
                     <div class="bg-gray-900/60 rounded p-2">
                         <div class="font-semibold text-gray-200">{{ s.parent_1 }}</div>
                         <div class="font-mono text-xs text-emerald-400">{{ s.parent_1_ivs }}</div>
-                        <div class="text-xs text-purple-300">Holds: {{ s.item_p1 }} · from {{ s.parent_1_src }}</div>
+                        <div class="text-xs text-purple-300">Holds: {{ s.item_p1 }} · Source: {{ s.parent_1_src }}</div>
                     </div>
                     <div class="bg-gray-900/60 rounded p-2">
                         <div class="font-semibold text-gray-200">{{ s.parent_2 }}</div>
                         <div class="font-mono text-xs text-emerald-400">{{ s.parent_2_ivs }}</div>
-                        <div class="text-xs text-purple-300">Holds: {{ s.item_p2 }} · from {{ s.parent_2_src }}</div>
+                        <div class="text-xs text-purple-300">Holds: {{ s.item_p2 }} · Source: {{ s.parent_2_src }}</div>
                     </div>
                 </div>
                 <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300">
@@ -111,7 +111,7 @@
     </main>
 
     <!-- Shopping List & Cost Breakdown -->
-    <section v-if="shoppingList.length > 0" class="space-y-6">
+    <section v-if="shoppingList.length > 0" class="space-y-6 mb-12">
         <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
             <h2 class="text-lg font-bold text-emerald-400 mb-4">🛒 Shopping List (Base Pokémon to Acquire)</h2>
             <div class="overflow-x-auto">
