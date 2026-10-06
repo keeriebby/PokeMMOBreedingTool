@@ -51,11 +51,16 @@ const app = createApp({
         const dbLoaded = ref(false);
         const view = ref(window.innerWidth < 768 ? 'steps' : 'tree');
         const orientation = ref('horizontal');
-        const speciesInput = ref('tyranitar');
-        const ivsInput = ref('31/31/31/x/31/31');
-        const natureInput = ref('adamant');
+        
+        // Blank input fields by default with placeholder hints
+        const speciesInput = ref('');
+        const ivsInput = ref('');
+        const natureInput = ref('');
+        
+        // Editable prices with defaults
         const powerCost = ref(10000);
         const everstoneCost = ref(5000);
+        
         const warnings = ref([]);
         const treeData = ref(null);
         const steps = ref([]);
@@ -74,19 +79,19 @@ const app = createApp({
                 const data = await response.json();
                 db = new SpeciesDB(data);
                 dbLoaded.value = true;
-                generatePlan();
             } catch (err) {
                 warnings.value = [`Database Error: ${err.message}`];
             }
         });
 
         const parseIVs = (str) => {
+            if (!str || !str.trim()) return ['hp', 'atk', 'def', 'spd', 'spe'];
             const parts = str.split('/').map(p => p.trim().toLowerCase());
             const ivKeys = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
             if (parts.length === 6) {
                 return ivKeys.filter((_, idx) => parts[idx] === '31');
             }
-            return ['hp', 'atk', 'def', 'spd', 'spe'];
+            return ivKeys.filter(k => str.toLowerCase().includes(k));
         };
 
         const formatTreeNode = (node) => {
@@ -142,13 +147,61 @@ const app = createApp({
             return Array.from(map.values());
         };
 
+        // Safe extraction helpers to prevent crashes if step objects vary
+        const extractParent = (s, pNum) => {
+            if (!s) return { species: '', ivs: '', source: 'Catch/Buy', item: 'None' };
+            const pObj = pNum === 1 ? (s.parent1 || s.parent_1 || s.p1) : (s.parent2 || s.parent_2 || s.p2);
+            if (pObj && typeof pObj === 'object') {
+                const ivs = Array.isArray(pObj.ivs) ? pObj.ivs.join('/') : (pObj.ivs || '');
+                return {
+                    species: pObj.species || pObj.name || '',
+                    ivs: ivs,
+                    source: pObj.source || pObj.from || 'Catch/Buy',
+                    item: pObj.item || pObj.held_item || 'None'
+                };
+            }
+            const pPrefix = pNum === 1 ? 'parent1' : 'parent2';
+            const altPrefix = pNum === 1 ? 'parent_1' : 'parent_2';
+            const species = s[`${pPrefix}_species`] || s[`${altPrefix}_species`] || s[pPrefix] || s[altPrefix] || '';
+            const ivsRaw = s[`${pPrefix}_ivs`] || s[`${altPrefix}_ivs`] || '';
+            const ivs = Array.isArray(ivsRaw) ? ivsRaw.join('/') : ivsRaw;
+            const source = s[`${pPrefix}_src`] || s[`${altPrefix}_src`] || 'Catch/Buy';
+            const item = s[`item_p${pNum}`] || s[`item_${pPrefix}`] || 'None';
+            return { species, ivs, source, item };
+        };
+
+        const extractChild = (s) => {
+            if (!s) return { ivs: '', nature: 'Any', gender: 'Any' };
+            if (s.child && typeof s.child === 'object') {
+                const ivs = Array.isArray(s.child.ivs) ? s.child.ivs.join('/') : (s.child.ivs || '');
+                return {
+                    ivs: ivs,
+                    nature: s.child.nature || 'Any',
+                    gender: s.child.gender || 'Any'
+                };
+            }
+            const ivsRaw = s.child_ivs || s.ivs || '';
+            const ivs = Array.isArray(ivsRaw) ? ivsRaw.join('/') : ivsRaw;
+            return {
+                ivs: ivs,
+                nature: s.child_nature || s.nature || 'Any',
+                gender: s.child_gender || s.gender || 'Any'
+            };
+        };
+
         const generatePlan = async () => {
             if (!db) return;
+            
+            const targetName = speciesInput.value.trim();
+            if (!targetName) {
+                warnings.value = ["Please enter a species name (e.g., Larvitar or Tyranitar)."];
+                return;
+            }
+
             loading.value = true;
             warnings.value = [];
 
             try {
-                const targetName = speciesInput.value.trim();
                 const targetSpecies = db.find(targetName);
                 const requestedIVs = parseIVs(ivsInput.value);
                 const wantNature = !!natureInput.value.trim();
@@ -164,31 +217,37 @@ const app = createApp({
 
                 treeData.value = formatTreeNode(root);
                 
-                steps.value = rawPlan.map((s, idx) => ({
-                    step: idx + 1,
-                    done: false,
-                    parent_1: s.parent1.species || hatch.name,
-                    parent_1_ivs: s.parent1.ivs.join('/'),
-                    parent_1_src: s.parent1.source || 'Catch/Buy',
-                    item_p1: s.parent1.item || 'None',
-                    parent_2: s.parent2.species || fodder.name,
-                    parent_2_ivs: s.parent2.ivs.join('/'),
-                    parent_2_src: s.parent2.source || 'Catch/Buy',
-                    item_p2: s.parent2.item || 'None',
-                    child_ivs: s.child.ivs.join('/'),
-                    child_nature: s.child.nature || 'Any',
-                    child_gender: s.child.gender || 'Any',
-                    gender_cost: s.gender_cost || 0
-                }));
+                // Safe mapping without crashing on missing parent properties
+                steps.value = rawPlan.map((s, idx) => {
+                    const p1 = extractParent(s, 1);
+                    const p2 = extractParent(s, 2);
+                    const child = extractChild(s);
+                    return {
+                        step: idx + 1,
+                        done: false,
+                        parent_1: p1.species || hatch.name,
+                        parent_1_ivs: p1.ivs,
+                        parent_1_src: p1.source,
+                        item_p1: p1.item,
+                        parent_2: p2.species || fodder.name,
+                        parent_2_ivs: p2.ivs,
+                        parent_2_src: p2.source,
+                        item_p2: p2.item,
+                        child_ivs: child.ivs,
+                        child_nature: child.nature,
+                        child_gender: child.gender,
+                        gender_cost: s.gender_cost || s.gender_lock_cost || 0
+                    };
+                });
 
                 const rawLeaves = extractShoppingList(root);
                 shoppingList.value = groupShoppingList(rawLeaves);
 
                 const powerCount = costs.power_items_count || 0;
                 const everCount = costs.everstones_count || 0;
-                const pCostTotal = powerCount * powerCost.value;
-                const eCostTotal = everCount * everstoneCost.value;
-                const totalCalculatedCost = pCostTotal + eCostTotal + costs.gender_lock_cost;
+                const pCostTotal = powerCount * (powerCost.value || 0);
+                const eCostTotal = everCount * (everstoneCost.value || 0);
+                const totalCalculatedCost = pCostTotal + eCostTotal + (costs.gender_lock_cost || 0);
 
                 costBreakdown.value = {
                     item_counts: {
@@ -196,12 +255,12 @@ const app = createApp({
                         "Everstones": everCount
                     },
                     power_items_count: powerCount,
-                    power_unit: powerCost.value,
+                    power_unit: powerCost.value || 0,
                     power_cost: pCostTotal,
                     everstones_count: everCount,
-                    everstone_unit: everstoneCost.value,
+                    everstone_unit: everstoneCost.value || 0,
                     everstone_cost: eCostTotal,
-                    gender_lock_cost: costs.gender_lock_cost,
+                    gender_lock_cost: costs.gender_lock_cost || 0,
                     total_cost: totalCalculatedCost
                 };
 

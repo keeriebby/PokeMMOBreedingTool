@@ -21,7 +21,6 @@
 </head>
 <body class="bg-darkbg text-gray-100 min-h-screen font-sans">
 
-<!-- Add v-cloak here -->
 <div id="app" v-cloak class="p-3 sm:p-6 flex flex-col min-h-screen">
 
     <!-- Header & Inputs -->
@@ -34,11 +33,11 @@
             </div>
         </div>
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
-            <input v-model="speciesInput" placeholder="Species (e.g. Gastly)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
-            <input v-model="ivsInput" placeholder="IVs (31/x/31/x/31/31)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-44">
-            <input v-model="natureInput" placeholder="Nature (e.g. Timid)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
-            <input v-model.number="powerCost" type="number" placeholder="Power Item $" title="Power Item price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
-            <input v-model.number="everstoneCost" type="number" placeholder="Everstone $" title="Everstone price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
+            <input v-model="speciesInput" placeholder="e.g. Larvitar" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
+            <input v-model="ivsInput" placeholder="e.g. 31/x/31/31/31/31" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-44">
+            <input v-model="natureInput" placeholder="e.g. Adamant" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
+            <input v-model.number="powerCost" type="number" placeholder="10000" title="Power Item Price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
+            <input v-model.number="everstoneCost" type="number" placeholder="5000" title="Everstone Price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
             <button @click="generatePlan" :disabled="!dbLoaded" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow disabled:opacity-50">Generate Plan</button>
         </div>
     </header>
@@ -91,10 +90,15 @@
                     </label>
                 </div>
                 <div class="space-y-2">
-                    <div v-for="p in [1, 2]" :key="p" class="bg-gray-900/60 rounded p-2">
-                        <div class="font-semibold text-gray-200">{{ s['parent_' + p] }}</div>
-                        <div class="font-mono text-xs text-emerald-400">{{ s['parent_' + p + '_ivs'] }}</div>
-                        <div class="text-xs text-purple-300">Holds: {{ s['item_p' + p] }} · from {{ s['parent_' + p + '_src'] }}</div>
+                    <div class="bg-gray-900/60 rounded p-2">
+                        <div class="font-semibold text-gray-200">{{ s.parent_1 }}</div>
+                        <div class="font-mono text-xs text-emerald-400">{{ s.parent_1_ivs }}</div>
+                        <div class="text-xs text-purple-300">Holds: {{ s.item_p1 }} · from {{ s.parent_1_src }}</div>
+                    </div>
+                    <div class="bg-gray-900/60 rounded p-2">
+                        <div class="font-semibold text-gray-200">{{ s.parent_2 }}</div>
+                        <div class="font-mono text-xs text-emerald-400">{{ s.parent_2_ivs }}</div>
+                        <div class="text-xs text-purple-300">Holds: {{ s.item_p2 }} · from {{ s.parent_2_src }}</div>
                     </div>
                 </div>
                 <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300">
