@@ -28,7 +28,7 @@ export const Gender = {
 // TreeNode Data Structure
 export class TreeNode {
   constructor(traits, options = {}) {
-    this.traits = traits; // Array of trait strings
+    this.traits = traits; 
     this.parent1 = options.parent1 || null;
     this.parent2 = options.parent2 || null;
     this.lockedByParent1 = options.lockedByParent1 || null;
@@ -138,8 +138,8 @@ export function genderLockCost(required, species) {
 
   const p =
     required === Gender.FEMALE
-      ? species.female_ratio
-      : 1.0 - species.female_ratio;
+      ? species.femaleRatio
+      : 1.0 - species.femaleRatio;
 
   if (p <= 0) return null;
   if (p >= 0.5) return 5000;
@@ -193,8 +193,7 @@ export function costReport(root, config = new PricingConfig()) {
   };
 }
 
-// --- ADDED: SpeciesDB and Planner Logic ---
-
+// SpeciesDB and Planner Logic
 export class SpeciesDB {
   constructor(data) {
     this.byId = {};

@@ -34,66 +34,7 @@
 
   <pre id="output">Loading species database...</pre>
 
-  <script type="module">
-    import { buildTree, costReport, PricingConfig, SpeciesDB, assignSpecies, renderPlan } from 'breeding.js';
-
-    let db = null;
-
-    async function init() {
-      try {
-        const response = await fetch('./species_db.json');
-        const data = await response.json();
-        db = new SpeciesDB(data);
-        document.getElementById('output').textContent = "Ready! Enter a Pokémon and select IVs.";
-      } catch (err) {
-        document.getElementById('output').textContent = "Error loading species_db.json. Are you running a local web server (http://localhost) instead of a file:/// URL?";
-      }
-    }
-
-    document.getElementById('calculate-btn').addEventListener('click', () => {
-      if (!db) return alert("Database not loaded yet.");
-      
-      const speciesName = document.getElementById('species').value;
-      const selectedIVs = Array.from(document.querySelectorAll('.iv-check:checked')).map(cb => cb.value);
-      const wantNature = document.getElementById('want-nature').checked;
-
-      try {
-        const targetSp = db.find(speciesName);
-        if (!targetSp.canBreed) throw new Error(`${targetSp.name} cannot breed.`);
-
-        const root = buildTree(selectedIVs, wantNature);
-        const hatchSp = db.hatchSpecies(targetSp);
-        const fodderSp = db.pickFodder(targetSp);
-        
-        assignSpecies(root, hatchSp, fodderSp);
-        const report = costReport(root, new PricingConfig());
-        const steps = renderPlan(root, targetSp.name, wantNature ? "Locked" : "Any", report.gender_costs, `Any (${targetSp.eggGroups.join('/')})`);
-
-        let out = `Target: ${targetSp.name} (Hatches as ${hatchSp.name})\n`;
-        out += `Fodder: Any (${targetSp.eggGroups.join('/')})\n\n`;
-        
-        out += `=== Breeding Steps ===\n`;
-        steps.forEach(s => {
-          let costStr = s.gender_cost === null ? " (IMPOSSIBLE)" : (s.gender_cost > 0 ? ` (Cost: ${s.gender_cost})` : "");
-          out += `Step ${s.step}: Breed ${s.parent_1} [${s.parent_1_ivs}] holding ${s.item_p1} (from ${s.parent_1_src})\n`;
-          out += `        + ${s.parent_2} [${s.parent_2_ivs}] holding ${s.item_p2} (from ${s.parent_2_src})\n`;
-          out += `       -> Child: [${s.child_ivs}] | Gender Lock: ${s.child_gender}${costStr}\n\n`;
-        });
-
-        out += `=== Cost Estimate ===\n`;
-        out += `Power Items: ${report.power_items_count} x 10k = ${report.power_items_cost.toLocaleString()}\n`;
-        out += `Everstones:  ${report.everstones_count} x 5k  = ${report.everstones_cost.toLocaleString()}\n`;
-        out += `Gender Locks:                    = ${report.gender_lock_cost.toLocaleString()}\n`;
-        out += `----------------------------------------\n`;
-        out += `TOTAL COST:                      = ${report.grand_total.toLocaleString()}\n`;
-
-        document.getElementById('output').textContent = out;
-      } catch (err) {
-        document.getElementById('output').textContent = "ERROR: " + err.message;
-      }
-    });
-
-    init();
+  <script type="module" src="app.js">
   </script>
 </body>
 </html>
