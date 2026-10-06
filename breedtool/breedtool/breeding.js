@@ -192,3 +192,106 @@ export function costReport(root, config = new PricingConfig()) {
     impossible: impossible,
   };
 }
+
+// --- ADDED: SpeciesDB and Planner Logic ---
+
+export class SpeciesDB {
+  constructor(data) {
+    this.byId = {};
+    this.index = {};
+    const entries = data.species ? data.species : Object.values(data);
+    
+    for (const e of entries) {
+      const s = {
+        id: e.id,
+        name: e.name || e.identifier.charAt(0).toUpperCase() + e.identifier.slice(1),
+        identifier: e.identifier,
+        evolvesFromId: e.evolves_from_id || null,
+        genderRate: e.gender_rate ?? 4,
+        eggGroupsRaw: e.egg_groups || [],
+        isBaby: !!e.is_baby,
+        get genderless() { return this.genderRate === -1; },
+        get femaleRatio() { return this.genderless ? 0 : this.genderRate / 8; },
+        get canBreed() { return !this.eggGroupsRaw.includes("no-eggs"); },
+        get eggGroups() {
+          const dict = { "ground": "Field", "plant": "Grass", "humanshape": "Humanoid", "indeterminate": "Chaos" };
+          return this.eggGroupsRaw.map(g => dict[g] || g.charAt(0).toUpperCase() + g.slice(1));
+        }
+      };
+      this.byId[s.id] = s;
+      const key = s.identifier.toLowerCase().replace(/[^a-z0-9]/g, "");
+      this.index[key] = s;
+    }
+  }
+
+  find(name) {
+    const key = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (!this.index[key]) throw new Error(`Species '${name}' not found.`);
+    return this.index[key];
+  }
+
+  chain(species) {
+    const out = [species];
+    while (out[0].evolvesFromId && this.byId[out[0].evolvesFromId]) {
+      out.unshift(this.byId[out[0].evolvesFromId]);
+    }
+    return out;
+  }
+
+  hatchSpecies(species) {
+    const c = this.chain(species);
+    const incenseBabies = ["azurill", "wynaut", "mantyke", "munchlax", "mime-jr", "happiny", "chingling", "bonsly", "budew"];
+    if (c.length > 1 && incenseBabies.includes(c[0].identifier)) return c[1];
+    return c[0];
+  }
+
+  eggGroupCompatible(a, b) {
+    if (!a.canBreed || !b.canBreed) return false;
+    if (a.eggGroupsRaw.includes("ditto") || b.eggGroupsRaw.includes("ditto")) return true;
+    return a.eggGroupsRaw.some(g => b.eggGroupsRaw.includes(g));
+  }
+
+  pickFodder(target) {
+    for (const s of Object.values(this.byId)) {
+      if (!s.evolvesFromId && !s.isBaby && s.genderRate === 4 && this.eggGroupCompatible(target, s)) {
+        return s;
+      }
+    }
+    throw new Error(`No 50/50 fodder species found for ${target.name}.`);
+  }
+}
+
+export function assignSpecies(node, hatch, fodder, isTarget = true, reqGender = null) {
+  node.isTargetLine = isTarget;
+  node.requiredGender = reqGender;
+  node.species = isTarget ? hatch : fodder;
+  
+  if (node.parent1) assignSpecies(node.parent1, hatch, fodder, isTarget, Gender.FEMALE);
+  if (node.parent2) assignSpecies(node.parent2, hatch, fodder, false, Gender.MALE);
+}
+
+export function renderPlan(root, targetName, natureName, genderCosts, fodderLabel) {
+  const formatIVs = traits => IV_STATS.map(s => traits.includes(s) ? "31" : "X").join("/");
+  const nodeLabel = n => `${n.isTargetLine ? targetName : fodderLabel} (${n.requiredGender || "Any"})`;
+
+  const breedNodes = breeds(root).sort((a, b) => a.traits.length - b.traits.length);
+  const stepMap = new Map();
+  breedNodes.forEach((n, i) => stepMap.set(n.nodeId, i + 1));
+
+  return breedNodes.map(n => {
+    return {
+      step: stepMap.get(n.nodeId),
+      parent_1: nodeLabel(n.parent1),
+      parent_1_ivs: formatIVs(n.parent1.traits),
+      parent_1_src: n.parent1.isLeaf ? "Buy" : `Step ${stepMap.get(n.parent1.nodeId)}`,
+      item_p1: ITEM_FOR_TRAIT[n.lockedByParent1],
+      parent_2: nodeLabel(n.parent2),
+      parent_2_ivs: formatIVs(n.parent2.traits),
+      parent_2_src: n.parent2.isLeaf ? "Buy" : `Step ${stepMap.get(n.parent2.nodeId)}`,
+      item_p2: ITEM_FOR_TRAIT[n.lockedByParent2],
+      child_ivs: formatIVs(n.traits),
+      child_gender: n.requiredGender || "Any",
+      gender_cost: genderCosts[n.nodeId] ?? null
+    };
+  });
+}

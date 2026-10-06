@@ -3,59 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BreedTool</title>
+  <title>BreedTool Web</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    .iv-group { margin: 15px 0; }
+    pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+  </style>
 </head>
 <body>
-  <h1>PokeMMO Breeding Tree & Cost Calculator</h1>
+  <h1>PokeMMO Breeding Planner</h1>
 
   <div>
-    <h3>Select Stats Needed:</h3>
-    <label><input type="checkbox" value="hp" class="iv-check"> HP</label>
-    <label><input type="checkbox" value="atk" class="iv-check"> Atk</label>
-    <label><input type="checkbox" value="def" class="iv-check"> Def</label>
-    <label><input type="checkbox" value="spa" class="iv-check"> SpA</label>
-    <label><input type="checkbox" value="spd" class="iv-check"> SpD</label>
-    <label><input type="checkbox" value="spe" class="iv-check"> Spe</label>
+    <label>Target Species: <input type="text" id="species" value="gastly" placeholder="e.g. gastly"></label>
     <br><br>
+    
+    <div class="iv-group">
+      <strong>Select IVs Needed (31):</strong><br>
+      <label><input type="checkbox" value="hp" class="iv-check"> HP</label>
+      <label><input type="checkbox" value="atk" class="iv-check"> Atk</label>
+      <label><input type="checkbox" value="def" class="iv-check"> Def</label>
+      <label><input type="checkbox" value="spa" class="iv-check"> SpA</label>
+      <label><input type="checkbox" value="spd" class="iv-check"> SpD</label>
+      <label><input type="checkbox" value="spe" class="iv-check"> Spe</label>
+    </div>
+    
     <label><input type="checkbox" id="want-nature"> Lock Nature?</label>
     <br><br>
-    <button id="calculate-btn">Calculate Breeding Tree</button>
+    <button id="calculate-btn">Calculate Breeding Plan</button>
   </div>
 
-  <pre id="output"></pre>
+  <pre id="output">Loading species database...</pre>
 
   <script type="module">
-    import { buildTree, costReport, PricingConfig } from './breeding.js';
+    import { buildTree, costReport, PricingConfig, SpeciesDB, assignSpecies, renderPlan } from './breeding.js';
 
-    let speciesDb = {};
+    let db = null;
 
-    // 1. Fetch species_db.json from the same directory
     async function init() {
       try {
         const response = await fetch('./species_db.json');
-        speciesDb = await response.json();
-        console.log("Loaded Species Database:", speciesDb);
+        const data = await response.json();
+        db = new SpeciesDB(data);
+        document.getElementById('output').textContent = "Ready! Enter a Pokémon and select IVs.";
       } catch (err) {
-        console.error("Could not load species_db.json:", err);
+        document.getElementById('output').textContent = "Error loading species_db.json. Are you running a local web server (http://localhost) instead of a file:/// URL?";
       }
     }
 
-    // 2. Handle Calculation
     document.getElementById('calculate-btn').addEventListener('click', () => {
-      const selectedIVs = Array.from(document.querySelectorAll('.iv-check:checked'))
-                               .map(cb => cb.value);
+      if (!db) return alert("Database not loaded yet.");
+      
+      const speciesName = document.getElementById('species').value;
+      const selectedIVs = Array.from(document.querySelectorAll('.iv-check:checked')).map(cb => cb.value);
       const wantNature = document.getElementById('want-nature').checked;
 
       try {
+        const targetSp = db.find(speciesName);
+        if (!targetSp.canBreed) throw new Error(`${targetSp.name} cannot breed.`);
+
         const root = buildTree(selectedIVs, wantNature);
-        const report = costReport(root, new PricingConfig(10000, 5000));
+        const hatchSp = db.hatchSpecies(targetSp);
+        const fodderSp = db.pickFodder(targetSp);
         
-        document.getElementById('output').textContent = JSON.stringify({
-          target: root.traitString(),
-          pricingReport: report
-        }, null, 2);
+        assignSpecies(root, hatchSp, fodderSp);
+        const report = costReport(root, new PricingConfig());
+        const steps = renderPlan(root, targetSp.name, wantNature ? "Locked" : "Any", report.gender_costs, `Any (${targetSp.eggGroups.join('/')})`);
+
+        let out = `Target: ${targetSp.name} (Hatches as ${hatchSp.name})\n`;
+        out += `Fodder: Any (${targetSp.eggGroups.join('/')})\n\n`;
+        
+        out += `=== Breeding Steps ===\n`;
+        steps.forEach(s => {
+          let costStr = s.gender_cost === null ? " (IMPOSSIBLE)" : (s.gender_cost > 0 ? ` (Cost: ${s.gender_cost})` : "");
+          out += `Step ${s.step}: Breed ${s.parent_1} [${s.parent_1_ivs}] holding ${s.item_p1} (from ${s.parent_1_src})\n`;
+          out += `        + ${s.parent_2} [${s.parent_2_ivs}] holding ${s.item_p2} (from ${s.parent_2_src})\n`;
+          out += `       -> Child: [${s.child_ivs}] | Gender Lock: ${s.child_gender}${costStr}\n\n`;
+        });
+
+        out += `=== Cost Estimate ===\n`;
+        out += `Power Items: ${report.power_items_count} x 10k = ${report.power_items_cost.toLocaleString()}\n`;
+        out += `Everstones:  ${report.everstones_count} x 5k  = ${report.everstones_cost.toLocaleString()}\n`;
+        out += `Gender Locks:                    = ${report.gender_lock_cost.toLocaleString()}\n`;
+        out += `----------------------------------------\n`;
+        out += `TOTAL COST:                      = ${report.grand_total.toLocaleString()}\n`;
+
+        document.getElementById('output').textContent = out;
       } catch (err) {
-        alert(err.message);
+        document.getElementById('output').textContent = "ERROR: " + err.message;
       }
     });
 
