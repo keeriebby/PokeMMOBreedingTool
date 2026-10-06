@@ -1,18 +1,36 @@
 import {
   buildTree, costReport, PricingConfig, SpeciesDB, assignSpecies, speciesWarnings,
-  serializeTree, buildShoppingList, renderPlan, IV_STATS,
+  serializeTree, buildShoppingList, renderPlan, allNodes, IV_STATS,
 } from './breeding.js';
 
-const { createApp, ref, watch, nextTick, onMounted } = Vue;
+const { createApp, ref, reactive, watch, nextTick, onMounted } = Vue;
+
+// ---- Saved progress (localStorage) ----
+// progress = { [nodeId]: true } for the current plan. Node ids are stable for a given
+// species + IVs + nature, so a plan can be reloaded later and pick up where you left off.
+const store = reactive({ progress: {} });
+const PROGRESS_PREFIX = 'breedtool:progress:v1:';
+const INPUTS_KEY = 'breedtool:inputs:v1';
+
+const loadJSON = (key) => {
+    try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+};
+const saveJSON = (key, value) => {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* private mode / storage full */ }
+};
 
 const TreeNode = {
     name: 'TreeNode',
     props: ['node', 'orientation'],
+    methods: {
+        isDone(id) { return !!store.progress[id]; },
+        toggle(id) { store.progress[id] = !store.progress[id]; },
+    },
     template: `
         <div :class="['flex items-center justify-center', orientation === 'horizontal' ? 'flex-row space-x-12' : 'flex-col space-y-12']">
             <div class="relative">
                 <!-- Breed Node -->
-                <div v-if="node.type === 'breed'" :class="node.bred ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-gray-800 border-gray-700'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
+                <div v-if="node.type === 'breed'" :class="isDone(node.id) ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-gray-800 border-gray-700'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
                     <div class="flex justify-between items-center mb-1 gap-1">
                         <span class="font-bold text-sm text-gray-100 flex items-center gap-1">
                             {{ node.species }}
@@ -35,13 +53,13 @@ const TreeNode = {
                         Final Target Result
                     </div>
                     <div class="flex items-center space-x-2 pt-2 border-t border-gray-700">
-                        <input type="checkbox" v-model="node.bred" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0 cursor-pointer">
-                        <label class="text-xs font-semibold cursor-pointer" :class="node.bred ? 'text-emerald-400' : 'text-gray-300'">Done (collapse parents)</label>
+                        <input type="checkbox" :checked="isDone(node.id)" @change="toggle(node.id)" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0 cursor-pointer">
+                        <label class="text-xs font-semibold cursor-pointer" :class="isDone(node.id) ? 'text-emerald-400' : 'text-gray-300'">Done (collapse parents)</label>
                     </div>
                 </div>
 
                 <!-- Leaf Node (Base Catch/Buy) -->
-                <div v-if="node.type === 'leaf'" :class="node.bought ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#211710] border-amber-600/80'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
+                <div v-if="node.type === 'leaf'" :class="isDone(node.id) ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#211710] border-amber-600/80'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
                     <div class="flex justify-between items-center mb-1">
                         <span class="bg-amber-800/80 text-amber-100 text-[10px] px-2 py-0.5 rounded-full font-bold">CATCH / BUY</span>
                         <span :class="node.gender.includes('Female') ? 'text-pink-400' : 'text-blue-400'" class="font-bold text-xs">
@@ -59,14 +77,14 @@ const TreeNode = {
                         Holds: {{ node.item }}
                     </div>
                     <div class="flex items-center space-x-2 pt-2 border-t border-gray-700/50">
-                        <input type="checkbox" v-model="node.bought" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0 cursor-pointer">
-                        <label class="text-xs font-semibold cursor-pointer" :class="node.bought ? 'text-emerald-400' : 'text-amber-200'">Acquired</label>
+                        <input type="checkbox" :checked="isDone(node.id)" @change="toggle(node.id)" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0 cursor-pointer">
+                        <label class="text-xs font-semibold cursor-pointer" :class="isDone(node.id) ? 'text-emerald-400' : 'text-amber-200'">Acquired</label>
                     </div>
                 </div>
             </div>
 
             <!-- Parent Branches -->
-            <div v-if="node.type === 'breed' && node.parent1 && node.parent2" v-show="!node.bred" :class="['flex relative', orientation === 'horizontal' ? 'flex-col space-y-6 tree-branch-h' : 'flex-row space-x-6 tree-branch-v']">
+            <div v-if="node.type === 'breed' && node.parent1 && node.parent2" v-show="!isDone(node.id)" :class="['flex relative', orientation === 'horizontal' ? 'flex-col space-y-6 tree-branch-h' : 'flex-row space-x-6 tree-branch-v']">
                 <tree-node :node="node.parent1" :orientation="orientation"></tree-node>
                 <tree-node :node="node.parent2" :orientation="orientation"></tree-node>
             </div>
@@ -95,6 +113,10 @@ const app = createApp({
         const costBreakdown = ref(null);
         const loading = ref(false);
 
+        const speciesNames = ref([]);
+        const totalNodes = ref(0);
+        let currentKey = null;
+
         const scale = ref(1);
         const canvas = ref(null);
         const treeEl = ref(null);
@@ -104,7 +126,19 @@ const app = createApp({
                 const response = await fetch('species_db.json');
                 if (!response.ok) throw new Error(`HTTP ${response.status}: could not load species_db.json`);
                 db = new SpeciesDB(await response.json());
+                speciesNames.value = db.names();
                 dbLoaded.value = true;
+
+                // Restore the last plan so a refresh (or coming back tomorrow) picks up where you left off
+                const saved = loadJSON(INPUTS_KEY);
+                if (saved && saved.species) {
+                    speciesInput.value = saved.species;
+                    ivsInput.value = saved.ivs || '';
+                    natureInput.value = saved.nature || '';
+                    if (saved.power !== undefined) powerCost.value = saved.power;
+                    if (saved.everstone !== undefined) everstoneCost.value = saved.everstone;
+                    await generatePlan();
+                }
             } catch (err) {
                 warnings.value = [`Database error: ${err.message} (open the site through a web server, not by double-clicking the file)`];
             }
@@ -143,9 +177,18 @@ const app = createApp({
                     natureName,
                 };
 
+                // Switch to this plan's saved progress
+                currentKey = `${PROGRESS_PREFIX}${target.identifier}|${root.traits.join(',')}|${(natureName || '').toLowerCase()}`;
+                store.progress = loadJSON(currentKey) || {};
+                totalNodes.value = allNodes(root).length;
+                saveJSON(INPUTS_KEY, {
+                    species: speciesInput.value.trim(), ivs: ivsInput.value, nature: natureInput.value.trim(),
+                    power: powerCost.value, everstone: everstoneCost.value,
+                });
+
                 treeData.value = serializeTree(root, ctx);
                 shoppingList.value = buildShoppingList(root, ctx);
-                steps.value = renderPlan(root, ctx, costs.gender_costs).map((s) => ({ ...s, done: false }));
+                steps.value = renderPlan(root, ctx, costs.gender_costs);
 
                 costBreakdown.value = {
                     item_counts: costs.item_counts,
@@ -204,9 +247,18 @@ const app = createApp({
 
         watch([orientation, view], async () => { await nextTick(); fit(); });
 
+        // Persist every checkbox change for the current plan
+        watch(() => store.progress, (p) => { if (currentKey) saveJSON(currentKey, p); }, { deep: true });
+
+        const doneCount = () => Object.values(store.progress).filter(Boolean).length;
+        const resetProgress = () => {
+            if (confirm('Clear all progress on this plan?')) store.progress = {};
+        };
+
         return {
             dbLoaded, view, orientation, speciesInput, ivsInput, natureInput, powerCost, everstoneCost,
             warnings, treeData, steps, shoppingList, costBreakdown, loading, generatePlan,
+            store, speciesNames, totalNodes, doneCount, resetProgress,
             scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost,
         };
     }

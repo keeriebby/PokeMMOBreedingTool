@@ -161,6 +161,15 @@ export class SpeciesDB {
       this.byId[s.id] = s;
       this.index[s.identifier.toLowerCase().replace(/[^a-z0-9]/g, "")] = s;
     }
+    for (const s of Object.values(this.byId)) {
+      const nameKey = s.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (!this.index[nameKey]) this.index[nameKey] = s;
+    }
+  }
+
+  // Names for the autocomplete list (breedable species only)
+  names() {
+    return Object.values(this.byId).filter((s) => s.canBreed).map((s) => s.name).sort();
   }
 
   find(name) {
@@ -283,6 +292,7 @@ export function renderPlan(root, ctx, genderCosts) {
 
   return nodes.map((n) => ({
     step: stepOf.get(n.nodeId),
+    nodeId: n.nodeId,
     parent_1: label(n.parent1), parent_1_ivs: formatIVs(n.parent1.traits),
     parent_1_src: src(n.parent1), item_p1: ITEM_FOR_TRAIT[n.lockedByParent1],
     parent_2: label(n.parent2), parent_2_ivs: formatIVs(n.parent2.traits),
