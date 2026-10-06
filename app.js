@@ -2,13 +2,13 @@ import { buildTree, costReport, SpeciesDB, assignSpecies, renderPlan } from './b
 
 const { createApp, ref, watch, nextTick, onMounted } = Vue;
 
-const POWER_ITEMS = {
-    hp: 'Power Weight (HP)',
-    atk: 'Power Bracer (Atk)',
-    def: 'Power Belt (Def)',
-    spa: 'Power Lens (SpA)',
-    spd: 'Power Band (SpD)',
-    spe: 'Power Anklet (Spe)'
+const POWER_ITEM_MAP = {
+    'HP': 'Power Weight (HP)',
+    'ATK': 'Power Bracer (Atk)',
+    'DEF': 'Power Belt (Def)',
+    'SPA': 'Power Lens (SpA)',
+    'SPD': 'Power Band (SpD)',
+    'SPE': 'Power Anklet (Spe)'
 };
 
 const TreeNode = {
@@ -18,12 +18,12 @@ const TreeNode = {
         <div :class="['flex items-center justify-center', orientation === 'horizontal' ? 'flex-row space-x-12' : 'flex-col space-y-12']">
             <div class="relative">
                 <!-- Breed Node -->
-                <div v-if="node.type === 'breed'" :class="node.bred ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-gray-800 border-gray-700'" class="border-2 rounded-xl p-3 w-60 shadow-xl transition-all duration-300">
+                <div v-if="node.type === 'breed'" :class="node.bred ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-gray-800 border-gray-700'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
                     <div class="flex justify-between items-center mb-1 gap-1">
                         <span class="font-bold text-sm text-gray-100 flex items-center gap-1">
                             {{ node.species }}
-                            <span :class="node.gender === 'Female' ? 'text-pink-400' : 'text-blue-400'" class="font-bold text-xs">
-                                {{ node.gender === 'Female' ? '♀' : (node.gender === 'Male' ? '♂' : '') }}
+                            <span :class="node.gender.includes('Female') ? 'text-pink-400' : (node.gender.includes('Male') ? 'text-blue-400' : 'text-gray-400')" class="font-bold text-xs">
+                                {{ node.gender }}
                             </span>
                         </span>
                         <span class="text-[10px] bg-gray-900 text-gray-400 px-1.5 py-0.5 rounded shrink-0">Bred</span>
@@ -32,7 +32,7 @@ const TreeNode = {
                         {{ node.ivs }}
                     </div>
                     <div class="text-xs text-gray-300 mb-2 flex justify-between">
-                        <span>Nature: <strong class="text-amber-300">{{ node.nature }}</strong></span>
+                        <span>Nature: <strong :class="node.nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ node.nature }}</strong></span>
                     </div>
                     <div v-if="node.held_item && node.held_item !== 'None'" class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium mb-2">
                         Holds: {{ node.held_item }}
@@ -47,11 +47,11 @@ const TreeNode = {
                 </div>
 
                 <!-- Leaf Node (Base Catch/Buy) -->
-                <div v-if="node.type === 'leaf'" :class="node.bought ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#211710] border-amber-600/80'" class="border-2 rounded-xl p-3 w-60 shadow-xl transition-all duration-300">
+                <div v-if="node.type === 'leaf'" :class="node.bought ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#211710] border-amber-600/80'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
                     <div class="flex justify-between items-center mb-1">
                         <span class="bg-amber-800/80 text-amber-100 text-[10px] px-2 py-0.5 rounded-full font-bold">CATCH / BUY</span>
-                        <span :class="node.gender === 'Female' ? 'text-pink-400' : 'text-blue-400'" class="font-bold text-xs">
-                            {{ node.gender === 'Female' ? '♀ Female' : (node.gender === 'Male' ? '♂ Male' : 'Any Gender') }}
+                        <span :class="node.gender.includes('Female') ? 'text-pink-400' : 'text-blue-400'" class="font-bold text-xs">
+                            {{ node.gender }}
                         </span>
                     </div>
                     <div class="font-bold text-sm text-amber-200 mb-1 truncate" :title="node.species">{{ node.species }}</div>
@@ -59,7 +59,7 @@ const TreeNode = {
                         {{ node.ivs }}
                     </div>
                     <div class="text-xs text-gray-300 mb-2">
-                        Nature: <strong class="text-amber-300">{{ node.nature }}</strong>
+                        Nature: <strong :class="node.nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ node.nature }}</strong>
                     </div>
                     <div class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium mb-2">
                         Holds: {{ node.item }}
@@ -121,6 +121,14 @@ const app = createApp({
         const getLeft = (n) => n ? (n.left || n.parent1 || n.parent_1 || n.p1 || (n.children && n.children[0]) || null) : null;
         const getRight = (n) => n ? (n.right || n.parent2 || n.parent_2 || n.p2 || (n.children && n.children[1]) || null) : null;
 
+        const getEggGroupsStr = (spObj) => {
+            if (!spObj) return '';
+            const raw = spObj.egg_groups || spObj.egg_group || spObj.groups || spObj.eggGroups || spObj.eggGroup;
+            if (Array.isArray(raw)) return raw.join(' / ');
+            if (typeof raw === 'string') return raw;
+            return '';
+        };
+
         const parseIVs = (str) => {
             if (!str || !str.trim()) return ['hp', 'atk', 'def', 'spd', 'spe'];
             const parts = str.split('/').map(p => p.trim().toLowerCase());
@@ -131,57 +139,123 @@ const app = createApp({
             return ivKeys.filter(k => str.toLowerCase().includes(k));
         };
 
-        const formatIVList = (ivArray) => {
-            if (!ivArray || !Array.isArray(ivArray) || ivArray.length === 0) return 'Any IVs';
-            return ivArray.map(stat => `31 ${String(stat).toUpperCase()}`).join(' / ');
+        const extractIVs = (node) => {
+            if (!node) return [];
+            let raw = node.ivs || node.stats || node.iv_set || node.passed_ivs || node.iv_list || node.iv;
+            
+            if (raw instanceof Set) {
+                raw = Array.from(raw);
+            }
+            
+            if (Array.isArray(raw)) {
+                return raw.map(s => String(s).toUpperCase());
+            }
+            
+            if (raw && typeof raw === 'object') {
+                const stats = [];
+                const validStats = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
+                for (const k of Object.keys(raw)) {
+                    if (validStats.includes(k.toLowerCase()) && raw[k]) {
+                        stats.push(k.toUpperCase());
+                    }
+                }
+                if (stats.length > 0) return stats;
+            }
+            
+            if (typeof raw === 'string' && raw.trim()) {
+                if (raw.includes('/')) {
+                    const parts = raw.split('/').map(p => p.trim());
+                    const statKeys = ['HP', 'ATK', 'DEF', 'SPA', 'SPD', 'SPE'];
+                    if (parts.length === 6) {
+                        const result = [];
+                        parts.forEach((val, idx) => {
+                            if (val === '31' || val.toLowerCase() === 'v') result.push(statKeys[idx]);
+                        });
+                        if (result.length > 0) return result;
+                    }
+                    return parts.filter(p => p.toLowerCase() !== 'x' && p.toLowerCase() !== 'any').map(p => p.toUpperCase());
+                }
+                if (raw.toLowerCase() !== 'any') {
+                    return [raw.toUpperCase()];
+                }
+            }
+            
+            return [];
         };
 
-        const detectHeldItem = (node) => {
-            if (node.item) return node.item;
-            if (node.held_item) return node.held_item;
-            if (node.hold) return node.hold;
-            
-            // Deduce from nature or passed IVs
-            if (node.nature && node.nature !== 'Any' && node.is_nature_source) {
+        const formatIVDisplay = (node) => {
+            const ivList = extractIVs(node);
+            if (ivList.length === 0) return 'Any IVs';
+            return ivList.map(stat => `31 ${stat}`).join(' / ');
+        };
+
+        const getNodeItem = (node) => {
+            if (!node) return 'None';
+
+            const explicit = node.item || node.held_item || node.hold || node.power_item;
+            if (typeof explicit === 'string' && explicit.trim() && explicit !== 'None') {
+                return explicit;
+            }
+
+            if (node.nature === true || node.is_nature || node.has_nature || node.nature_source || node.is_nature_source) {
                 return 'Everstone';
             }
-            if (Array.isArray(node.ivs) && node.ivs.length === 1) {
-                const stat = node.ivs[0].toLowerCase();
-                if (POWER_ITEMS[stat]) return POWER_ITEMS[stat];
+
+            const ivs = extractIVs(node);
+            if (ivs.length === 1 && POWER_ITEM_MAP[ivs[0]]) {
+                return POWER_ITEM_MAP[ivs[0]];
             }
+
             return 'None';
         };
 
-        const formatTreeNode = (node, targetSpeciesObj, isParent1 = true, depth = 0) => {
+        const getNodeNature = (node, userNature) => {
+            if (!userNature) return 'Any';
+
+            if (typeof node.nature === 'string' && node.nature.trim() && node.nature !== 'Any' && node.nature !== 'false') {
+                return node.nature;
+            }
+
+            if (node.nature === true || node.is_nature || node.has_nature || node.nature_source || node.is_nature_source) {
+                return userNature;
+            }
+
+            const item = getNodeItem(node);
+            if (item === 'Everstone') {
+                return userNature;
+            }
+
+            return 'Any';
+        };
+
+        const formatTreeNode = (node, targetSpeciesObj, isMainLine = true, depth = 0) => {
             if (!node) return null;
 
             const left = getLeft(node);
             const right = getRight(node);
             const isLeaf = node.is_leaf || node.isLeaf || (!left && !right);
 
-            const targetName = targetSpeciesObj.name;
-            const eggGroups = targetSpeciesObj.egg_groups ? targetSpeciesObj.egg_groups.join(' / ') : 'Egg Group';
+            const targetName = targetSpeciesObj.name || 'Target';
+            const eggGroupsStr = getEggGroupsStr(targetSpeciesObj);
 
-            // Determine Gender: Target line (Parent 1) is Female to preserve species; Parent 2 is Male fodder
-            let gender = node.gender || (depth === 0 ? 'Female' : (isParent1 ? 'Female' : 'Male'));
+            let speciesName = isMainLine ? targetName : (eggGroupsStr ? `Any (${eggGroupsStr})` : 'Any (Egg Group)');
             
-            // Determine Species Display Name
-            let speciesName = typeof node.species === 'object' ? (node.species?.name || targetName) : (node.species || targetName);
-            if (speciesName !== targetName && speciesName !== 'Larvitar') {
-                speciesName = `Any (${eggGroups})`;
-            } else if (depth > 0 && !isParent1) {
-                speciesName = `Any (${eggGroups})`;
+            let genderDisplay = 'Any Gender';
+            if (depth > 0) {
+                genderDisplay = isMainLine ? 'Female ♀' : 'Male ♂';
+            } else if (isMainLine) {
+                genderDisplay = 'Female ♀';
             }
 
-            const formattedIVs = Array.isArray(node.ivs) ? formatIVList(node.ivs) : (node.ivs || 'Any IVs');
-            const nature = node.nature || (natureInput.value.trim() ? natureInput.value.trim() : 'Any');
-            const item = detectHeldItem(node);
+            const formattedIVs = formatIVDisplay(node);
+            const nature = getNodeNature(node, natureInput.value.trim());
+            const item = getNodeItem(node);
 
             if (isLeaf) {
                 return {
                     type: 'leaf',
                     species: speciesName,
-                    gender: gender,
+                    gender: genderDisplay,
                     ivs: formattedIVs,
                     nature: nature,
                     item: item,
@@ -192,7 +266,7 @@ const app = createApp({
             return {
                 type: 'breed',
                 species: speciesName,
-                gender: gender,
+                gender: genderDisplay,
                 ivs: formattedIVs,
                 nature: nature,
                 held_item: item,
@@ -202,29 +276,25 @@ const app = createApp({
             };
         };
 
-        const extractShoppingList = (node, targetSpeciesObj, isParent1 = true, depth = 0) => {
+        const extractShoppingList = (node, targetSpeciesObj, isMainLine = true, depth = 0) => {
             if (!node) return [];
             const left = getLeft(node);
             const right = getRight(node);
             const isLeaf = node.is_leaf || node.isLeaf || (!left && !right);
 
             if (isLeaf) {
-                const targetName = targetSpeciesObj.name;
-                const eggGroups = targetSpeciesObj.egg_groups ? targetSpeciesObj.egg_groups.join(' / ') : 'Egg Group';
-                
-                let speciesName = targetName;
-                if (!isParent1 || depth > 0) {
-                    speciesName = `Any (${eggGroups})`;
-                }
+                const targetName = targetSpeciesObj.name || 'Target';
+                const eggGroupsStr = getEggGroupsStr(targetSpeciesObj);
 
-                const gender = node.gender || (isParent1 ? 'Female ♀' : 'Male ♂');
-                const formattedIVs = Array.isArray(node.ivs) ? formatIVList(node.ivs) : (node.ivs || 'Any IVs');
-                const nature = node.nature || (natureInput.value.trim() ? natureInput.value.trim() : 'Any');
-                const item = detectHeldItem(node);
+                const speciesName = isMainLine ? targetName : (eggGroupsStr ? `Any (${eggGroupsStr})` : 'Any (Egg Group)');
+                const genderDisplay = isMainLine ? 'Female ♀' : 'Male ♂';
+                const formattedIVs = formatIVDisplay(node);
+                const nature = getNodeNature(node, natureInput.value.trim());
+                const item = getNodeItem(node);
 
                 return [{
                     species: speciesName,
-                    gender: gender,
+                    gender: genderDisplay,
                     ivs: formattedIVs,
                     nature: nature,
                     item: item
@@ -272,11 +342,6 @@ const app = createApp({
                 const fodder = db.pickFodder(targetSpecies);
                 assignSpecies(root, hatch, fodder);
 
-                // Set designated nature on root tree nodes if nature was requested
-                if (natureName) {
-                    root.nature = natureName;
-                }
-
                 const costs = costReport(root);
                 const rawPlan = renderPlan(root, hatch.name, natureName, costs.gender_costs, fodder.name);
 
@@ -285,19 +350,21 @@ const app = createApp({
                 const rawLeaves = extractShoppingList(root, targetSpecies);
                 shoppingList.value = groupShoppingList(rawLeaves);
 
+                const eggGroupsStr = getEggGroupsStr(targetSpecies);
+
                 steps.value = rawPlan.map((s, idx) => {
                     return {
                         step: idx + 1,
                         done: false,
                         parent_1: `${hatch.name} (Female ♀)`,
-                        parent_1_ivs: s.parent1_ivs ? formatIVList(s.parent1_ivs) : '31 IV',
+                        parent_1_ivs: s.parent1_ivs ? (Array.isArray(s.parent1_ivs) ? s.parent1_ivs.map(i => `31 ${String(i).toUpperCase()}`).join(' / ') : s.parent1_ivs) : '31 IV',
                         parent_1_src: s.parent1_src || 'Catch/Buy',
                         item_p1: s.item_p1 || s.item_parent1 || 'None',
-                        parent_2: `Any (${targetSpecies.egg_groups ? targetSpecies.egg_groups.join(' / ') : 'Egg Group'}) (Male ♂)`,
-                        parent_2_ivs: s.parent2_ivs ? formatIVList(s.parent2_ivs) : '31 IV',
+                        parent_2: `Any (${eggGroupsStr || 'Egg Group'}) (Male ♂)`,
+                        parent_2_ivs: s.parent2_ivs ? (Array.isArray(s.parent2_ivs) ? s.parent2_ivs.map(i => `31 ${String(i).toUpperCase()}`).join(' / ') : s.parent2_ivs) : '31 IV',
                         parent_2_src: s.parent2_src || 'Catch/Buy',
                         item_p2: s.item_p2 || s.item_parent2 || 'None',
-                        child_ivs: s.child_ivs ? formatIVList(s.child_ivs) : 'Any IVs',
+                        child_ivs: s.child_ivs ? (Array.isArray(s.child_ivs) ? s.child_ivs.map(i => `31 ${String(i).toUpperCase()}`).join(' / ') : s.child_ivs) : 'Any IVs',
                         child_nature: natureName || s.child_nature || 'Any',
                         child_gender: idx === rawPlan.length - 1 ? 'Female ♀ or Male ♂' : 'Female ♀',
                         gender_cost: s.gender_cost || s.gender_lock_cost || 0

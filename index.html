@@ -104,7 +104,7 @@
                 <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300 flex justify-between">
                     <div>
                         → Child IVs: <span class="font-mono text-emerald-400 font-bold">{{ s.child_ivs }}</span>
-                        · Nature: <strong class="text-amber-300">{{ s.child_nature }}</strong>
+                        · Nature: <strong :class="s.child_nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ s.child_nature }}</strong>
                     </div>
                     <div class="font-semibold text-pink-300">{{ s.child_gender }} {{ fmtCost(s.gender_cost) }}</div>
                 </div>
@@ -138,7 +138,7 @@
                                 {{ item.gender }}
                             </td>
                             <td class="p-3 font-mono text-emerald-400 font-bold whitespace-nowrap">{{ item.ivs }}</td>
-                            <td class="p-3 font-medium text-amber-300">{{ item.nature }}</td>
+                            <td class="p-3 font-medium" :class="item.nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ item.nature }}</td>
                             <td class="p-3 text-purple-300 font-medium whitespace-nowrap">{{ item.item }}</td>
                         </tr>
                     </tbody>
