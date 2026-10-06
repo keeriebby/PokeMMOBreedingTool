@@ -1,16 +1,9 @@
-import { buildTree, costReport, SpeciesDB, assignSpecies, renderPlan } from './breeding.js';
+import {
+  buildTree, costReport, PricingConfig, SpeciesDB, assignSpecies, speciesWarnings,
+  serializeTree, buildShoppingList, renderPlan, IV_STATS,
+} from './breeding.js';
 
 const { createApp, ref, watch, nextTick, onMounted } = Vue;
-
-const STAT_KEYS = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
-const POWER_ITEM_MAP = {
-    'hp': 'Power Weight (HP)',
-    'atk': 'Power Bracer (Atk)',
-    'def': 'Power Belt (Def)',
-    'spa': 'Power Lens (SpA)',
-    'spd': 'Power Band (SpD)',
-    'spe': 'Power Anklet (Spe)'
-};
 
 const TreeNode = {
     name: 'TreeNode',
@@ -35,7 +28,7 @@ const TreeNode = {
                     <div class="text-xs text-gray-300 mb-2 flex justify-between">
                         <span>Nature: <strong :class="node.nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ node.nature }}</strong></span>
                     </div>
-                    <div v-if="node.held_item && node.held_item !== 'None'" class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium mb-2">
+                    <div v-if="node.held_item" class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium mb-2">
                         Holds: {{ node.held_item }}
                     </div>
                     <div v-else class="bg-emerald-900/30 border border-emerald-500/30 rounded p-1 text-center text-xs text-emerald-300 font-medium mb-2">
@@ -88,14 +81,13 @@ const app = createApp({
         const dbLoaded = ref(false);
         const view = ref(window.innerWidth < 768 ? 'steps' : 'tree');
         const orientation = ref('horizontal');
-        
+
         const speciesInput = ref('');
         const ivsInput = ref('');
         const natureInput = ref('');
-        
         const powerCost = ref(10000);
         const everstoneCost = ref(5000);
-        
+
         const warnings = ref([]);
         const treeData = ref(null);
         const steps = ref([]);
@@ -110,316 +102,71 @@ const app = createApp({
         onMounted(async () => {
             try {
                 const response = await fetch('species_db.json');
-                if (!response.ok) throw new Error(`HTTP ${response.status}: Could not load species_db.json`);
-                const data = await response.json();
-                db = new SpeciesDB(data);
+                if (!response.ok) throw new Error(`HTTP ${response.status}: could not load species_db.json`);
+                db = new SpeciesDB(await response.json());
                 dbLoaded.value = true;
             } catch (err) {
-                warnings.value = [`Database Error: ${err.message}`];
+                warnings.value = [`Database error: ${err.message} (open the site through a web server, not by double-clicking the file)`];
             }
         });
 
-        const getLeft = (n) => n ? (n.left || n.parent1 || n.parent_1 || n.p1 || (n.children && n.children[0]) || null) : null;
-        const getRight = (n) => n ? (n.right || n.parent2 || n.parent_2 || n.p2 || (n.children && n.children[1]) || null) : null;
-
-        const getEggGroupsStr = (spObj) => {
-            if (!spObj) return '';
-            const raw = spObj.egg_groups || spObj.egg_group || spObj.groups || spObj.eggGroups || spObj.eggGroup;
-            if (Array.isArray(raw)) return raw.join(' / ');
-            if (typeof raw === 'string') return raw;
-            return '';
-        };
-
-        const getActiveIVSet = (node) => {
-            const active = new Set();
-            if (!node) return active;
-
-            const candidates = [
-                node.ivs, node.stats, node.iv_set, node.passed_ivs, node.passed_stats,
-                node.iv_list, node.iv, node.stat, node.passed_stat
-            ];
-
-            for (const raw of candidates) {
-                if (!raw) continue;
-                if (raw instanceof Set) {
-                    raw.forEach(v => {
-                        const s = String(v).toLowerCase();
-                        if (STAT_KEYS.includes(s)) active.add(s);
-                    });
-                } else if (Array.isArray(raw)) {
-                    raw.forEach(v => {
-                        const s = String(v).toLowerCase();
-                        if (STAT_KEYS.includes(s)) active.add(s);
-                    });
-                } else if (typeof raw === 'object') {
-                    for (const [k, v] of Object.entries(raw)) {
-                        const keyLower = k.toLowerCase();
-                        if (STAT_KEYS.includes(keyLower) && (v === 31 || v === true || v === '31' || v === 'V' || v === 'v')) {
-                            active.add(keyLower);
-                        }
-                    }
-                } else if (typeof raw === 'string') {
-                    const parts = raw.split(/[\/\,\s]+/).map(p => p.trim().toLowerCase());
-                    parts.forEach((p, idx) => {
-                        if (STAT_KEYS.includes(p)) {
-                            active.add(p);
-                        } else if (parts.length === 6 && (p === '31' || p === 'v')) {
-                            active.add(STAT_KEYS[idx]);
-                        }
-                    });
-                }
-            }
-
-            STAT_KEYS.forEach(k => {
-                if (node[k] === 31 || node[k] === true || node[k] === '31') {
-                    active.add(k);
-                }
-            });
-
-            return active;
-        };
-
-        const format6IVStringFromRaw = (raw) => {
-            const active = getActiveIVSet({ ivs: raw });
-            if (active.size === 0) return 'x/x/x/x/x/x';
-            return STAT_KEYS.map(k => active.has(k) ? '31' : 'x').join('/');
-        };
-
+        // "31/x/31/x/31/31" -> ['hp','def','spd','spe']. Anything other than 31 means "don't care".
         const parseIVs = (str) => {
-            if (!str || !str.trim()) return ['hp', 'atk', 'def', 'spd', 'spe'];
-            const parts = str.split('/').map(p => p.trim().toLowerCase());
-            if (parts.length === 6) {
-                return STAT_KEYS.filter((_, idx) => parts[idx] === '31');
-            }
-            return STAT_KEYS.filter(k => str.toLowerCase().includes(k));
+            const parts = str.split('/').map((p) => p.trim().toLowerCase());
+            if (parts.length !== 6) throw new Error("IVs need 6 slots separated by '/', e.g. 31/x/31/x/31/31");
+            return IV_STATS.filter((_, i) => parts[i] === '31');
         };
 
-        const deriveNodeItemAndNature = (node, userNature) => {
-            if (!node) return { item: 'None', nature: 'Any' };
-
-            let item = 'None';
-            let nature = 'Any';
-
-            const explicitItem = node.item || node.held_item || node.hold || node.power_item || node.assigned_item;
-            if (typeof explicitItem === 'string' && explicitItem.trim() && explicitItem !== 'None' && explicitItem !== 'null') {
-                item = explicitItem;
-            }
-
-            const isNatureNode = node.is_nature || node.has_nature || node.nature_source || node.is_nature_source || node.everstone || (typeof node.nature === 'string' && node.nature !== 'Any' && node.nature !== 'false' && node.nature.trim().length > 0);
-            if (isNatureNode && userNature) {
-                nature = userNature;
-            } else if (typeof node.nature === 'string' && node.nature && node.nature !== 'Any' && node.nature !== 'false') {
-                nature = node.nature;
-            }
-
-            if (item === 'None') {
-                const myIVs = getActiveIVSet(node);
-                const passedStat = node.passed_stat || node.stat || node.passed_iv;
-                
-                if (passedStat && typeof passedStat === 'string' && POWER_ITEM_MAP[passedStat.toLowerCase()]) {
-                    item = POWER_ITEM_MAP[passedStat.toLowerCase()];
-                } else if (myIVs.size === 1) {
-                    const stat = Array.from(myIVs)[0];
-                    if (POWER_ITEM_MAP[stat]) item = POWER_ITEM_MAP[stat];
-                }
-
-                if (item === 'None' && nature !== 'Any' && userNature) {
-                    item = 'Everstone';
-                }
-            }
-
-            return { item, nature };
-        };
-
-        const formatTreeNode = (node, targetSpeciesObj, isTargetLine = true, depth = 0) => {
-            if (!node) return null;
-
-            const left = getLeft(node);
-            const right = getRight(node);
-            const isLeaf = node.is_leaf || node.isLeaf || (!left && !right);
-
-            const targetName = targetSpeciesObj.name || 'Target';
-            const eggGroupsStr = getEggGroupsStr(targetSpeciesObj);
-
-            const speciesName = isTargetLine ? targetName : (eggGroupsStr ? `Any (${eggGroupsStr})` : 'Any (Egg Group)');
-            
-            let genderDisplay = 'Any Gender';
-            if (depth > 0) {
-                genderDisplay = isTargetLine ? 'Female ♀' : 'Male ♂';
-            } else if (isTargetLine) {
-                genderDisplay = 'Female ♀';
-            }
-
-            const formattedIVs = format6IVStringFromRaw(node);
-            const userNature = natureInput.value.trim();
-            const { item, nature } = deriveNodeItemAndNature(node, userNature);
-
-            if (isLeaf) {
-                return {
-                    type: 'leaf',
-                    species: speciesName,
-                    gender: genderDisplay,
-                    ivs: formattedIVs,
-                    nature: nature,
-                    item: item,
-                    bought: false
-                };
-            }
-
-            const parent1Formatted = formatTreeNode(left, targetSpeciesObj, isTargetLine, depth + 1);
-            const parent2Formatted = formatTreeNode(right, targetSpeciesObj, false, depth + 1);
-
-            if (parent1Formatted && parent2Formatted) {
-                const p1IVs = getActiveIVSet(left);
-                const p2IVs = getActiveIVSet(right);
-                const childIVs = getActiveIVSet(node);
-
-                if (parent1Formatted.item === 'None') {
-                    for (const s of childIVs) {
-                        if (p1IVs.has(s) && !p2IVs.has(s)) {
-                            parent1Formatted.item = POWER_ITEM_MAP[s] || 'None';
-                            break;
-                        }
-                    }
-                }
-
-                if (parent2Formatted.item === 'None') {
-                    for (const s of childIVs) {
-                        if (p2IVs.has(s) && !p1IVs.has(s)) {
-                            parent2Formatted.item = POWER_ITEM_MAP[s] || 'None';
-                            break;
-                        }
-                    }
-                }
-
-                if (userNature) {
-                    if (parent1Formatted.nature === userNature && parent1Formatted.item === 'None') {
-                        parent1Formatted.item = 'Everstone';
-                    } else if (parent2Formatted.nature === userNature && parent2Formatted.item === 'None') {
-                        parent2Formatted.item = 'Everstone';
-                    }
-                }
-            }
-
-            return {
-                type: 'breed',
-                species: speciesName,
-                gender: genderDisplay,
-                ivs: formattedIVs,
-                nature: nature,
-                held_item: item,
-                bred: false,
-                parent1: parent1Formatted,
-                parent2: parent2Formatted
-            };
-        };
-
-        const extractShoppingList = (formattedNode) => {
-            if (!formattedNode) return [];
-
-            if (formattedNode.type === 'leaf') {
-                return [{
-                    species: formattedNode.species,
-                    gender: formattedNode.gender,
-                    ivs: formattedNode.ivs,
-                    nature: formattedNode.nature,
-                    item: formattedNode.item
-                }];
-            }
-
-            return [
-                ...extractShoppingList(formattedNode.parent1),
-                ...extractShoppingList(formattedNode.parent2)
-            ];
-        };
-
-        const groupShoppingList = (items) => {
-            const map = new Map();
-            items.forEach(item => {
-                const key = `${item.species}|${item.gender}|${item.ivs}|${item.nature}|${item.item}`;
-                if (!map.has(key)) {
-                    map.set(key, { ...item, count: 1 });
-                } else {
-                    map.get(key).count++;
-                }
-            });
-            return Array.from(map.values());
-        };
+        const price = (v, fallback) => (v === '' || v === null || Number.isNaN(Number(v)) ? fallback : Number(v));
 
         const generatePlan = async () => {
             if (!db) return;
-            
             const targetName = speciesInput.value.trim();
-            if (!targetName) {
-                warnings.value = ["Please enter a species name (e.g., Larvitar)."];
-                return;
-            }
+            if (!targetName) { warnings.value = ["Please enter a species name (e.g. Larvitar)."]; return; }
 
             loading.value = true;
             warnings.value = [];
-
             try {
-                const targetSpecies = db.find(targetName);
-                const requestedIVs = parseIVs(ivsInput.value);
-                const wantNature = !!natureInput.value.trim();
-                const natureName = wantNature ? natureInput.value.trim() : null;
+                const target = db.find(targetName);
+                if (!target.canBreed) throw new Error(`${target.name} is in the Undiscovered egg group and can't be bred.`);
 
-                const root = buildTree(requestedIVs, wantNature);
-                const hatch = db.hatchSpecies(targetSpecies);
-                const fodder = db.pickFodder(targetSpecies);
+                const natureName = natureInput.value.trim() || null;
+                const root = buildTree(parseIVs(ivsInput.value), natureName !== null);
+                const hatch = db.hatchSpecies(target);
+                const fodder = db.pickFodder(target);
                 assignSpecies(root, hatch, fodder);
 
-                const costs = costReport(root);
-                const rawPlan = renderPlan(root, hatch.name, natureName, costs.gender_costs, fodder.name);
-
-                treeData.value = formatTreeNode(root, targetSpecies);
-                
-                const rawLeaves = extractShoppingList(treeData.value);
-                shoppingList.value = groupShoppingList(rawLeaves);
-
-                const eggGroupsStr = getEggGroupsStr(targetSpecies);
-
-                steps.value = rawPlan.map((s, idx) => {
-                    return {
-                        step: idx + 1,
-                        done: false,
-                        parent_1: `${hatch.name} (Female ♀)`,
-                        parent_1_ivs: format6IVStringFromRaw(s.parent1_ivs),
-                        parent_1_src: s.parent1_src || 'Catch/Buy',
-                        item_p1: s.item_p1 || s.item_parent1 || 'None',
-                        parent_2: `Any (${eggGroupsStr || 'Egg Group'}) (Male ♂)`,
-                        parent_2_ivs: format6IVStringFromRaw(s.parent2_ivs),
-                        parent_2_src: s.parent2_src || 'Catch/Buy',
-                        item_p2: s.item_p2 || s.item_parent2 || 'None',
-                        child_ivs: format6IVStringFromRaw(s.child_ivs),
-                        child_nature: natureName || s.child_nature || 'Any',
-                        child_gender: idx === rawPlan.length - 1 ? 'Female ♀ or Male ♂' : 'Female ♀',
-                        gender_cost: s.gender_cost || s.gender_lock_cost || 0
-                    };
-                });
-
-                const powerCount = costs.power_items_count || 0;
-                const everCount = costs.everstones_count || 0;
-                const pCostTotal = powerCount * (powerCost.value || 0);
-                const eCostTotal = everCount * (everstoneCost.value || 0);
-                const totalCalculatedCost = pCostTotal + eCostTotal + (costs.gender_lock_cost || 0);
-
-                costBreakdown.value = {
-                    item_counts: {
-                        "Power Items": powerCount,
-                        "Everstones": everCount
-                    },
-                    power_items_count: powerCount,
-                    power_unit: powerCost.value || 0,
-                    power_cost: pCostTotal,
-                    everstones_count: everCount,
-                    everstone_unit: everstoneCost.value || 0,
-                    everstone_cost: eCostTotal,
-                    gender_lock_cost: costs.gender_lock_cost || 0,
-                    total_cost: totalCalculatedCost
+                const costs = costReport(root, new PricingConfig(price(powerCost.value, 10000), price(everstoneCost.value, 5000)));
+                const ctx = {
+                    targetName: target.name,
+                    fodderLabel: `Any (${target.eggGroups.join(' / ')})`,
+                    natureName,
                 };
 
+                treeData.value = serializeTree(root, ctx);
+                shoppingList.value = buildShoppingList(root, ctx);
+                steps.value = renderPlan(root, ctx, costs.gender_costs).map((s) => ({ ...s, done: false }));
+
+                costBreakdown.value = {
+                    item_counts: costs.item_counts,
+                    power_items_count: costs.power_items_count,
+                    power_unit: price(powerCost.value, 10000),
+                    power_cost: costs.power_items_cost,
+                    everstones_count: costs.everstones_count,
+                    everstone_unit: price(everstoneCost.value, 5000),
+                    everstone_cost: costs.everstones_cost,
+                    gender_lock_cost: costs.gender_lock_cost,
+                    total_cost: costs.grand_total,
+                };
+
+                const w = speciesWarnings(target, hatch, fodder);
+                if (costs.impossible.length) w.push(`${costs.impossible.length} breed(s) need a gender this species can't produce.`);
+                warnings.value = w;
             } catch (err) {
+                treeData.value = null;
+                shoppingList.value = [];
+                steps.value = [];
+                costBreakdown.value = null;
                 warnings.value = [err.message || "Failed to generate plan."];
             } finally {
                 loading.value = false;
@@ -437,7 +184,6 @@ const app = createApp({
             const s = Math.min((c.clientWidth - 16) / t.scrollWidth, (c.clientHeight - 16) / t.scrollHeight);
             scale.value = Math.max(0.25, Math.min(1, s));
         };
-
         const zoomBy = (d) => { scale.value = Math.max(0.25, Math.min(1.5, +(scale.value + d).toFixed(2))); };
 
         let drag = null;
@@ -454,14 +200,14 @@ const app = createApp({
         };
         const onUp = () => { drag = null; if (canvas.value) canvas.value.classList.remove('grabbing'); };
 
-        const fmtCost = (c) => c === null ? '(IMPOSSIBLE)' : (c ? `($${c.toLocaleString()})` : '');
+        const fmtCost = (c) => (c === null ? '(IMPOSSIBLE)' : (c ? `($${c.toLocaleString()})` : ''));
 
         watch([orientation, view], async () => { await nextTick(); fit(); });
 
         return {
             dbLoaded, view, orientation, speciesInput, ivsInput, natureInput, powerCost, everstoneCost,
             warnings, treeData, steps, shoppingList, costBreakdown, loading, generatePlan,
-            scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost
+            scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost,
         };
     }
 });
