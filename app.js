@@ -2,13 +2,14 @@ import { buildTree, costReport, SpeciesDB, assignSpecies, renderPlan } from './b
 
 const { createApp, ref, watch, nextTick, onMounted } = Vue;
 
+const STAT_KEYS = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
 const POWER_ITEM_MAP = {
-    'HP': 'Power Weight (HP)',
-    'ATK': 'Power Bracer (Atk)',
-    'DEF': 'Power Belt (Def)',
-    'SPA': 'Power Lens (SpA)',
-    'SPD': 'Power Band (SpD)',
-    'SPE': 'Power Anklet (Spe)'
+    'hp': 'Power Weight (HP)',
+    'atk': 'Power Bracer (Atk)',
+    'def': 'Power Belt (Def)',
+    'spa': 'Power Lens (SpA)',
+    'spd': 'Power Band (SpD)',
+    'spe': 'Power Anklet (Spe)'
 };
 
 const TreeNode = {
@@ -28,7 +29,7 @@ const TreeNode = {
                         </span>
                         <span class="text-[10px] bg-gray-900 text-gray-400 px-1.5 py-0.5 rounded shrink-0">Bred</span>
                     </div>
-                    <div class="bg-gray-900 rounded p-1.5 text-center font-mono text-xs font-bold text-emerald-400 mb-2 border border-gray-800">
+                    <div class="bg-gray-900 rounded p-1.5 text-center font-mono text-xs font-bold text-emerald-400 mb-2 border border-gray-800 tracking-wider">
                         {{ node.ivs }}
                     </div>
                     <div class="text-xs text-gray-300 mb-2 flex justify-between">
@@ -55,7 +56,7 @@ const TreeNode = {
                         </span>
                     </div>
                     <div class="font-bold text-sm text-amber-200 mb-1 truncate" :title="node.species">{{ node.species }}</div>
-                    <div class="bg-gray-900 rounded p-1.5 text-center font-mono text-xs font-bold text-emerald-400 mb-2 border border-gray-800">
+                    <div class="bg-gray-900 rounded p-1.5 text-center font-mono text-xs font-bold text-emerald-400 mb-2 border border-gray-800 tracking-wider">
                         {{ node.ivs }}
                     </div>
                     <div class="text-xs text-gray-300 mb-2">
@@ -129,106 +130,108 @@ const app = createApp({
             return '';
         };
 
+        const getActiveIVSet = (node) => {
+            const active = new Set();
+            if (!node) return active;
+
+            const candidates = [
+                node.ivs, node.stats, node.iv_set, node.passed_ivs, node.passed_stats,
+                node.iv_list, node.iv, node.stat, node.passed_stat
+            ];
+
+            for (const raw of candidates) {
+                if (!raw) continue;
+                if (raw instanceof Set) {
+                    raw.forEach(v => {
+                        const s = String(v).toLowerCase();
+                        if (STAT_KEYS.includes(s)) active.add(s);
+                    });
+                } else if (Array.isArray(raw)) {
+                    raw.forEach(v => {
+                        const s = String(v).toLowerCase();
+                        if (STAT_KEYS.includes(s)) active.add(s);
+                    });
+                } else if (typeof raw === 'object') {
+                    for (const [k, v] of Object.entries(raw)) {
+                        const keyLower = k.toLowerCase();
+                        if (STAT_KEYS.includes(keyLower) && (v === 31 || v === true || v === '31' || v === 'V' || v === 'v')) {
+                            active.add(keyLower);
+                        }
+                    }
+                } else if (typeof raw === 'string') {
+                    const parts = raw.split(/[\/\,\s]+/).map(p => p.trim().toLowerCase());
+                    parts.forEach((p, idx) => {
+                        if (STAT_KEYS.includes(p)) {
+                            active.add(p);
+                        } else if (parts.length === 6 && (p === '31' || p === 'v')) {
+                            active.add(STAT_KEYS[idx]);
+                        }
+                    });
+                }
+            }
+
+            STAT_KEYS.forEach(k => {
+                if (node[k] === 31 || node[k] === true || node[k] === '31') {
+                    active.add(k);
+                }
+            });
+
+            return active;
+        };
+
+        const format6IVStringFromRaw = (raw) => {
+            const active = getActiveIVSet({ ivs: raw });
+            if (active.size === 0) return 'x/x/x/x/x/x';
+            return STAT_KEYS.map(k => active.has(k) ? '31' : 'x').join('/');
+        };
+
         const parseIVs = (str) => {
             if (!str || !str.trim()) return ['hp', 'atk', 'def', 'spd', 'spe'];
             const parts = str.split('/').map(p => p.trim().toLowerCase());
-            const ivKeys = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
             if (parts.length === 6) {
-                return ivKeys.filter((_, idx) => parts[idx] === '31');
+                return STAT_KEYS.filter((_, idx) => parts[idx] === '31');
             }
-            return ivKeys.filter(k => str.toLowerCase().includes(k));
+            return STAT_KEYS.filter(k => str.toLowerCase().includes(k));
         };
 
-        const extractIVs = (node) => {
-            if (!node) return [];
-            let raw = node.ivs || node.stats || node.iv_set || node.passed_ivs || node.iv_list || node.iv;
-            
-            if (raw instanceof Set) {
-                raw = Array.from(raw);
+        const deriveNodeItemAndNature = (node, userNature) => {
+            if (!node) return { item: 'None', nature: 'Any' };
+
+            let item = 'None';
+            let nature = 'Any';
+
+            const explicitItem = node.item || node.held_item || node.hold || node.power_item || node.assigned_item;
+            if (typeof explicitItem === 'string' && explicitItem.trim() && explicitItem !== 'None' && explicitItem !== 'null') {
+                item = explicitItem;
             }
-            
-            if (Array.isArray(raw)) {
-                return raw.map(s => String(s).toUpperCase());
+
+            const isNatureNode = node.is_nature || node.has_nature || node.nature_source || node.is_nature_source || node.everstone || (typeof node.nature === 'string' && node.nature !== 'Any' && node.nature !== 'false' && node.nature.trim().length > 0);
+            if (isNatureNode && userNature) {
+                nature = userNature;
+            } else if (typeof node.nature === 'string' && node.nature && node.nature !== 'Any' && node.nature !== 'false') {
+                nature = node.nature;
             }
-            
-            if (raw && typeof raw === 'object') {
-                const stats = [];
-                const validStats = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
-                for (const k of Object.keys(raw)) {
-                    if (validStats.includes(k.toLowerCase()) && raw[k]) {
-                        stats.push(k.toUpperCase());
-                    }
+
+            if (item === 'None') {
+                const myIVs = getActiveIVSet(node);
+                const passedStat = node.passed_stat || node.stat || node.passed_iv;
+                
+                if (passedStat && typeof passedStat === 'string' && POWER_ITEM_MAP[passedStat.toLowerCase()]) {
+                    item = POWER_ITEM_MAP[passedStat.toLowerCase()];
+                } else if (myIVs.size === 1) {
+                    const stat = Array.from(myIVs)[0];
+                    if (POWER_ITEM_MAP[stat]) item = POWER_ITEM_MAP[stat];
                 }
-                if (stats.length > 0) return stats;
-            }
-            
-            if (typeof raw === 'string' && raw.trim()) {
-                if (raw.includes('/')) {
-                    const parts = raw.split('/').map(p => p.trim());
-                    const statKeys = ['HP', 'ATK', 'DEF', 'SPA', 'SPD', 'SPE'];
-                    if (parts.length === 6) {
-                        const result = [];
-                        parts.forEach((val, idx) => {
-                            if (val === '31' || val.toLowerCase() === 'v') result.push(statKeys[idx]);
-                        });
-                        if (result.length > 0) return result;
-                    }
-                    return parts.filter(p => p.toLowerCase() !== 'x' && p.toLowerCase() !== 'any').map(p => p.toUpperCase());
-                }
-                if (raw.toLowerCase() !== 'any') {
-                    return [raw.toUpperCase()];
+
+                if (item === 'None' && nature !== 'Any' && userNature) {
+                    item = 'Everstone';
                 }
             }
-            
-            return [];
+
+            return { item, nature };
         };
 
-        const formatIVDisplay = (node) => {
-            const ivList = extractIVs(node);
-            if (ivList.length === 0) return 'Any IVs';
-            return ivList.map(stat => `31 ${stat}`).join(' / ');
-        };
-
-        const getNodeItem = (node) => {
-            if (!node) return 'None';
-
-            const explicit = node.item || node.held_item || node.hold || node.power_item;
-            if (typeof explicit === 'string' && explicit.trim() && explicit !== 'None') {
-                return explicit;
-            }
-
-            if (node.nature === true || node.is_nature || node.has_nature || node.nature_source || node.is_nature_source) {
-                return 'Everstone';
-            }
-
-            const ivs = extractIVs(node);
-            if (ivs.length === 1 && POWER_ITEM_MAP[ivs[0]]) {
-                return POWER_ITEM_MAP[ivs[0]];
-            }
-
-            return 'None';
-        };
-
-        const getNodeNature = (node, userNature) => {
-            if (!userNature) return 'Any';
-
-            if (typeof node.nature === 'string' && node.nature.trim() && node.nature !== 'Any' && node.nature !== 'false') {
-                return node.nature;
-            }
-
-            if (node.nature === true || node.is_nature || node.has_nature || node.nature_source || node.is_nature_source) {
-                return userNature;
-            }
-
-            const item = getNodeItem(node);
-            if (item === 'Everstone') {
-                return userNature;
-            }
-
-            return 'Any';
-        };
-
-        const formatTreeNode = (node, targetSpeciesObj, isMainLine = true, depth = 0) => {
+        const formatTreeNode = (node, targetSpeciesObj, isTargetLine = true, depth = 0) => {
             if (!node) return null;
 
             const left = getLeft(node);
@@ -238,18 +241,18 @@ const app = createApp({
             const targetName = targetSpeciesObj.name || 'Target';
             const eggGroupsStr = getEggGroupsStr(targetSpeciesObj);
 
-            let speciesName = isMainLine ? targetName : (eggGroupsStr ? `Any (${eggGroupsStr})` : 'Any (Egg Group)');
+            const speciesName = isTargetLine ? targetName : (eggGroupsStr ? `Any (${eggGroupsStr})` : 'Any (Egg Group)');
             
             let genderDisplay = 'Any Gender';
             if (depth > 0) {
-                genderDisplay = isMainLine ? 'Female ♀' : 'Male ♂';
-            } else if (isMainLine) {
+                genderDisplay = isTargetLine ? 'Female ♀' : 'Male ♂';
+            } else if (isTargetLine) {
                 genderDisplay = 'Female ♀';
             }
 
-            const formattedIVs = formatIVDisplay(node);
-            const nature = getNodeNature(node, natureInput.value.trim());
-            const item = getNodeItem(node);
+            const formattedIVs = format6IVStringFromRaw(node);
+            const userNature = natureInput.value.trim();
+            const { item, nature } = deriveNodeItemAndNature(node, userNature);
 
             if (isLeaf) {
                 return {
@@ -263,6 +266,41 @@ const app = createApp({
                 };
             }
 
+            const parent1Formatted = formatTreeNode(left, targetSpeciesObj, isTargetLine, depth + 1);
+            const parent2Formatted = formatTreeNode(right, targetSpeciesObj, false, depth + 1);
+
+            if (parent1Formatted && parent2Formatted) {
+                const p1IVs = getActiveIVSet(left);
+                const p2IVs = getActiveIVSet(right);
+                const childIVs = getActiveIVSet(node);
+
+                if (parent1Formatted.item === 'None') {
+                    for (const s of childIVs) {
+                        if (p1IVs.has(s) && !p2IVs.has(s)) {
+                            parent1Formatted.item = POWER_ITEM_MAP[s] || 'None';
+                            break;
+                        }
+                    }
+                }
+
+                if (parent2Formatted.item === 'None') {
+                    for (const s of childIVs) {
+                        if (p2IVs.has(s) && !p1IVs.has(s)) {
+                            parent2Formatted.item = POWER_ITEM_MAP[s] || 'None';
+                            break;
+                        }
+                    }
+                }
+
+                if (userNature) {
+                    if (parent1Formatted.nature === userNature && parent1Formatted.item === 'None') {
+                        parent1Formatted.item = 'Everstone';
+                    } else if (parent2Formatted.nature === userNature && parent2Formatted.item === 'None') {
+                        parent2Formatted.item = 'Everstone';
+                    }
+                }
+            }
+
             return {
                 type: 'breed',
                 species: speciesName,
@@ -271,38 +309,27 @@ const app = createApp({
                 nature: nature,
                 held_item: item,
                 bred: false,
-                parent1: formatTreeNode(left, targetSpeciesObj, true, depth + 1),
-                parent2: formatTreeNode(right, targetSpeciesObj, false, depth + 1)
+                parent1: parent1Formatted,
+                parent2: parent2Formatted
             };
         };
 
-        const extractShoppingList = (node, targetSpeciesObj, isMainLine = true, depth = 0) => {
-            if (!node) return [];
-            const left = getLeft(node);
-            const right = getRight(node);
-            const isLeaf = node.is_leaf || node.isLeaf || (!left && !right);
+        const extractShoppingList = (formattedNode) => {
+            if (!formattedNode) return [];
 
-            if (isLeaf) {
-                const targetName = targetSpeciesObj.name || 'Target';
-                const eggGroupsStr = getEggGroupsStr(targetSpeciesObj);
-
-                const speciesName = isMainLine ? targetName : (eggGroupsStr ? `Any (${eggGroupsStr})` : 'Any (Egg Group)');
-                const genderDisplay = isMainLine ? 'Female ♀' : 'Male ♂';
-                const formattedIVs = formatIVDisplay(node);
-                const nature = getNodeNature(node, natureInput.value.trim());
-                const item = getNodeItem(node);
-
+            if (formattedNode.type === 'leaf') {
                 return [{
-                    species: speciesName,
-                    gender: genderDisplay,
-                    ivs: formattedIVs,
-                    nature: nature,
-                    item: item
+                    species: formattedNode.species,
+                    gender: formattedNode.gender,
+                    ivs: formattedNode.ivs,
+                    nature: formattedNode.nature,
+                    item: formattedNode.item
                 }];
             }
+
             return [
-                ...extractShoppingList(left, targetSpeciesObj, true, depth + 1),
-                ...extractShoppingList(right, targetSpeciesObj, false, depth + 1)
+                ...extractShoppingList(formattedNode.parent1),
+                ...extractShoppingList(formattedNode.parent2)
             ];
         };
 
@@ -347,7 +374,7 @@ const app = createApp({
 
                 treeData.value = formatTreeNode(root, targetSpecies);
                 
-                const rawLeaves = extractShoppingList(root, targetSpecies);
+                const rawLeaves = extractShoppingList(treeData.value);
                 shoppingList.value = groupShoppingList(rawLeaves);
 
                 const eggGroupsStr = getEggGroupsStr(targetSpecies);
@@ -357,14 +384,14 @@ const app = createApp({
                         step: idx + 1,
                         done: false,
                         parent_1: `${hatch.name} (Female ♀)`,
-                        parent_1_ivs: s.parent1_ivs ? (Array.isArray(s.parent1_ivs) ? s.parent1_ivs.map(i => `31 ${String(i).toUpperCase()}`).join(' / ') : s.parent1_ivs) : '31 IV',
+                        parent_1_ivs: format6IVStringFromRaw(s.parent1_ivs),
                         parent_1_src: s.parent1_src || 'Catch/Buy',
                         item_p1: s.item_p1 || s.item_parent1 || 'None',
                         parent_2: `Any (${eggGroupsStr || 'Egg Group'}) (Male ♂)`,
-                        parent_2_ivs: s.parent2_ivs ? (Array.isArray(s.parent2_ivs) ? s.parent2_ivs.map(i => `31 ${String(i).toUpperCase()}`).join(' / ') : s.parent2_ivs) : '31 IV',
+                        parent_2_ivs: format6IVStringFromRaw(s.parent2_ivs),
                         parent_2_src: s.parent2_src || 'Catch/Buy',
                         item_p2: s.item_p2 || s.item_parent2 || 'None',
-                        child_ivs: s.child_ivs ? (Array.isArray(s.child_ivs) ? s.child_ivs.map(i => `31 ${String(i).toUpperCase()}`).join(' / ') : s.child_ivs) : 'Any IVs',
+                        child_ivs: format6IVStringFromRaw(s.child_ivs),
                         child_nature: natureName || s.child_nature || 'Any',
                         child_gender: idx === rawPlan.length - 1 ? 'Female ♀ or Male ♂' : 'Female ♀',
                         gender_cost: s.gender_cost || s.gender_lock_cost || 0

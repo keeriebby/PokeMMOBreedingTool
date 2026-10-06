@@ -92,18 +92,18 @@
                 <div class="space-y-2">
                     <div class="bg-gray-900/60 rounded p-2 border border-gray-700/50">
                         <div class="font-semibold text-gray-200">{{ s.parent_1 }}</div>
-                        <div class="font-mono text-xs text-emerald-400">{{ s.parent_1_ivs }}</div>
+                        <div class="font-mono text-xs text-emerald-400 tracking-wider">{{ s.parent_1_ivs }}</div>
                         <div class="text-xs text-purple-300">Holds: {{ s.item_p1 }} · Source: {{ s.parent_1_src }}</div>
                     </div>
                     <div class="bg-gray-900/60 rounded p-2 border border-gray-700/50">
                         <div class="font-semibold text-gray-200">{{ s.parent_2 }}</div>
-                        <div class="font-mono text-xs text-emerald-400">{{ s.parent_2_ivs }}</div>
+                        <div class="font-mono text-xs text-emerald-400 tracking-wider">{{ s.parent_2_ivs }}</div>
                         <div class="text-xs text-purple-300">Holds: {{ s.item_p2 }} · Source: {{ s.parent_2_src }}</div>
                     </div>
                 </div>
                 <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300 flex justify-between">
                     <div>
-                        → Child IVs: <span class="font-mono text-emerald-400 font-bold">{{ s.child_ivs }}</span>
+                        → Child IVs: <span class="font-mono text-emerald-400 font-bold tracking-wider">{{ s.child_ivs }}</span>
                         · Nature: <strong :class="s.child_nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ s.child_nature }}</strong>
                     </div>
                     <div class="font-semibold text-pink-300">{{ s.child_gender }} {{ fmtCost(s.gender_cost) }}</div>
@@ -125,7 +125,7 @@
                             <th class="p-3">Qty</th>
                             <th class="p-3">Species / Group</th>
                             <th class="p-3">Gender</th>
-                            <th class="p-3">Required IVs</th>
+                            <th class="p-3">Required IVs (HP/ATK/DEF/SPA/SPD/SPE)</th>
                             <th class="p-3">Nature</th>
                             <th class="p-3">Held Item</th>
                         </tr>
@@ -137,7 +137,7 @@
                             <td class="p-3 font-bold" :class="item.gender.includes('Female') ? 'text-pink-400' : 'text-blue-400'">
                                 {{ item.gender }}
                             </td>
-                            <td class="p-3 font-mono text-emerald-400 font-bold whitespace-nowrap">{{ item.ivs }}</td>
+                            <td class="p-3 font-mono text-emerald-400 font-bold whitespace-nowrap tracking-wider">{{ item.ivs }}</td>
                             <td class="p-3 font-medium" :class="item.nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ item.nature }}</td>
                             <td class="p-3 text-purple-300 font-medium whitespace-nowrap">{{ item.item }}</td>
                         </tr>
