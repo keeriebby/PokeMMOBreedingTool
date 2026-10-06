@@ -32,14 +32,34 @@
                 <button @click="view = 'steps'" :class="view === 'steps' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Step List</button>
             </div>
         </div>
-        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
-            <input v-model="speciesInput" placeholder="e.g. Larvitar" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
-            <input v-model="ivsInput" placeholder="e.g. 31/x/31/31/31/31" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-48">
-            <input v-model="natureInput" placeholder="e.g. Adamant" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
-            <input v-model.number="powerCost" type="number" placeholder="10000" title="Power Item Price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
-            <input v-model.number="everstoneCost" type="number" placeholder="5000" title="Everstone Price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
-            <button @click="generatePlan" :disabled="!dbLoaded" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow disabled:opacity-50">Generate Plan</button>
-        </div>
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-end gap-2">
+    <label class="flex flex-col">
+        <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Species</span>
+        <input v-model="speciesInput" placeholder="e.g. Larvitar" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
+    </label>
+
+    <label class="flex flex-col col-span-2 sm:col-span-1">
+        <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">IVs <span class="normal-case text-gray-500">(HP/Atk/Def/SpA/SpD/Spe, x = don't care)</span></span>
+        <input v-model="ivsInput" placeholder="e.g. 31/x/31/31/31/31" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm font-mono focus:outline-none focus:border-emerald-500 sm:w-64">
+    </label>
+
+    <label class="flex flex-col">
+        <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Nature <span class="normal-case text-gray-500">(optional)</span></span>
+        <input v-model="natureInput" placeholder="e.g. Adamant" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
+    </label>
+
+    <label class="flex flex-col">
+        <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Power Item price</span>
+        <input v-model.number="powerCost" type="number" min="0" placeholder="10000" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
+    </label>
+
+    <label class="flex flex-col">
+        <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Everstone price</span>
+        <input v-model.number="everstoneCost" type="number" min="0" placeholder="5000" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
+    </label>
+
+    <button @click="generatePlan" :disabled="!dbLoaded" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow disabled:opacity-50">Generate Plan</button>
+</div>
     </header>
 
     <!-- Warnings -->
