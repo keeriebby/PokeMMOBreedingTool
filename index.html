@@ -28,13 +28,13 @@
         <div class="flex flex-wrap items-center justify-between gap-2">
             <h1 class="text-lg sm:text-xl font-bold text-emerald-400">PokéMMO BreedStudio</h1>
             <div class="flex bg-gray-800 rounded-lg p-1">
-                <button @click="view = 'tree'" :class="view === 'tree' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Tree</button>
-                <button @click="view = 'steps'" :class="view === 'steps' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Steps</button>
+                <button @click="view = 'tree'" :class="view === 'tree' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Tree View</button>
+                <button @click="view = 'steps'" :class="view === 'steps' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Step List</button>
             </div>
         </div>
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
             <input v-model="speciesInput" placeholder="e.g. Larvitar" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
-            <input v-model="ivsInput" placeholder="e.g. 31/x/31/31/31/31" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-44">
+            <input v-model="ivsInput" placeholder="e.g. 31/x/31/31/31/31" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-48">
             <input v-model="natureInput" placeholder="e.g. Adamant" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
             <input v-model.number="powerCost" type="number" placeholder="10000" title="Power Item Price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
             <input v-model.number="everstoneCost" type="number" placeholder="5000" title="Everstone Price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
@@ -90,21 +90,23 @@
                     </label>
                 </div>
                 <div class="space-y-2">
-                    <div class="bg-gray-900/60 rounded p-2">
+                    <div class="bg-gray-900/60 rounded p-2 border border-gray-700/50">
                         <div class="font-semibold text-gray-200">{{ s.parent_1 }}</div>
                         <div class="font-mono text-xs text-emerald-400">{{ s.parent_1_ivs }}</div>
                         <div class="text-xs text-purple-300">Holds: {{ s.item_p1 }} · Source: {{ s.parent_1_src }}</div>
                     </div>
-                    <div class="bg-gray-900/60 rounded p-2">
+                    <div class="bg-gray-900/60 rounded p-2 border border-gray-700/50">
                         <div class="font-semibold text-gray-200">{{ s.parent_2 }}</div>
                         <div class="font-mono text-xs text-emerald-400">{{ s.parent_2_ivs }}</div>
                         <div class="text-xs text-purple-300">Holds: {{ s.item_p2 }} · Source: {{ s.parent_2_src }}</div>
                     </div>
                 </div>
-                <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300">
-                    → <span class="font-mono text-emerald-400">{{ s.child_ivs }}</span>
-                    · Nature: {{ s.child_nature }}
-                    <span v-if="s.child_gender !== 'Any'"> · {{ s.child_gender }} {{ fmtCost(s.gender_cost) }}</span>
+                <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300 flex justify-between">
+                    <div>
+                        → Child IVs: <span class="font-mono text-emerald-400 font-bold">{{ s.child_ivs }}</span>
+                        · Nature: <strong class="text-amber-300">{{ s.child_nature }}</strong>
+                    </div>
+                    <div class="font-semibold text-pink-300">{{ s.child_gender }} {{ fmtCost(s.gender_cost) }}</div>
                 </div>
             </div>
         </div>
@@ -113,22 +115,30 @@
     <!-- Shopping List & Cost Breakdown -->
     <section v-if="shoppingList.length > 0" class="space-y-6 mb-12">
         <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
-            <h2 class="text-lg font-bold text-emerald-400 mb-4">🛒 Shopping List (Base Pokémon to Acquire)</h2>
+            <h2 class="text-lg font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                <span>🛒</span> Shopping List (Base Pokémon to Acquire)
+            </h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm text-gray-300">
                     <thead class="bg-gray-800 text-xs uppercase text-gray-400">
                         <tr>
-                            <th class="p-3">Qty</th><th class="p-3">Species / Group</th><th class="p-3">Gender</th>
-                            <th class="p-3">Required IVs</th><th class="p-3">Nature</th><th class="p-3">Held Item</th>
+                            <th class="p-3">Qty</th>
+                            <th class="p-3">Species / Group</th>
+                            <th class="p-3">Gender</th>
+                            <th class="p-3">Required IVs</th>
+                            <th class="p-3">Nature</th>
+                            <th class="p-3">Held Item</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in shoppingList" :key="index" class="border-b border-gray-800 hover:bg-gray-800/50">
                             <td class="p-3 font-mono font-bold text-emerald-400 text-base">{{ item.count }}x</td>
-                            <td class="p-3 font-semibold text-gray-200 whitespace-nowrap">{{ item.species }}</td>
-                            <td class="p-3">{{ item.gender }}</td>
-                            <td class="p-3 font-mono text-gray-300 whitespace-nowrap">{{ item.ivs }}</td>
-                            <td class="p-3 italic text-gray-400">{{ item.nature }}</td>
+                            <td class="p-3 font-semibold text-amber-200 whitespace-nowrap">{{ item.species }}</td>
+                            <td class="p-3 font-bold" :class="item.gender.includes('Female') ? 'text-pink-400' : 'text-blue-400'">
+                                {{ item.gender }}
+                            </td>
+                            <td class="p-3 font-mono text-emerald-400 font-bold whitespace-nowrap">{{ item.ivs }}</td>
+                            <td class="p-3 font-medium text-amber-300">{{ item.nature }}</td>
                             <td class="p-3 text-purple-300 font-medium whitespace-nowrap">{{ item.item }}</td>
                         </tr>
                     </tbody>
@@ -137,7 +147,9 @@
         </div>
 
         <div v-if="costBreakdown" class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
-            <h2 class="text-lg font-bold text-emerald-400 mb-4">📊 Item Breakdown & Cost Estimate</h2>
+            <h2 class="text-lg font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                <span>📊</span> Item Breakdown & Cost Estimate
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-950 p-4 sm:p-6 rounded-lg border border-gray-800 text-sm">
                 <div>
                     <h3 class="text-xs uppercase tracking-wider text-gray-400 mb-3 font-bold font-mono">Item Counts</h3>
