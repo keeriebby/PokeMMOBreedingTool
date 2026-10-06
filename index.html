@@ -1,42 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokeMMO Breeding Planner</title>
+    <title>PokéMMO BreedStudio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { darkbg: '#121214' } } } }
+    </script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .hidden { display: none; }
-        #output { margin-top: 20px; background: #f5f5f5; padding: 15px; border-radius: 5px; }
-        pre { white-space: pre-wrap; }
+        .tree-branch-h { position: relative; }
+        .tree-branch-h::before { content: ''; position: absolute; top: 50%; left: -3rem; width: 3rem; height: 2px; background-color: #374151; }
+        .tree-branch-v { position: relative; }
+        .tree-branch-v::before { content: ''; position: absolute; top: -3rem; left: 50%; width: 2px; height: 3rem; background-color: #374151; }
+        .grabbable { cursor: grab; }
+        .grabbing { cursor: grabbing; user-select: none; }
     </style>
 </head>
-<body>
-    <h1>PokeMMO Breeding Planner</h1>
-    
-    <div>
-        <label>Target Species: <input type="text" id="targetSpecies" value="Tyranitar"></label>
-    </div>
-    <br>
-    <div>
-        <strong>Select IVs Needed (31):</strong><br>
-        <label><input type="checkbox" class="iv-check" value="hp" checked> HP</label>
-        <label><input type="checkbox" class="iv-check" value="atk" checked> Atk</label>
-        <label><input type="checkbox" class="iv-check" value="def" checked> Def</label>
-        <label><input type="checkbox" class="iv-check" value="spa"> SpA</label>
-        <label><input type="checkbox" class="iv-check" value="spd" checked> SpD</label>
-        <label><input type="checkbox" class="iv-check" value="spe" checked> Spe</label>
-    </div>
-    <br>
-    <div>
-        <label><input type="checkbox" id="lockNature"> Lock Nature?</label>
-        <input type="text" id="natureName" class="hidden" placeholder="e.g., Adamant">
-    </div>
-    <br>
-    <button id="calcBtn" disabled>Calculate Breeding Plan</button>
-    
-    <div id="output">Loading species database...</div>
+<body class="bg-darkbg text-gray-100 min-h-screen font-sans">
 
-    <script type="module" src="app.js"></script>
+<div id="app" class="p-3 sm:p-6 flex flex-col min-h-screen">
+
+    <!-- Header & Inputs -->
+    <header class="bg-gray-900 p-3 sm:p-4 rounded-xl border border-gray-800 mb-3 shadow-lg space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+            <h1 class="text-lg sm:text-xl font-bold text-emerald-400">PokéMMO BreedStudio</h1>
+            <div class="flex bg-gray-800 rounded-lg p-1">
+                <button @click="view = 'tree'" :class="view === 'tree' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Tree</button>
+                <button @click="view = 'steps'" :class="view === 'steps' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Steps</button>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
+            <input v-model="speciesInput" placeholder="Species (e.g. Gastly)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
+            <input v-model="ivsInput" placeholder="IVs (31/x/31/x/31/31)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-44">
+            <input v-model="natureInput" placeholder="Nature (e.g. Timid)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
+            <input v-model.number="powerCost" type="number" placeholder="Power Item $" title="Power Item price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
+            <input v-model.number="everstoneCost" type="number" placeholder="Everstone $" title="Everstone price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
+            <button @click="generatePlan" :disabled="!dbLoaded" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow disabled:opacity-50">Generate Plan</button>
+        </div>
+    </header>
+
+    <!-- Warnings -->
+    <div v-if="warnings.length" class="bg-amber-950 border border-amber-700 rounded-xl p-3 text-sm text-amber-200 space-y-1 mb-3">
+        <div v-for="w in warnings" :key="w">⚠ {{ w }}</div>
+    </div>
+
+    <!-- Tree Toolbar -->
+    <div v-if="view === 'tree' && treeData" class="flex flex-wrap items-center gap-2 mb-2 text-sm">
+        <div class="flex bg-gray-800 rounded-lg p-1">
+            <button @click="orientation = 'horizontal'" :class="orientation === 'horizontal' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded transition">Horizontal</button>
+            <button @click="orientation = 'vertical'" :class="orientation === 'vertical' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded transition">Vertical</button>
+        </div>
+        <div class="flex items-center bg-gray-800 rounded-lg p-1">
+            <button @click="zoomBy(-0.1)" class="px-3 py-1 rounded text-gray-300 hover:bg-gray-700">−</button>
+            <span class="w-12 text-center font-mono text-xs text-gray-400">{{ Math.round(scale * 100) }}%</span>
+            <button @click="zoomBy(0.1)" class="px-3 py-1 rounded text-gray-300 hover:bg-gray-700">+</button>
+        </div>
+        <button @click="fit" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">Fit to screen</button>
+        <span class="hidden sm:inline text-xs text-gray-500">Drag to pan</span>
+    </div>
+
+    <!-- Workspace -->
+    <main ref="canvas"
+          :class="view === 'tree' ? 'h-[70vh] overflow-auto flex grabbable border border-gray-800 rounded-xl bg-[#0d0d0f] shadow-inner' : ''"
+          class="mb-6"
+          @mousedown="onDown" @mousemove="onMove" @mouseup="onUp" @mouseleave="onUp">
+        
+        <div v-if="!dbLoaded" class="m-auto text-emerald-400 animate-pulse">Loading species database...</div>
+        <div v-else-if="loading" class="m-auto text-emerald-400 animate-pulse">Computing optimal breeding tree...</div>
+        <div v-else-if="!treeData" class="m-auto text-gray-500 p-6 text-center">Enter your target details above and click Generate Plan.</div>
+
+        <!-- Tree View -->
+        <div v-else-if="view === 'tree'" ref="treeEl" class="m-auto w-max p-8" :style="{ zoom: scale }">
+            <tree-node :node="treeData" :orientation="orientation"></tree-node>
+        </div>
+
+        <!-- Steps View -->
+        <div v-else class="w-full max-w-2xl mx-auto space-y-3">
+            <div v-for="s in steps" :key="s.step"
+                 :class="s.done ? 'border-emerald-500 bg-emerald-950' : 'border-gray-700 bg-gray-800'"
+                 class="border-2 rounded-xl p-3 text-sm transition-all">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-bold text-emerald-400">Step {{ s.step }}</span>
+                    <label class="flex items-center space-x-2 text-xs font-semibold cursor-pointer">
+                        <input type="checkbox" v-model="s.done" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0">
+                        <span>Done</span>
+                    </label>
+                </div>
+                <div class="space-y-2">
+                    <div v-for="p in [1, 2]" :key="p" class="bg-gray-900/60 rounded p-2">
+                        <div class="font-semibold text-gray-200">{{ s['parent_' + p] }}</div>
+                        <div class="font-mono text-xs text-emerald-400">{{ s['parent_' + p + '_ivs'] }}</div>
+                        <div class="text-xs text-purple-300">Holds: {{ s['item_p' + p] }} · from {{ s['parent_' + p + '_src'] }}</div>
+                    </div>
+                </div>
+                <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300">
+                    → <span class="font-mono text-emerald-400">{{ s.child_ivs }}</span>
+                    · Nature: {{ s.child_nature }}
+                    <span v-if="s.child_gender !== 'Any'"> · {{ s.child_gender }} {{ fmtCost(s.gender_cost) }}</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Shopping List & Cost Breakdown -->
+    <section v-if="shoppingList.length > 0" class="space-y-6">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-emerald-400 mb-4">🛒 Shopping List (Base Pokémon to Acquire)</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-300">
+                    <thead class="bg-gray-800 text-xs uppercase text-gray-400">
+                        <tr>
+                            <th class="p-3">Qty</th><th class="p-3">Species / Group</th><th class="p-3">Gender</th>
+                            <th class="p-3">Required IVs</th><th class="p-3">Nature</th><th class="p-3">Held Item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in shoppingList" :key="index" class="border-b border-gray-800 hover:bg-gray-800/50">
+                            <td class="p-3 font-mono font-bold text-emerald-400 text-base">{{ item.count }}x</td>
+                            <td class="p-3 font-semibold text-gray-200 whitespace-nowrap">{{ item.species }}</td>
+                            <td class="p-3">{{ item.gender }}</td>
+                            <td class="p-3 font-mono text-gray-300 whitespace-nowrap">{{ item.ivs }}</td>
+                            <td class="p-3 italic text-gray-400">{{ item.nature }}</td>
+                            <td class="p-3 text-purple-300 font-medium whitespace-nowrap">{{ item.item }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div v-if="costBreakdown" class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-emerald-400 mb-4">📊 Item Breakdown & Cost Estimate</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-950 p-4 sm:p-6 rounded-lg border border-gray-800 text-sm">
+                <div>
+                    <h3 class="text-xs uppercase tracking-wider text-gray-400 mb-3 font-bold font-mono">Item Counts</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li v-for="(count, itemName) in costBreakdown.item_counts" :key="itemName">
+                            <span class="text-emerald-400 font-bold font-mono text-base mr-1">{{ count }}x</span> <span class="font-medium">{{ itemName }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xs uppercase tracking-wider text-gray-400 mb-3 font-bold font-mono">Cost Estimate</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <div class="flex justify-between gap-2">
+                            <span>Power Items used:</span>
+                            <span class="font-mono">{{ costBreakdown.power_items_count }} x ${{ costBreakdown.power_unit.toLocaleString() }} = <strong class="text-emerald-400">${{ costBreakdown.power_cost.toLocaleString() }}</strong></span>
+                        </div>
+                        <div class="flex justify-between gap-2">
+                            <span>Everstones used:</span>
+                            <span class="font-mono">{{ costBreakdown.everstones_count }} x ${{ costBreakdown.everstone_unit.toLocaleString() }} = <strong class="text-emerald-400">${{ costBreakdown.everstone_cost.toLocaleString() }}</strong></span>
+                        </div>
+                        <div class="flex justify-between gap-2">
+                            <span>Gender-lock costs:</span>
+                            <span class="font-mono"><strong class="text-emerald-400">${{ costBreakdown.gender_lock_cost.toLocaleString() }}</strong></span>
+                        </div>
+                        <hr class="border-gray-800 my-3">
+                        <div class="flex justify-between text-base font-bold text-emerald-400">
+                            <span>TOTAL ESTIMATED COST:</span>
+                            <span class="font-mono">${{ costBreakdown.total_cost.toLocaleString() }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
