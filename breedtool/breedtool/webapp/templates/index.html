@@ -1,303 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéMMO BreedTool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { darkbg: '#121214' } } } }
-    </script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        .tree-branch-h { position: relative; }
-        .tree-branch-h::before { content: ''; position: absolute; top: 50%; left: -3rem; width: 3rem; height: 2px; background-color: #374151; }
-        .tree-branch-v { position: relative; }
-        .tree-branch-v::before { content: ''; position: absolute; top: -3rem; left: 50%; width: 2px; height: 3rem; background-color: #374151; }
-        .grabbable { cursor: grab; }
-        .grabbing { cursor: grabbing; user-select: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BreedTool</title>
 </head>
-<body class="bg-darkbg text-gray-100 min-h-screen font-sans">
-{% raw %}
-<div id="app" class="p-3 sm:p-6 flex flex-col min-h-screen">
+<body>
+  <h1>PokeMMO Breeding Tree & Cost Calculator</h1>
 
-    <!-- Header: wraps cleanly on phones -->
-    <header class="bg-gray-900 p-3 sm:p-4 rounded-xl border border-gray-800 mb-3 shadow-lg space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-            <h1 class="text-lg sm:text-xl font-bold text-emerald-400">PokéMMO BreedStudio</h1>
-            <div class="flex bg-gray-800 rounded-lg p-1">
-                <button @click="view = 'tree'" :class="view === 'tree' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Tree</button>
-                <button @click="view = 'steps'" :class="view === 'steps' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded text-sm font-medium transition">Steps</button>
-            </div>
-        </div>
-        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
-            <input v-model="speciesInput" placeholder="Species (e.g. Gastly)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
-            <input v-model="ivsInput" placeholder="IVs (31/x/31/x/31/31)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-40">
-            <input v-model="natureInput" placeholder="Nature (e.g. Timid)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
-            <input v-model="fodderInput" placeholder="Fodder pricing (auto)" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
-            <input v-model.number="powerCost" type="number" title="Power Item price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-24">
-            <input v-model.number="everstoneCost" type="number" title="Everstone price" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-24">
-            <button @click="fetchPlan" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow">Generate Plan</button>
-        </div>
-    </header>
+  <div>
+    <h3>Select Stats Needed:</h3>
+    <label><input type="checkbox" value="hp" class="iv-check"> HP</label>
+    <label><input type="checkbox" value="atk" class="iv-check"> Atk</label>
+    <label><input type="checkbox" value="def" class="iv-check"> Def</label>
+    <label><input type="checkbox" value="spa" class="iv-check"> SpA</label>
+    <label><input type="checkbox" value="spd" class="iv-check"> SpD</label>
+    <label><input type="checkbox" value="spe" class="iv-check"> Spe</label>
+    <br><br>
+    <label><input type="checkbox" id="want-nature"> Lock Nature?</label>
+    <br><br>
+    <button id="calculate-btn">Calculate Breeding Tree</button>
+  </div>
 
-    <!-- Warnings -->
-    <div v-if="warnings.length" class="bg-amber-950 border border-amber-700 rounded-xl p-3 text-sm text-amber-200 space-y-1 mb-3">
-        <div v-for="w in warnings" :key="w">⚠ {{ w }}</div>
-    </div>
+  <pre id="output"></pre>
 
-    <!-- Tree toolbar -->
-    <div v-if="view === 'tree' && treeData" class="flex flex-wrap items-center gap-2 mb-2 text-sm">
-        <div class="flex bg-gray-800 rounded-lg p-1">
-            <button @click="orientation = 'horizontal'" :class="orientation === 'horizontal' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded transition">Horizontal</button>
-            <button @click="orientation = 'vertical'" :class="orientation === 'vertical' ? 'bg-emerald-600 text-white' : 'text-gray-400'" class="px-3 py-1 rounded transition">Vertical</button>
-        </div>
-        <div class="flex items-center bg-gray-800 rounded-lg p-1">
-            <button @click="zoomBy(-0.1)" class="px-3 py-1 rounded text-gray-300 hover:bg-gray-700">−</button>
-            <span class="w-12 text-center font-mono text-xs text-gray-400">{{ Math.round(scale * 100) }}%</span>
-            <button @click="zoomBy(0.1)" class="px-3 py-1 rounded text-gray-300 hover:bg-gray-700">+</button>
-        </div>
-        <button @click="fit" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">Fit to screen</button>
-        <span class="hidden sm:inline text-xs text-gray-500">Drag to pan</span>
-    </div>
+  <script type="module">
+    import { buildTree, costReport, PricingConfig } from './breeding.js';
 
-    <!-- Workspace -->
-    <main ref="canvas"
-          :class="view === 'tree' ? 'h-[70vh] overflow-auto flex grabbable border border-gray-800 rounded-xl bg-[#0d0d0f] shadow-inner' : ''"
-          class="mb-6"
-          @mousedown="onDown" @mousemove="onMove" @mouseup="onUp" @mouseleave="onUp">
-        <div v-if="loading" class="m-auto text-emerald-400 animate-pulse">Computing optimal breeding tree...</div>
-        <div v-else-if="!treeData" class="m-auto text-gray-500 p-6 text-center">Enter your target details above and click Generate Plan.</div>
+    let speciesDb = {};
 
-        <!-- Tree view. m-auto (not justify-center) so the left/top edge is never clipped -->
-        <div v-else-if="view === 'tree'" ref="treeEl" class="m-auto w-max p-8" :style="{ zoom: scale }">
-            <tree-node :node="treeData" :orientation="orientation"></tree-node>
-        </div>
+    // 1. Fetch species_db.json from the same directory
+    async function init() {
+      try {
+        const response = await fetch('./species_db.json');
+        speciesDb = await response.json();
+        console.log("Loaded Species Database:", speciesDb);
+      } catch (err) {
+        console.error("Could not load species_db.json:", err);
+      }
+    }
 
-        <!-- Steps view: the phone-friendly version -->
-        <div v-else class="w-full max-w-2xl mx-auto space-y-3">
-            <div v-for="s in steps" :key="s.step"
-                 :class="s.done ? 'border-emerald-500 bg-emerald-950' : 'border-gray-700 bg-gray-800'"
-                 class="border-2 rounded-xl p-3 text-sm transition-all">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="font-bold text-emerald-400">Step {{ s.step }}</span>
-                    <label class="flex items-center space-x-2 text-xs font-semibold cursor-pointer">
-                        <input type="checkbox" v-model="s.done" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0">
-                        <span>Done</span>
-                    </label>
-                </div>
-                <div class="space-y-2">
-                    <div v-for="p in [1, 2]" :key="p" class="bg-gray-900/60 rounded p-2">
-                        <div class="font-semibold text-gray-200">{{ s['parent_' + p] }}</div>
-                        <div class="font-mono text-xs text-emerald-400">{{ s['parent_' + p + '_ivs'] }}</div>
-                        <div class="text-xs text-purple-300">Holds: {{ s['item_p' + p] }} · from {{ s['parent_' + p + '_src'] }}</div>
-                    </div>
-                </div>
-                <div class="mt-2 pt-2 border-t border-gray-700 text-xs text-gray-300">
-                    → <span class="font-mono text-emerald-400">{{ s.child_ivs }}</span>
-                    · Nature: {{ s.child_nature }}
-                    <span v-if="s.child_gender !== 'Any'"> · {{ s.child_gender }} {{ fmtCost(s.gender_cost) }}</span>
-                </div>
-            </div>
-        </div>
-    </main>
+    // 2. Handle Calculation
+    document.getElementById('calculate-btn').addEventListener('click', () => {
+      const selectedIVs = Array.from(document.querySelectorAll('.iv-check:checked'))
+                               .map(cb => cb.value);
+      const wantNature = document.getElementById('want-nature').checked;
 
-    <!-- Shopping list & costs -->
-    <section v-if="shoppingList.length > 0" class="space-y-6">
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
-            <h2 class="text-lg font-bold text-emerald-400 mb-4">🛒 Shopping List (Base Pokémon to Acquire)</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-gray-300">
-                    <thead class="bg-gray-800 text-xs uppercase text-gray-400">
-                        <tr>
-                            <th class="p-3">Qty</th><th class="p-3">Species / Group</th><th class="p-3">Gender</th>
-                            <th class="p-3">Required IVs</th><th class="p-3">Nature</th><th class="p-3">Held Item</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in shoppingList" :key="index" class="border-b border-gray-800 hover:bg-gray-800/50">
-                            <td class="p-3 font-mono font-bold text-emerald-400 text-base">{{ item.count }}x</td>
-                            <td class="p-3 font-semibold text-gray-200 whitespace-nowrap">{{ item.species }}</td>
-                            <td class="p-3">{{ item.gender }}</td>
-                            <td class="p-3 font-mono text-gray-300 whitespace-nowrap">{{ item.ivs }}</td>
-                            <td class="p-3 italic text-gray-400">{{ item.nature }}</td>
-                            <td class="p-3 text-purple-300 font-medium whitespace-nowrap">{{ item.item }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+      try {
+        const root = buildTree(selectedIVs, wantNature);
+        const report = costReport(root, new PricingConfig(10000, 5000));
+        
+        document.getElementById('output').textContent = JSON.stringify({
+          target: root.traitString(),
+          pricingReport: report
+        }, null, 2);
+      } catch (err) {
+        alert(err.message);
+      }
+    });
 
-        <div v-if="costBreakdown" class="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
-            <h2 class="text-lg font-bold text-emerald-400 mb-4">📊 Item Breakdown & Cost Estimate</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-950 p-4 sm:p-6 rounded-lg border border-gray-800 text-sm">
-                <div>
-                    <h3 class="text-xs uppercase tracking-wider text-gray-400 mb-3 font-bold">Item Breakdown</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li v-for="(count, itemName) in costBreakdown.item_counts" :key="itemName">
-                            <span class="text-emerald-400 font-bold font-mono text-base mr-1">{{ count }}x</span> <span class="font-medium">{{ itemName }}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xs uppercase tracking-wider text-gray-400 mb-3 font-bold">Cost Estimate</h3>
-                    <div class="space-y-2 text-gray-300">
-                        <div class="flex justify-between gap-2">
-                            <span>Power Items used:</span>
-                            <span class="font-mono">{{ costBreakdown.power_items_count }} x {{ costBreakdown.power_unit.toLocaleString() }} = <strong class="text-emerald-400">{{ costBreakdown.power_cost.toLocaleString() }}</strong></span>
-                        </div>
-                        <div class="flex justify-between gap-2">
-                            <span>Everstones used:</span>
-                            <span class="font-mono">{{ costBreakdown.everstones_count }} x {{ costBreakdown.everstone_unit.toLocaleString() }} = <strong class="text-emerald-400">{{ costBreakdown.everstone_cost.toLocaleString() }}</strong></span>
-                        </div>
-                        <div class="flex justify-between gap-2">
-                            <span>Gender-lock costs:</span>
-                            <span class="font-mono"><strong class="text-emerald-400">{{ costBreakdown.gender_lock_cost.toLocaleString() }}</strong></span>
-                        </div>
-                        <hr class="border-gray-800 my-3">
-                        <div class="flex justify-between text-base font-bold text-emerald-400">
-                            <span>TOTAL ESTIMATED COST:</span>
-                            <span class="font-mono">{{ costBreakdown.total_cost.toLocaleString() }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-
-<script>
-    const { createApp, ref, watch, nextTick, onMounted } = Vue;
-
-    const TreeNode = {
-        name: 'TreeNode',
-        props: ['node', 'orientation'],
-        template: `
-            <div :class="['flex items-center justify-center', orientation === 'horizontal' ? 'flex-row space-x-12' : 'flex-col space-y-12']">
-                <div class="relative">
-                    <!-- Breed node -->
-                    <div v-if="node.type === 'breed'" :class="node.bred ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-gray-800 border-gray-700'" class="border-2 rounded-xl p-3 w-56 shadow-xl transition-all duration-300">
-                        <div class="flex justify-between items-center mb-2 gap-2">
-                            <span class="font-bold text-sm text-gray-200">{{ node.species }}</span>
-                            <span class="text-[10px] bg-gray-900 text-gray-400 px-1.5 py-0.5 rounded shrink-0">Bred</span>
-                        </div>
-                        <div class="bg-gray-900 rounded p-1 text-center font-mono text-xs text-emerald-400 mb-2">{{ node.ivs }}</div>
-                        <div class="text-xs text-gray-400 mb-2 italic">{{ node.nature }}</div>
-                        <div v-if="node.held_item" class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium mb-2">Holds: {{ node.held_item }}</div>
-                        <div v-else class="bg-emerald-900/40 border border-emerald-500/50 rounded p-1 text-center text-xs text-emerald-300 font-medium mb-2">Final Pokémon</div>
-                        <div class="flex items-center space-x-2 pt-2 border-t border-gray-700">
-                            <input type="checkbox" v-model="node.bred" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0 cursor-pointer">
-                            <label class="text-xs font-semibold cursor-pointer" :class="node.bred ? 'text-emerald-400' : 'text-gray-300'">Done (collapse parents)</label>
-                        </div>
-                    </div>
-
-                    <!-- Leaf node -->
-                    <div v-if="node.type === 'leaf'" :class="node.bought ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#261c10] border-amber-600'" class="border-2 rounded-xl p-3 w-56 shadow-xl transition-all duration-300">
-                        <div class="inline-block bg-emerald-800 text-white text-[10px] px-2 py-0.5 rounded-full font-bold mb-1">PURCHASE / CATCH</div>
-                        <div class="font-bold text-sm text-gray-100 mb-1">{{ node.species }}</div>
-                        <div class="bg-gray-900 rounded p-1 text-center font-mono text-xs text-emerald-400 mb-2">{{ node.ivs }}</div>
-                        <div class="text-xs text-gray-300 mb-2">{{ node.nature }}</div>
-                        <div class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium mb-2">Holds: {{ node.item }}</div>
-                        <div class="flex items-center space-x-2 pt-2 border-t border-gray-700/50">
-                            <input type="checkbox" v-model="node.bought" class="rounded bg-gray-700 border-gray-600 text-emerald-600 focus:ring-0 cursor-pointer">
-                            <label class="text-xs font-semibold cursor-pointer" :class="node.bought ? 'text-emerald-400' : 'text-amber-200'">Bought</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div v-if="node.type === 'breed' && node.parent1 && node.parent2" v-show="!node.bred" :class="['flex relative', orientation === 'horizontal' ? 'flex-col space-y-6 tree-branch-h' : 'flex-row space-x-6 tree-branch-v']">
-                    <tree-node :node="node.parent1" :orientation="orientation"></tree-node>
-                    <tree-node :node="node.parent2" :orientation="orientation"></tree-node>
-                </div>
-            </div>
-        `
-    };
-
-    createApp({
-        components: { TreeNode },
-        setup() {
-            // Phones default to the Steps list; desktop to the Tree
-            const view = ref(window.innerWidth < 768 ? 'steps' : 'tree');
-            const orientation = ref('horizontal');
-            const speciesInput = ref('gastly');
-            const ivsInput = ref('31/x/31/x/31/31');
-            const natureInput = ref('Timid');
-            const fodderInput = ref('');
-            const powerCost = ref(10000);
-            const everstoneCost = ref(5000);
-            const warnings = ref([]);
-            const treeData = ref(null);
-            const steps = ref([]);
-            const shoppingList = ref([]);
-            const costBreakdown = ref(null);
-            const loading = ref(false);
-
-            const scale = ref(1);
-            const canvas = ref(null);
-            const treeEl = ref(null);
-
-            const fit = async () => {
-                if (view.value !== 'tree') return;
-                scale.value = 1;
-                await nextTick();
-                const c = canvas.value, t = treeEl.value;
-                if (!c || !t) return;
-                const s = Math.min((c.clientWidth - 16) / t.scrollWidth, (c.clientHeight - 16) / t.scrollHeight);
-                scale.value = Math.max(0.25, Math.min(1, s));
-            };
-            const zoomBy = (d) => { scale.value = Math.max(0.25, Math.min(1.5, +(scale.value + d).toFixed(2))); };
-
-            // Click-and-drag panning (touch devices scroll natively)
-            let drag = null;
-            const onDown = (e) => {
-                if (view.value !== 'tree' || e.button !== 0 || e.target.closest('input,label,button')) return;
-                const c = canvas.value;
-                drag = { x: e.clientX, y: e.clientY, l: c.scrollLeft, t: c.scrollTop };
-                c.classList.add('grabbing');
-            };
-            const onMove = (e) => {
-                if (!drag) return;
-                canvas.value.scrollLeft = drag.l - (e.clientX - drag.x);
-                canvas.value.scrollTop = drag.t - (e.clientY - drag.y);
-            };
-            const onUp = () => { drag = null; if (canvas.value) canvas.value.classList.remove('grabbing'); };
-
-            const fmtCost = (c) => c === null ? '(IMPOSSIBLE)' : (c ? `(${c.toLocaleString()})` : '');
-
-            const fetchPlan = async () => {
-                loading.value = true;
-                try {
-                    const q = new URLSearchParams({
-                        species: speciesInput.value, ivs: ivsInput.value, nature: natureInput.value,
-                        fodder: fodderInput.value, power: powerCost.value, everstone: everstoneCost.value
-                    });
-                    const res = await fetch(`/api/plan?${q}`);
-                    const data = await res.json();
-                    if (!res.ok) { alert(data.detail || "Failed to generate plan."); return; }
-                    treeData.value = data.tree;
-                    steps.value = data.steps;
-                    shoppingList.value = data.shopping_list;
-                    costBreakdown.value = data.cost_breakdown;
-                    warnings.value = data.warnings;
-                } catch (e) {
-                    console.error("Failed to fetch plan:", e);
-                } finally {
-                    loading.value = false;
-                    await nextTick();
-                    fit();
-                }
-            };
-
-            watch([orientation, view], async () => { await nextTick(); fit(); });
-            onMounted(fetchPlan);
-
-            return { view, orientation, speciesInput, ivsInput, natureInput, fodderInput, powerCost, everstoneCost,
-                     warnings, treeData, steps, shoppingList, costBreakdown, loading, fetchPlan,
-                     scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost };
-        }
-    }).mount('#app');
-</script>
-{% endraw %}
+    init();
+  </script>
 </body>
 </html>
