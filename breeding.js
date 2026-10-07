@@ -478,9 +478,11 @@ export function buildFullPlan(db, o) {
   if (!best) throw lastErr || new Error(`No usable egg group found for ${o.target.name}.`);
 
   const baseline = attempt(db, best.args, []);
+  // Show every egg group the target is in. (The plan itself is checked against ONE of them, see the note.)
+  const groupText = groups.map(eggGroupName).join("/");
   const ctx = {
     targetName: o.target.name, natureName: o.natureName,
-    fodderLabel: `Any (${eggGroupName(best.group)})`,
+    fodderLabel: `Any (${groupText})`,
   };
 
   // Where did each Pokemon end up?
@@ -502,7 +504,9 @@ export function buildFullPlan(db, o) {
     return { unitId: u.unitId, entryId: u.entryId, placed: true, where };
   });
 
-  const notes = [`Every Pokémon that isn't ${o.target.name} must be in the ${eggGroupName(best.group)} egg group.`];
+  const notes = [groups.length > 1
+    ? `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg groups. Pick them all from the same group (this plan assumes ${eggGroupName(best.group)}) so they stay compatible with each other.`
+    : `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg group.`];
   const warnings = speciesWarnings(o.target, hatch, best.fodder);
   if (best.result.costs.impossible.length) warnings.push(`${best.result.costs.impossible.length} breed(s) need a gender this species can't produce.`);
 
