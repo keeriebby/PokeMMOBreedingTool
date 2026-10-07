@@ -1,9 +1,54 @@
 import {
-  buildTree, costReport, PricingConfig, SpeciesDB, assignSpecies, speciesWarnings,
-  serializeTree, buildShoppingList, renderPlan, allNodes, IV_STATS,
+  PricingConfig, SpeciesDB, buildFullPlan, expandOnHand, canonicalNature, parseIVs, formatIVs,
+  serializeTree, buildShoppingList, renderPlan, leaves, breeds, NATURES,
 } from './breeding.js';
 
 const { createApp, ref, reactive, watch, nextTick, onMounted } = Vue;
+
+// ---- Autocomplete input (works the same on desktop and mobile; no <datalist>) ----
+const AutoInput = {
+    name: 'AutoInput',
+    props: ['modelValue', 'options', 'placeholder', 'inputClass', 'showAll'],
+    emits: ['update:modelValue'],
+    data() { return { open: false, active: -1 }; },
+    computed: {
+        matches() {
+            const q = (this.modelValue || '').trim().toLowerCase();
+            const opts = this.options || [];
+            if (!q) return this.showAll ? opts.slice(0, 30) : [];
+            const starts = opts.filter((o) => o.toLowerCase().startsWith(q));
+            const has = opts.filter((o) => !o.toLowerCase().startsWith(q) && o.toLowerCase().includes(q));
+            const list = [...starts, ...has].slice(0, 8);
+            return list.length === 1 && list[0].toLowerCase() === q ? [] : list;   // already typed in full
+        },
+    },
+    methods: {
+        onInput(e) { this.$emit('update:modelValue', e.target.value); this.open = true; this.active = -1; },
+        pick(v) { this.$emit('update:modelValue', v); this.open = false; this.active = -1; },
+        move(d) {
+            if (!this.matches.length) return;
+            this.open = true;
+            this.active = (this.active + d + this.matches.length) % this.matches.length;
+        },
+        onEnter(e) { if (this.open && this.active >= 0) { e.preventDefault(); this.pick(this.matches[this.active]); } },
+        close() { setTimeout(() => { this.open = false; }, 150); },
+    },
+    template: `
+        <div class="relative">
+            <input :class="inputClass" :placeholder="placeholder" :value="modelValue"
+                   autocomplete="off" autocapitalize="off" spellcheck="false"
+                   @input="onInput" @focus="open = true" @blur="close"
+                   @keydown.down.prevent="move(1)" @keydown.up.prevent="move(-1)"
+                   @keydown.enter="onEnter" @keydown.esc="open = false">
+            <ul v-if="open && matches.length" class="absolute z-30 mt-1 w-full min-w-[9rem] max-h-56 overflow-auto bg-gray-800 border border-gray-700 rounded-lg shadow-xl text-sm">
+                <li v-for="(m, i) in matches" :key="m"
+                    :class="i === active ? 'bg-emerald-700 text-white' : 'text-gray-200 hover:bg-gray-700'"
+                    class="px-3 py-1.5 cursor-pointer"
+                    @mousedown.prevent @click="pick(m)">{{ m }}</li>
+            </ul>
+        </div>
+    `
+};
 
 // ---- Saved progress (localStorage) ----
 // progress = { [nodeId]: true } for the current plan. Node ids are stable for a given
@@ -11,6 +56,7 @@ const { createApp, ref, reactive, watch, nextTick, onMounted } = Vue;
 const store = reactive({ progress: {} });
 const PROGRESS_PREFIX = 'breedtool:progress:v1:';
 const INPUTS_KEY = 'breedtool:inputs:v1';
+const ONHAND_KEY = 'breedtool:onhand:v1';
 
 const loadJSON = (key) => {
     try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
@@ -58,6 +104,27 @@ const TreeNode = {
                     </div>
                 </div>
 
+                <!-- Pokemon on hand (replaces this node and everything beneath it) -->
+                <div v-if="node.type === 'owned'" class="border-2 rounded-xl p-3 w-64 shadow-xl bg-sky-950/60 border-sky-500">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-sky-700 text-sky-50 text-[10px] px-2 py-0.5 rounded-full font-bold">ON HAND</span>
+                        <span :class="node.gender.includes('Female') ? 'text-pink-400' : 'text-blue-400'" class="font-bold text-xs">{{ node.gender }}</span>
+                    </div>
+                    <div class="font-bold text-sm text-sky-200 mb-1 truncate" :title="node.species">{{ node.species }}</div>
+                    <div class="bg-gray-900 rounded p-1.5 text-center font-mono text-xs font-bold text-emerald-400 mb-2 border border-gray-800 tracking-wider">
+                        {{ node.ivs }}
+                    </div>
+                    <div class="text-xs text-gray-300 mb-2">
+                        Nature: <strong :class="node.nature !== 'Any' ? 'text-amber-300' : 'text-gray-400'">{{ node.nature }}</strong>
+                    </div>
+                    <div v-if="node.item" class="bg-purple-900/40 border border-purple-500/50 rounded p-1 text-center text-xs text-purple-300 font-medium">
+                        Holds: {{ node.item }}
+                    </div>
+                    <div v-else class="bg-emerald-900/30 border border-emerald-500/30 rounded p-1 text-center text-xs text-emerald-300 font-medium">
+                        You already have the final Pokémon!
+                    </div>
+                </div>
+
                 <!-- Leaf Node (Base Catch/Buy) -->
                 <div v-if="node.type === 'leaf'" :class="isDone(node.id) ? 'bg-emerald-950 border-emerald-500 shadow-emerald-900/40' : 'bg-[#211710] border-amber-600/80'" class="border-2 rounded-xl p-3 w-64 shadow-xl transition-all duration-300">
                     <div class="flex justify-between items-center mb-1">
@@ -93,7 +160,7 @@ const TreeNode = {
 };
 
 const app = createApp({
-    components: { TreeNode },
+    components: { TreeNode, AutoInput },
     setup() {
         let db = null;
         const dbLoaded = ref(false);
@@ -114,8 +181,22 @@ const app = createApp({
         const loading = ref(false);
 
         const speciesNames = ref([]);
+        const natureNames = NATURES;
+        const visibleIds = ref([]);
         const totalNodes = ref(0);
+        const notes = ref([]);
+        const savings = ref(null);
+        const placements = ref([]);
         let currentKey = null;
+
+        // Pokemon on hand (kept across plans, saved in the browser)
+        const onHand = ref(loadJSON(ONHAND_KEY) || []);
+        const ohSpecies = ref('');
+        const ohNature = ref('');
+        const ohIvs = ref('');
+        const ohGender = ref('Female');
+        const ohQty = ref(1);
+        const onHandError = ref('');
 
         const scale = ref(1);
         const canvas = ref(null);
@@ -144,13 +225,6 @@ const app = createApp({
             }
         });
 
-        // "31/x/31/x/31/31" -> ['hp','def','spd','spe']. Anything other than 31 means "don't care".
-        const parseIVs = (str) => {
-            const parts = str.split('/').map((p) => p.trim().toLowerCase());
-            if (parts.length !== 6) throw new Error("IVs need 6 slots separated by '/', e.g. 31/x/31/x/31/31");
-            return IV_STATS.filter((_, i) => parts[i] === '31');
-        };
-
         const price = (v, fallback) => (v === '' || v === null || Number.isNaN(Number(v)) ? fallback : Number(v));
 
         const generatePlan = async () => {
@@ -164,58 +238,76 @@ const app = createApp({
                 const target = db.find(targetName);
                 if (!target.canBreed) throw new Error(`${target.name} is in the Undiscovered egg group and can't be bred.`);
 
-                const natureName = natureInput.value.trim() || null;
-                const root = buildTree(parseIVs(ivsInput.value), natureName !== null);
-                const hatch = db.hatchSpecies(target);
-                const fodder = db.pickFodder(target);
-                assignSpecies(root, hatch, fodder);
+                const natureName = canonicalNature(natureInput.value);
+                const config = new PricingConfig(price(powerCost.value, 10000), price(everstoneCost.value, 5000));
+                const plan = buildFullPlan(db, {
+                    target, ivs: parseIVs(ivsInput.value), natureName, onHand: onHand.value, config,
+                });
 
-                const costs = costReport(root, new PricingConfig(price(powerCost.value, 10000), price(everstoneCost.value, 5000)));
-                const ctx = {
-                    targetName: target.name,
-                    fodderLabel: `Any (${target.eggGroups.join(' / ')})`,
-                    natureName,
-                };
-
-                // Switch to this plan's saved progress
-                currentKey = `${PROGRESS_PREFIX}${target.identifier}|${root.traits.join(',')}|${(natureName || '').toLowerCase()}`;
-                store.progress = loadJSON(currentKey) || {};
-                totalNodes.value = allNodes(root).length;
+                // Saved progress belongs to the plan (species + IVs + nature), not to your Pokemon on hand
+                const key = `${PROGRESS_PREFIX}${target.identifier}|${plan.root.traits.join(',')}|${(natureName || '').toLowerCase()}`;
+                if (key !== currentKey) { currentKey = key; store.progress = loadJSON(key) || {}; }
                 saveJSON(INPUTS_KEY, {
                     species: speciesInput.value.trim(), ivs: ivsInput.value, nature: natureInput.value.trim(),
                     power: powerCost.value, everstone: everstoneCost.value,
                 });
 
-                treeData.value = serializeTree(root, ctx);
-                shoppingList.value = buildShoppingList(root, ctx);
-                steps.value = renderPlan(root, ctx, costs.gender_costs);
+                const costs = plan.costs;
+                treeData.value = serializeTree(plan.root, plan.ctx);
+                shoppingList.value = buildShoppingList(plan.root, plan.ctx);
+                steps.value = renderPlan(plan.root, plan.ctx, costs.gender_costs);
+                visibleIds.value = [...leaves(plan.root), ...breeds(plan.root)].map((n) => n.nodeId);
+                totalNodes.value = visibleIds.value.length;
 
                 costBreakdown.value = {
                     item_counts: costs.item_counts,
-                    power_items_count: costs.power_items_count,
-                    power_unit: price(powerCost.value, 10000),
-                    power_cost: costs.power_items_cost,
-                    everstones_count: costs.everstones_count,
-                    everstone_unit: price(everstoneCost.value, 5000),
-                    everstone_cost: costs.everstones_cost,
-                    gender_lock_cost: costs.gender_lock_cost,
-                    total_cost: costs.grand_total,
+                    power_items_count: costs.power_items_count, power_unit: config.powerItemCost, power_cost: costs.power_items_cost,
+                    everstones_count: costs.everstones_count, everstone_unit: config.everstoneCost, everstone_cost: costs.everstones_cost,
+                    gender_lock_cost: costs.gender_lock_cost, total_cost: costs.grand_total,
                 };
-
-                const w = speciesWarnings(target, hatch, fodder);
-                if (costs.impossible.length) w.push(`${costs.impossible.length} breed(s) need a gender this species can't produce.`);
-                warnings.value = w;
+                placements.value = plan.placements;
+                savings.value = onHand.value.length ? plan.savings : null;
+                notes.value = plan.notes;
+                warnings.value = plan.warnings;
             } catch (err) {
-                treeData.value = null;
-                shoppingList.value = [];
-                steps.value = [];
-                costBreakdown.value = null;
+                treeData.value = null; shoppingList.value = []; steps.value = [];
+                costBreakdown.value = null; placements.value = []; savings.value = null; notes.value = [];
                 warnings.value = [err.message || "Failed to generate plan."];
             } finally {
                 loading.value = false;
                 await nextTick();
                 fit();
             }
+        };
+
+        // ---- Pokemon on hand ----
+        const addOnHand = () => {
+            onHandError.value = '';
+            try {
+                if (!db) throw new Error('Database is still loading.');
+                if (!ohSpecies.value.trim()) throw new Error('Enter a species.');
+                const entry = {
+                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                    species: ohSpecies.value.trim(), nature: ohNature.value.trim(), ivs: ohIvs.value.trim(),
+                    gender: ohGender.value, qty: Math.max(1, parseInt(ohQty.value) || 1),
+                };
+                const [u] = expandOnHand(db, [entry]);   // throws a readable error if anything is off
+                onHand.value.push({ ...entry, species: u.name, nature: u.nature || '', ivs: formatIVs(u.traits) });
+                ohSpecies.value = ''; ohNature.value = ''; ohIvs.value = ''; ohQty.value = 1;
+            } catch (err) {
+                onHandError.value = err.message;
+            }
+        };
+        const removeOnHand = (id) => { onHand.value = onHand.value.filter((p) => p.id !== id); };
+        const clearOnHand = () => { if (confirm('Remove all Pokémon on hand?')) onHand.value = []; };
+        const onHandTotal = () => onHand.value.reduce((n, p) => n + p.qty, 0);
+        const statusFor = (entry) => {
+            const mine = placements.value.filter((p) => p.entryId === entry.id);
+            if (!mine.length) return { used: false, lines: [treeData.value ? 'Not used' : 'Generate a plan to see where it goes'] };
+            const used = mine.filter((p) => p.placed);
+            const lines = used.map((p) => p.where);
+            if (mine.length > used.length) lines.push(`${mine.length - used.length} unused (doesn't fit this plan)`);
+            return { used: used.length > 0, lines };
         };
 
         const fit = async () => {
@@ -250,7 +342,10 @@ const app = createApp({
         // Persist every checkbox change for the current plan
         watch(() => store.progress, (p) => { if (currentKey) saveJSON(currentKey, p); }, { deep: true });
 
-        const doneCount = () => Object.values(store.progress).filter(Boolean).length;
+        const doneCount = () => visibleIds.value.filter((id) => store.progress[id]).length;
+
+        // Re-plan (and save) whenever the Pokemon on hand change
+        watch(onHand, (v) => { saveJSON(ONHAND_KEY, v); if (db && treeData.value) generatePlan(); }, { deep: true });
         const resetProgress = () => {
             if (confirm('Clear all progress on this plan?')) store.progress = {};
         };
@@ -258,7 +353,9 @@ const app = createApp({
         return {
             dbLoaded, view, orientation, speciesInput, ivsInput, natureInput, powerCost, everstoneCost,
             warnings, treeData, steps, shoppingList, costBreakdown, loading, generatePlan,
-            store, speciesNames, totalNodes, doneCount, resetProgress,
+            store, speciesNames, natureNames, totalNodes, doneCount, resetProgress, notes, savings,
+            onHand, ohSpecies, ohNature, ohIvs, ohGender, ohQty, onHandError,
+            addOnHand, removeOnHand, clearOnHand, onHandTotal, statusFor,
             scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost,
         };
     }

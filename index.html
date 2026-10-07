@@ -35,7 +35,7 @@
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-end gap-2">
     <label class="flex flex-col">
         <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Species</span>
-        <input v-model="speciesInput" placeholder="e.g. Larvitar" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-36">
+        <auto input v-model="speciesInput" :options="speciesNames" placeholder="e.g. Girafarig" input-class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 w-full sm:w-36"></auto-input>
     </label>
 
     <label class="flex flex-col col-span-2 sm:col-span-1">
@@ -45,7 +45,7 @@
 
     <label class="flex flex-col">
         <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Nature <span class="normal-case text-gray-500">(optional)</span></span>
-        <input v-model="natureInput" placeholder="e.g. Adamant" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-32">
+        <auto-input v-model="natureInput" :options="natureNames" :show-all="true" placeholder="e.g. Adamant"input-class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 w-full sm:w-32"></auto-input>
     </label>
 
     <label class="flex flex-col">
@@ -62,10 +62,71 @@
 </div>
     </header>
 
+    <details class="bg-gray-900 border border-gray-800 rounded-xl mb-3" :open="onHand.length > 0">
+    <summary class="px-4 py-3 cursor-pointer font-semibold text-emerald-400 select-none">
+        Pokémon on hand <span class="text-gray-500 font-normal">({{ onHandTotal() }})</span>
+    </summary>
+    <div class="p-4 pt-0 space-y-3">
+        <p class="text-xs text-gray-400">Add Pokémon you already own. The plan places each one where it saves the most work and removes everything beneath it.</p>
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-end gap-2">
+            <label class="flex flex-col">
+                <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Species</span>
+                <auto-input v-model="ohSpecies" :options="speciesNames" placeholder="e.g. Larvesta"
+                  input-class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 w-full sm:w-36"></auto-input>
+            </label>
+            <label class="flex flex-col">
+                <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Nature <span class="normal-case text-gray-500">(optional)</span></span>
+                <auto-input v-model="ohNature" :options="natureNames" :show-all="true" placeholder="e.g. Modest"
+                  input-class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 w-full sm:w-32"></auto-input>
+            </label>
+            <label class="flex flex-col col-span-2 sm:col-span-1">
+                <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">IVs it has</span>
+                <input v-model="ohIvs" placeholder="e.g. 31/x/31/x/x/x" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm font-mono focus:outline-none focus:border-emerald-500 sm:w-48">
+            </label>
+            <label class="flex flex-col">
+                <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Gender</span>
+                <select v-model="ohGender" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500">
+                    <option>Female</option><option>Male</option>
+                </select>
+            </label>
+            <label class="flex flex-col">
+                <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Qty</span>
+                <input v-model.number="ohQty" type="number" min="1" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-20">
+            </label>
+            <button @click="addOnHand" class="col-span-2 sm:col-span-1 bg-sky-600 hover:bg-sky-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition">Add</button>
+        </div>
+        <div v-if="onHandError" class="text-sm text-red-300">⚠ {{ onHandError }}</div>
+
+        <div v-if="savings && (savings.breeds || savings.buys)" class="bg-emerald-950 border border-emerald-700 rounded-lg p-3 text-sm text-emerald-200">
+            Your Pokémon save <strong>{{ savings.breeds }}</strong> breeds, <strong>{{ savings.buys }}</strong> Pokémon to buy and <strong>${{ savings.cost.toLocaleString() }}</strong>.
+        </div>
+
+        <ul class="space-y-2">
+            <li v-for="p in onHand" :key="p.id" class="flex items-start justify-between gap-3 bg-gray-800 rounded-lg px-3 py-2 text-sm">
+                <div>
+                    <div class="font-semibold text-gray-100">
+                        {{ p.qty }}× {{ p.species }}
+                        <span :class="p.gender === 'Female' ? 'text-pink-400' : 'text-blue-400'">{{ p.gender === 'Female' ? '♀' : '♂' }}</span>
+                        <span v-if="p.nature" class="text-amber-300 font-medium">{{ p.nature }}</span>
+                    </div>
+                    <div class="font-mono text-xs text-emerald-400 tracking-wider">{{ p.ivs }}</div>
+                    <div v-for="(line, i) in statusFor(p).lines" :key="i" class="text-xs" :class="statusFor(p).used ? 'text-sky-300' : 'text-gray-500'">{{ line }}</div>
+                </div>
+                <button @click="removeOnHand(p.id)" class="text-xs text-gray-400 hover:text-red-400 shrink-0">Remove</button>
+            </li>
+        </ul>
+        <button v-if="onHand.length > 1" @click="clearOnHand" class="text-xs text-gray-500 hover:text-red-400">Remove all</button>
+    </div>
+</details>
+
     <!-- Warnings -->
     <div v-if="warnings.length" class="bg-amber-950 border border-amber-700 rounded-xl p-3 text-sm text-amber-200 space-y-1 mb-3">
         <div v-for="w in warnings" :key="w">⚠ {{ w }}</div>
     </div>
+
+    <div v-if="notes.length && treeData" class="bg-sky-950/60 border border-sky-800 rounded-xl p-3 text-sm text-sky-200 mb-3">
+    <div v-for="n in notes" :key="n">ℹ {{ n }}</div>
+</div>
 
     <!-- Tree Controls -->
     <div v-if="view === 'tree' && treeData" class="flex flex-wrap items-center gap-2 mb-2 text-sm">

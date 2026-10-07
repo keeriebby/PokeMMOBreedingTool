@@ -13,9 +13,32 @@ export const ITEM_FOR_TRAIT = {
   [NATURE]: "Everstone",
 };
 
+export const NATURES = [
+  "Adamant", "Bashful", "Bold", "Brave", "Calm", "Careful", "Docile", "Gentle", "Hardy", "Hasty",
+  "Impish", "Jolly", "Lax", "Lonely", "Mild", "Modest", "Naive", "Naughty", "Quiet", "Quirky",
+  "Rash", "Relaxed", "Sassy", "Serious", "Timid",
+];
+
+export function canonicalNature(str) {
+  const t = (str || "").trim();
+  if (!t) return null;
+  const hit = NATURES.find((n) => n.toLowerCase() === t.toLowerCase());
+  if (!hit) throw new Error(`Unknown nature '${t}'. Pick one from the suggestions.`);
+  return hit;
+}
+
+// "31/x/31/x/31/31" -> ['hp','def','spe',...]. Anything other than 31 means "don't care".
+export function parseIVs(str) {
+  const parts = String(str || "").split("/").map((p) => p.trim().toLowerCase());
+  if (parts.length !== 6) throw new Error("IVs need 6 slots separated by '/', e.g. 31/x/31/x/31/31");
+  return IV_STATS.filter((_, i) => parts[i] === "31");
+}
+
 export const Gender = { FEMALE: "Female", MALE: "Male" };
 const GENDER_TEXT = { Female: "Female ♀", Male: "Male ♂" };
 export const genderText = (g) => GENDER_TEXT[g] || "Any";
+
+export const eggGroupName = (g) => EGG_GROUP_DISPLAY[g] || g.charAt(0).toUpperCase() + g.slice(1);
 
 const EGG_GROUP_DISPLAY = {
   ground: "Field", plant: "Grass", water1: "Water A", water2: "Water B", water3: "Water C",
@@ -40,6 +63,7 @@ export class TreeNode {
     this.isTargetLine = options.isTargetLine || false;
     this.requiredGender = options.requiredGender || null;
     this.species = options.species || null;
+    this.owned = null;   // a Pokemon on hand that replaces this node (and its whole subtree)
   }
   get isLeaf() { return this.parent1 === null; }
   traitString() { return IV_STATS.map((s) => (this.traits.includes(s) ? "31" : "x")).join("/"); }
@@ -75,7 +99,8 @@ export function buildTree(ivStatsWanted, wantNature) {
   return buildInternal(wantNature ? [...wanted, NATURE] : wanted, { value: 0 });
 }
 
-export function allNodes(root) {
+// Structural walk: every node, ignoring anything on hand.
+export function allNodesFull(root) {
   const out = [];
   (function walk(node) {
     if (!node.isLeaf) { walk(node.parent1); walk(node.parent2); }
@@ -83,8 +108,19 @@ export function allNodes(root) {
   })(root);
   return out;
 }
-export const leaves = (root) => allNodes(root).filter((n) => n.isLeaf);
-export const breeds = (root) => allNodes(root).filter((n) => !n.isLeaf);
+
+// Visible walk: stops at Pokemon on hand (their subtree isn't needed).
+export function allNodes(root) {
+  const out = [];
+  (function walk(node) {
+    if (!node.isLeaf && !node.owned) { walk(node.parent1); walk(node.parent2); }
+    out.push(node);
+  })(root);
+  return out;
+}
+export const leaves = (root) => allNodes(root).filter((n) => n.isLeaf && !n.owned);
+export const breeds = (root) => allNodes(root).filter((n) => !n.isLeaf && !n.owned);
+export const ownedNodes = (root) => allNodes(root).filter((n) => n.owned);
 
 // Pricing Logic
 export class PricingConfig {
@@ -196,9 +232,13 @@ export class SpeciesDB {
     return a.eggGroupsRaw.some((g) => b.eggGroupsRaw.includes(g));
   }
 
-  pickFodder(target) {
+  // group (optional): force the fodder into one specific egg group
+  pickFodder(target, group = null) {
     for (const s of Object.values(this.byId)) {
-      if (!s.evolvesFromId && !s.isBaby && s.genderRate === 4 && this.eggGroupCompatible(target, s)) return s;
+      if (s.evolvesFromId || s.isBaby || s.genderRate !== 4 || !this.eggGroupCompatible(target, s)) continue;
+      if (s.eggGroupsRaw.includes("ditto")) continue;
+      if (group && !s.eggGroupsRaw.includes(group)) continue;
+      return s;
     }
     throw new Error(`No 50/50 fodder species found for ${target.name}.`);
   }
@@ -248,6 +288,14 @@ const speciesLabel = (n, ctx) => (n.isTargetLine ? ctx.targetName : ctx.fodderLa
 const natureLabel = (n, ctx) => (n.traits.includes(NATURE) ? ctx.natureName || "Required" : "Any");
 
 export function serializeTree(node, ctx, held = null) {
+  if (node.owned) {
+    const p = node.owned;
+    return {
+      id: node.nodeId, type: "owned", species: p.name,
+      gender: p.isDitto ? "Genderless" : genderText(p.gender),
+      ivs: formatIVs(p.traits), nature: p.nature || "Any", item: held,
+    };
+  }
   const base = {
     id: node.nodeId,
     species: speciesLabel(node, ctx),
@@ -287,19 +335,184 @@ export function renderPlan(root, ctx, genderCosts) {
     a.traits.length - b.traits.length ||
     (a.traits.includes(NATURE) - b.traits.includes(NATURE)) || a.nodeId - b.nodeId);
   const stepOf = new Map(nodes.map((n, i) => [n.nodeId, i + 1]));
-  const src = (p) => (p.isLeaf ? "Buy" : `Step ${stepOf.get(p.nodeId)}`);
-  const label = (n) => `${speciesLabel(n, ctx)} (${genderText(n.requiredGender)})`;
+  const src = (p) => (p.owned ? "On hand" : p.isLeaf ? "Buy" : `Step ${stepOf.get(p.nodeId)}`);
+  const label = (n) => (n.owned
+    ? `${n.owned.name} (${n.owned.isDitto ? "Genderless" : genderText(n.owned.gender)}) · on hand`
+    : `${speciesLabel(n, ctx)} (${genderText(n.requiredGender)})`);
+  const ivsOf = (n) => formatIVs(n.owned ? n.owned.traits : n.traits);
 
   return nodes.map((n) => ({
     step: stepOf.get(n.nodeId),
     nodeId: n.nodeId,
-    parent_1: label(n.parent1), parent_1_ivs: formatIVs(n.parent1.traits),
+    parent_1: label(n.parent1), parent_1_ivs: ivsOf(n.parent1),
     parent_1_src: src(n.parent1), item_p1: ITEM_FOR_TRAIT[n.lockedByParent1],
-    parent_2: label(n.parent2), parent_2_ivs: formatIVs(n.parent2.traits),
+    parent_2: label(n.parent2), parent_2_ivs: ivsOf(n.parent2),
     parent_2_src: src(n.parent2), item_p2: ITEM_FOR_TRAIT[n.lockedByParent2],
     child_ivs: formatIVs(n.traits),
     child_nature: n.traits.includes(NATURE) ? ctx.natureName || "Locked" : "Any",
     child_gender: genderText(n.requiredGender),
     gender_cost: genderCosts[n.nodeId] ?? null,   // null = impossible
   }));
+}
+
+
+// ======================= Pokemon on hand =======================
+
+// entries: [{ id, species, nature, ivs, gender, qty }] -> one unit per Pokemon, validated.
+export function expandOnHand(db, entries) {
+  const units = [];
+  for (const e of entries) {
+    const species = db.find(e.species);
+    const isDitto = species.eggGroupsRaw.includes("ditto");
+    if (!isDitto) {
+      if (!species.canBreed) throw new Error(`${species.name} can't breed.`);
+      if (species.genderless) throw new Error(`${species.name} is genderless and can only breed with Ditto, so it can't be used here.`);
+      if (e.gender === Gender.FEMALE && species.maleOnly) throw new Error(`${species.name} is male-only.`);
+      if (e.gender === Gender.MALE && species.femaleOnly) throw new Error(`${species.name} is female-only.`);
+    }
+    const nature = canonicalNature(e.nature);
+    const traits = parseIVs(e.ivs);
+    const qty = Math.max(1, parseInt(e.qty) || 1);
+    for (let i = 0; i < qty; i++) {
+      units.push({
+        unitId: `${e.id}#${i}`, entryId: e.id, species, name: species.name, isDitto,
+        gender: isDitto ? null : e.gender, nature, traits, placedNodeId: null,
+      });
+    }
+  }
+  return units;
+}
+
+// Can this Pokemon stand in for this node (and replace everything beneath it)?
+function fits(node, u, rules) {
+  if (u.isDitto) {
+    // Ditto is genderless and can't be a mother: only a male-parent leaf outside the target line
+    if (node.isTargetLine || !node.isLeaf || node.requiredGender !== Gender.MALE) return false;
+  } else if (node.requiredGender && u.gender !== node.requiredGender) return false;
+  for (const t of node.traits) {
+    if (t === NATURE) {
+      if (!u.nature || !rules.natureName || u.nature !== rules.natureName) return false;
+    } else if (!u.traits.includes(t)) return false;
+  }
+  if (u.isDitto) return true;
+  if (node.isTargetLine) return rules.sameLine(u.species);
+  return u.species.canBreed && !u.species.genderless && u.species.eggGroupsRaw.includes(rules.group);
+}
+
+// Best-fit, biggest savings first: each Pokemon goes where it removes the most of the tree,
+// and where several fit equally, the one with the fewest "wasted" extra IVs is used.
+function placeOnHand(root, units, rules) {
+  const nodes = allNodesFull(root);
+  const size = new Map();
+  const desc = new Map();
+  (function calc(n) {
+    if (n.isLeaf) { size.set(n.nodeId, 1); desc.set(n.nodeId, []); return; }
+    calc(n.parent1); calc(n.parent2);
+    size.set(n.nodeId, 1 + size.get(n.parent1.nodeId) + size.get(n.parent2.nodeId));
+    desc.set(n.nodeId, [n.parent1.nodeId, n.parent2.nodeId, ...desc.get(n.parent1.nodeId), ...desc.get(n.parent2.nodeId)]);
+  })(root);
+
+  const pairs = [];
+  for (const n of nodes) {
+    const need = n.traits.filter((t) => t !== NATURE).length;
+    for (const u of units) {
+      if (!fits(n, u, rules)) continue;
+      const wasted = u.traits.length - need + (u.nature && !n.traits.includes(NATURE) ? 1 : 0);
+      pairs.push({ n, u, saving: size.get(n.nodeId), wasted });
+    }
+  }
+  pairs.sort((a, b) => b.saving - a.saving || a.wasted - b.wasted || a.n.nodeId - b.n.nodeId);
+
+  const used = new Set(), blocked = new Set(), taken = new Set();
+  for (const { n, u } of pairs) {
+    if (used.has(u.unitId) || blocked.has(n.nodeId) || taken.has(n.nodeId)) continue;
+    if (desc.get(n.nodeId).some((id) => taken.has(id))) continue;
+    n.owned = u;
+    u.placedNodeId = n.nodeId;
+    used.add(u.unitId);
+    taken.add(n.nodeId);
+    desc.get(n.nodeId).forEach((id) => blocked.add(id));
+  }
+}
+
+// A bred fodder Pokemon hatches as its mother's species, so gender-lock prices follow the mother chain.
+function propagateSpecies(n, db, hatch, fodder) {
+  if (!n.isLeaf && !n.owned) { propagateSpecies(n.parent1, db, hatch, fodder); propagateSpecies(n.parent2, db, hatch, fodder); }
+  if (n.isTargetLine) { n.species = hatch; return; }
+  if (n.owned) { n.species = n.owned.isDitto ? n.owned.species : db.hatchSpecies(n.owned.species); return; }
+  n.species = n.isLeaf ? fodder : n.parent1.species;
+}
+
+function attempt(db, o, units) {
+  const root = buildTree(o.ivs, o.natureName !== null);
+  assignSpecies(root, o.hatch, o.fodder);
+  const lineRoot = db.chain(o.target)[0].identifier;
+  placeOnHand(root, units, {
+    group: o.group, natureName: o.natureName,
+    sameLine: (sp) => db.chain(sp)[0].identifier === lineRoot,
+  });
+  propagateSpecies(root, db, o.hatch, o.fodder);
+  const costs = costReport(root, o.config);
+  return { root, costs, nodes: allNodes(root).length, buys: leaves(root).length, breedCount: breeds(root).length };
+}
+
+// o = { target, ivs: [stats], natureName|null, onHand: [entries], config }
+export function buildFullPlan(db, o) {
+  const hatch = db.hatchSpecies(o.target);
+  const groups = o.target.eggGroupsRaw.filter((g) => g !== "ditto" && g !== "no-eggs");
+  const units = expandOnHand(db, o.onHand || []);
+
+  // All non-target Pokemon must share ONE egg group with the target (and so with each other).
+  // Try each of the target's groups and keep whichever uses your Pokemon best.
+  let best = null, lastErr = null;
+  for (const group of groups) {
+    let fodder;
+    try { fodder = db.pickFodder(o.target, group); } catch (e) { lastErr = e; continue; }
+    const args = { ...o, hatch, group, fodder };
+    const fresh = units.map((u) => ({ ...u, placedNodeId: null }));
+    const result = attempt(db, args, fresh);
+    const better = !best || result.nodes < best.result.nodes ||
+      (result.nodes === best.result.nodes && result.costs.grand_total < best.result.costs.grand_total);
+    if (better) best = { result, group, fodder, units: fresh, args };
+  }
+  if (!best) throw lastErr || new Error(`No usable egg group found for ${o.target.name}.`);
+
+  const baseline = attempt(db, best.args, []);
+  const ctx = {
+    targetName: o.target.name, natureName: o.natureName,
+    fodderLabel: `Any (${eggGroupName(best.group)})`,
+  };
+
+  // Where did each Pokemon end up?
+  const steps = renderPlan(best.result.root, ctx, best.result.costs.gender_costs);
+  const held = heldItemMap(best.result.root);
+  const parentStep = new Map();
+  for (const st of steps) {
+    const node = allNodes(best.result.root).find((n) => n.nodeId === st.nodeId);
+    parentStep.set(node.parent1.nodeId, st.step);
+    parentStep.set(node.parent2.nodeId, st.step);
+  }
+  const placements = best.units.map((u) => {
+    if (u.placedNodeId === null) return { unitId: u.unitId, entryId: u.entryId, placed: false, where: "Doesn't fit anywhere in this plan" };
+    const step = parentStep.get(u.placedNodeId);
+    const item = held.get(u.placedNodeId);
+    const where = step === undefined
+      ? "Used as your final Pokémon"
+      : `${u.isDitto ? "Male parent" : `${u.gender} parent`} in step ${step}${item ? `, holding ${item}` : ""}`;
+    return { unitId: u.unitId, entryId: u.entryId, placed: true, where };
+  });
+
+  const notes = [`Every Pokémon that isn't ${o.target.name} must be in the ${eggGroupName(best.group)} egg group.`];
+  const warnings = speciesWarnings(o.target, hatch, best.fodder);
+  if (best.result.costs.impossible.length) warnings.push(`${best.result.costs.impossible.length} breed(s) need a gender this species can't produce.`);
+
+  return {
+    root: best.result.root, ctx, costs: best.result.costs, hatch, fodder: best.fodder, group: best.group,
+    placements, notes, warnings,
+    savings: {
+      breeds: baseline.breedCount - best.result.breedCount,
+      buys: baseline.buys - best.result.buys,
+      cost: baseline.costs.grand_total - best.result.costs.grand_total,
+    },
+  };
 }
