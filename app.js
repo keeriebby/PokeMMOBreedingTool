@@ -1,6 +1,6 @@
 import {
   PricingConfig, SpeciesDB, buildFullPlan, expandOnHand, canonicalNature, parseIVs, formatIVs,
-  serializeTree, buildShoppingList, renderPlan, leaves, breeds, NATURES,
+  serializeTree, buildShoppingList, renderPlan, leaves, breeds, NATURES, IV_STATS, STAT_LABEL,
 } from './breeding.js';
 
 const { createApp, ref, reactive, watch, nextTick, onMounted } = Vue;
@@ -46,6 +46,33 @@ const AutoInput = {
                     class="px-3 py-1.5 cursor-pointer"
                     @mousedown.prevent @click="pick(m)">{{ m }}</li>
             </ul>
+        </div>
+    `
+};
+
+// ---- IV picker: tap a stat to require 31 in it ----
+const ivString = (list) => IV_STATS.map((s) => (list.includes(s) ? '31' : 'x')).join('/');
+
+const IvPicker = {
+    name: 'IvPicker',
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    data() { return { stats: IV_STATS.map((key) => ({ key, label: STAT_LABEL[key] })) }; },
+    methods: {
+        has(k) { return (this.modelValue || []).includes(k); },
+        set(list) { this.$emit('update:modelValue', IV_STATS.filter((s) => list.includes(s))); },
+        toggle(k) {
+            const cur = this.modelValue || [];
+            this.set(cur.includes(k) ? cur.filter((s) => s !== k) : [...cur, k]);
+        },
+    },
+    template: `
+        <div class="flex flex-wrap items-center gap-1">
+            <button v-for="s in stats" :key="s.key" type="button" @click="toggle(s.key)" :aria-pressed="has(s.key)"
+                    :class="has(s.key) ? 'bg-emerald-600 border-emerald-400 text-white' : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-500'"
+                    class="w-11 py-1 rounded border text-xs font-semibold transition">{{ s.label }}</button>
+            <button type="button" @click="set(stats.map(s => s.key))" class="px-2 py-1 text-[11px] text-gray-400 hover:text-emerald-400">All</button>
+            <button type="button" @click="set([])" class="px-1 py-1 text-[11px] text-gray-400 hover:text-emerald-400">None</button>
         </div>
     `
 };
@@ -160,7 +187,7 @@ const TreeNode = {
 };
 
 const app = createApp({
-    components: { TreeNode, AutoInput },
+    components: { TreeNode, AutoInput, IvPicker },
     setup() {
         let db = null;
         const dbLoaded = ref(false);
@@ -168,7 +195,7 @@ const app = createApp({
         const orientation = ref('horizontal');
 
         const speciesInput = ref('');
-        const ivsInput = ref('');
+        const targetIvs = ref([]);
         const natureInput = ref('');
         const powerCost = ref(10000);
         const everstoneCost = ref(5000);
@@ -193,7 +220,7 @@ const app = createApp({
         const onHand = ref(loadJSON(ONHAND_KEY) || []);
         const ohSpecies = ref('');
         const ohNature = ref('');
-        const ohIvs = ref('');
+        const ohIvList = ref([]);
         const ohGender = ref('Female');
         const ohQty = ref(1);
         const onHandError = ref('');
@@ -214,7 +241,7 @@ const app = createApp({
                 const saved = loadJSON(INPUTS_KEY);
                 if (saved && saved.species) {
                     speciesInput.value = saved.species;
-                    ivsInput.value = saved.ivs || '';
+                    try { targetIvs.value = parseIVs(saved.ivs); } catch { targetIvs.value = []; }
                     natureInput.value = saved.nature || '';
                     if (saved.power !== undefined) powerCost.value = saved.power;
                     if (saved.everstone !== undefined) everstoneCost.value = saved.everstone;
@@ -227,7 +254,7 @@ const app = createApp({
 
         const price = (v, fallback) => (v === '' || v === null || Number.isNaN(Number(v)) ? fallback : Number(v));
 
-        const generatePlan = async () => {
+        const generatePlan = async ({ reset = false } = {}) => {
             if (!db) return;
             const targetName = speciesInput.value.trim();
             if (!targetName) { warnings.value = ["Please enter a species name (e.g. Larvitar)."]; return; }
@@ -241,14 +268,15 @@ const app = createApp({
                 const natureName = canonicalNature(natureInput.value);
                 const config = new PricingConfig(price(powerCost.value, 10000), price(everstoneCost.value, 5000));
                 const plan = buildFullPlan(db, {
-                    target, ivs: parseIVs(ivsInput.value), natureName, onHand: onHand.value, config,
+                    target, ivs: targetIvs.value, natureName, onHand: onHand.value, config,
                 });
 
                 // Saved progress belongs to the plan (species + IVs + nature), not to your Pokemon on hand
                 const key = `${PROGRESS_PREFIX}${target.identifier}|${plan.root.traits.join(',')}|${(natureName || '').toLowerCase()}`;
                 if (key !== currentKey) { currentKey = key; store.progress = loadJSON(key) || {}; }
+                if (reset) store.progress = {};   // Generate Plan = fresh tree (saved automatically by the watcher)
                 saveJSON(INPUTS_KEY, {
-                    species: speciesInput.value.trim(), ivs: ivsInput.value, nature: natureInput.value.trim(),
+                    species: speciesInput.value.trim(), ivs: ivString(targetIvs.value), nature: natureInput.value.trim(),
                     power: powerCost.value, everstone: everstoneCost.value,
                 });
 
@@ -280,6 +308,21 @@ const app = createApp({
             }
         };
 
+        // Wipe every field and the plan itself. (Your saved Pokemon on hand are kept; they have their own "Remove all".)
+        const clearAll = () => {
+            if (treeData.value && !confirm('Clear all fields and the current plan, including its saved progress?')) return;
+            if (currentKey) { try { localStorage.removeItem(currentKey); } catch { /* ignore */ } }
+            currentKey = null;
+            store.progress = {};
+            speciesInput.value = ''; targetIvs.value = []; natureInput.value = '';
+            powerCost.value = 10000; everstoneCost.value = 5000;
+            ohSpecies.value = ''; ohNature.value = ''; ohIvList.value = []; ohGender.value = 'Female'; ohQty.value = 1; onHandError.value = '';
+            treeData.value = null; steps.value = []; shoppingList.value = []; costBreakdown.value = null;
+            warnings.value = []; notes.value = []; placements.value = []; savings.value = null;
+            visibleIds.value = []; totalNodes.value = 0;
+            try { localStorage.removeItem(INPUTS_KEY); } catch { /* ignore */ }
+        };
+
         // ---- Pokemon on hand ----
         const addOnHand = () => {
             onHandError.value = '';
@@ -288,12 +331,12 @@ const app = createApp({
                 if (!ohSpecies.value.trim()) throw new Error('Enter a species.');
                 const entry = {
                     id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-                    species: ohSpecies.value.trim(), nature: ohNature.value.trim(), ivs: ohIvs.value.trim(),
+                    species: ohSpecies.value.trim(), nature: ohNature.value.trim(), ivs: ivString(ohIvList.value),
                     gender: ohGender.value, qty: Math.max(1, parseInt(ohQty.value) || 1),
                 };
                 const [u] = expandOnHand(db, [entry]);   // throws a readable error if anything is off
                 onHand.value.push({ ...entry, species: u.name, nature: u.nature || '', ivs: formatIVs(u.traits) });
-                ohSpecies.value = ''; ohNature.value = ''; ohIvs.value = ''; ohQty.value = 1;
+                ohSpecies.value = ''; ohNature.value = ''; ohIvList.value = []; ohQty.value = 1;
             } catch (err) {
                 onHandError.value = err.message;
             }
@@ -347,14 +390,14 @@ const app = createApp({
         // Re-plan (and save) whenever the Pokemon on hand change
         watch(onHand, (v) => { saveJSON(ONHAND_KEY, v); if (db && treeData.value) generatePlan(); }, { deep: true });
         const resetProgress = () => {
-            if (confirm('Clear all progress on this plan?')) store.progress = {};
+            if (confirm('Reset the tree? This un-ticks everything you marked as bred or acquired.')) store.progress = {};
         };
 
         return {
-            dbLoaded, view, orientation, speciesInput, ivsInput, natureInput, powerCost, everstoneCost,
-            warnings, treeData, steps, shoppingList, costBreakdown, loading, generatePlan,
+            dbLoaded, view, orientation, speciesInput, targetIvs, natureInput, powerCost, everstoneCost,
+            warnings, treeData, steps, shoppingList, costBreakdown, loading, generatePlan, clearAll,
             store, speciesNames, natureNames, totalNodes, doneCount, resetProgress, notes, savings,
-            onHand, ohSpecies, ohNature, ohIvs, ohGender, ohQty, onHandError,
+            onHand, ohSpecies, ohNature, ohIvList, ohGender, ohQty, onHandError,
             addOnHand, removeOnHand, clearOnHand, onHandTotal, statusFor,
             scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost,
         };

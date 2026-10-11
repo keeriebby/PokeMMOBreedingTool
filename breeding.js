@@ -505,7 +505,7 @@ export function buildFullPlan(db, o) {
   });
 
   const notes = [groups.length > 1
-    ? `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg groups. Pick them all from the same group (this plan assumes ${eggGroupName(best.group)}) so they stay compatible with each other.`
+    ? `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg groups. Mix egg groups with caution as breeds may not stay compatible with each other.`
     : `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg group.`];
   const warnings = speciesWarnings(o.target, hatch, best.fodder);
   if (best.result.costs.impossible.length) warnings.push(`${best.result.costs.impossible.length} breed(s) need a gender this species can't produce.`);

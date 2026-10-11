@@ -40,7 +40,7 @@
 
     <label class="flex flex-col col-span-2 sm:col-span-1">
         <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">IVs <span class="normal-case text-gray-500">(HP/Atk/Def/SpA/SpD/Spe, x = don't care)</span></span>
-        <input v-model="ivsInput" placeholder="e.g. 31/x/31/31/31/31" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm font-mono focus:outline-none focus:border-emerald-500 sm:w-64">
+        <iv-picker v-model="targetIvs"></iv-picker>
     </label>
 
     <label class="flex flex-col">
@@ -58,7 +58,8 @@
         <input v-model.number="everstoneCost" type="number" min="0" placeholder="5000" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-emerald-500 sm:w-28">
     </label>
 
-    <button @click="generatePlan" :disabled="!dbLoaded" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow disabled:opacity-50">Generate Plan</button>
+    <button @click="generatePlan({ reset: true })" :disabled="!dbLoaded" class="col-span-2 sm:col-span-1 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow disabled:opacity-50">Generate Plan</button>
+    <button @click="clearAll" class="col-span-2 sm:col-span-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 px-4 py-1.5 rounded text-sm transition">Clear all</button>
 </div>
     </header>
 
@@ -81,7 +82,7 @@
             </label>
             <label class="flex flex-col col-span-2 sm:col-span-1">
                 <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">IVs it has</span>
-                <input v-model="ohIvs" placeholder="e.g. 31/x/31/x/x/x" class="bg-gray-800 border border-gray-700 px-3 py-1.5 rounded text-sm font-mono focus:outline-none focus:border-emerald-500 sm:w-48">
+                <iv-picker v-model="ohIvList"></iv-picker>
             </label>
             <label class="flex flex-col">
                 <span class="text-[11px] uppercase tracking-wide text-gray-400 mb-1">Gender</span>
