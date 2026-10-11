@@ -84,6 +84,7 @@ const store = reactive({ progress: {} });
 const PROGRESS_PREFIX = 'breedtool:progress:v1:';
 const INPUTS_KEY = 'breedtool:inputs:v1';
 const ONHAND_KEY = 'breedtool:onhand:v1';
+const PRICES_KEY = 'breedtool:prices:v1';
 
 const loadJSON = (key) => {
     try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
@@ -225,6 +226,35 @@ const app = createApp({
         const ohQty = ref(1);
         const onHandError = ref('');
 
+        // Base-Pokemon prices. defaultPrice applies wherever a specific price is blank.
+        //   targets[speciesId][stat|'nature']          target species (female) base Pokemon
+        //   groups[eggGroup][Female|Male][stat]        fodder base Pokemon
+        const prices = reactive(loadJSON(PRICES_KEY) || { defaultPrice: '', targets: {}, groups: {} });
+        prices.targets = prices.targets || {};
+        prices.groups = prices.groups || {};
+        const priceGroups = ref([]);       // egg groups relevant to the current plan
+        const curTarget = ref('');
+        const curTargetName = ref('');
+        const priceRows = IV_STATS.map((key) => ({ key, label: STAT_LABEL[key] }));
+        const activePriceRows = () => priceRows.filter((r) => targetIvs.value.includes(r.key));   // only the stats you asked for
+        let priceTimer = null;
+
+        const ensurePriceSlots = (targetId, groups) => {
+            if (!prices.targets[targetId]) prices.targets[targetId] = {};
+            for (const g of groups) {
+                if (!prices.groups[g.id]) prices.groups[g.id] = { Female: {}, Male: {} };
+                if (!prices.groups[g.id].Female) prices.groups[g.id].Female = {};
+                if (!prices.groups[g.id].Male) prices.groups[g.id].Male = {};
+            }
+        };
+        const clearPrices = () => {
+            if (!confirm('Clear every price you entered?')) return;
+            prices.defaultPrice = '';
+            prices.targets = {};
+            prices.groups = {};
+            ensurePriceSlots(curTarget.value, priceGroups.value);
+        };
+
         const scale = ref(1);
         const canvas = ref(null);
         const treeEl = ref(null);
@@ -254,7 +284,7 @@ const app = createApp({
 
         const price = (v, fallback) => (v === '' || v === null || Number.isNaN(Number(v)) ? fallback : Number(v));
 
-        const generatePlan = async ({ reset = false } = {}) => {
+        const generatePlan = async ({ reset = false, refit = true } = {}) => {
             if (!db) return;
             const targetName = speciesInput.value.trim();
             if (!targetName) { warnings.value = ["Please enter a species name (e.g. Larvitar)."]; return; }
@@ -269,7 +299,12 @@ const app = createApp({
                 const config = new PricingConfig(price(powerCost.value, 10000), price(everstoneCost.value, 5000));
                 const plan = buildFullPlan(db, {
                     target, ivs: targetIvs.value, natureName, onHand: onHand.value, config,
+                    prices: { defaultPrice: prices.defaultPrice, target: prices.targets[target.identifier] || {}, groups: prices.groups },
                 });
+                ensurePriceSlots(target.identifier, plan.groups);
+                curTarget.value = target.identifier;
+                curTargetName.value = target.name;
+                priceGroups.value = plan.groups;
 
                 // Saved progress belongs to the plan (species + IVs + nature), not to your Pokemon on hand
                 const key = `${PROGRESS_PREFIX}${target.identifier}|${plan.root.traits.join(',')}|${(natureName || '').toLowerCase()}`;
@@ -292,6 +327,7 @@ const app = createApp({
                     power_items_count: costs.power_items_count, power_unit: config.powerItemCost, power_cost: costs.power_items_cost,
                     everstones_count: costs.everstones_count, everstone_unit: config.everstoneCost, everstone_cost: costs.everstones_cost,
                     gender_lock_cost: costs.gender_lock_cost, total_cost: costs.grand_total,
+                    pokemon_cost: costs.pokemon_cost, unpriced: costs.unpriced, priced: plan.priced,
                 };
                 placements.value = plan.placements;
                 savings.value = onHand.value.length ? plan.savings : null;
@@ -304,7 +340,7 @@ const app = createApp({
             } finally {
                 loading.value = false;
                 await nextTick();
-                fit();
+                if (refit) fit();
             }
         };
 
@@ -388,6 +424,13 @@ const app = createApp({
         const doneCount = () => visibleIds.value.filter((id) => store.progress[id]).length;
 
         // Re-plan (and save) whenever the Pokemon on hand change
+        // Re-plan (without resetting the zoom) shortly after the last price edit
+        watch(prices, (v) => {
+            saveJSON(PRICES_KEY, v);
+            clearTimeout(priceTimer);
+            priceTimer = setTimeout(() => { if (db && treeData.value) generatePlan({ refit: false }); }, 300);
+        }, { deep: true });
+
         watch(onHand, (v) => { saveJSON(ONHAND_KEY, v); if (db && treeData.value) generatePlan(); }, { deep: true });
         const resetProgress = () => {
             if (confirm('Reset the tree? This un-ticks everything you marked as bred or acquired.')) store.progress = {};
@@ -399,6 +442,7 @@ const app = createApp({
             store, speciesNames, natureNames, totalNodes, doneCount, resetProgress, notes, savings,
             onHand, ohSpecies, ohNature, ohIvList, ohGender, ohQty, onHandError,
             addOnHand, removeOnHand, clearOnHand, onHandTotal, statusFor,
+            prices, priceGroups, curTarget, curTargetName, activePriceRows, clearPrices,
             scale, canvas, treeEl, fit, zoomBy, onDown, onMove, onUp, fmtCost,
         };
     }

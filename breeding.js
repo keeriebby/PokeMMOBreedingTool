@@ -312,6 +312,7 @@ export function serializeTree(node, ctx, held = null) {
 }
 
 export function buildShoppingList(root, ctx) {
+  const priceFn = ctx.priceFn || (() => null);
   const held = heldItemMap(root);
   const groups = new Map();
   for (const leaf of leaves(root)) {
@@ -322,11 +323,14 @@ export function buildShoppingList(root, ctx) {
       nature: leaf.traits.includes(NATURE) ? (ctx.natureName ? `Required (${ctx.natureName})` : "Required") : "Any",
       item: held.get(leaf.nodeId) || "None",
       targetLine: leaf.isTargetLine,
+      price: priceFn(leaf),
     };
-    const key = [row.species, row.gender, row.ivs, row.nature, row.item].join("|");
+    const key = [row.species, row.gender, row.ivs, row.nature, row.item, row.price].join("|");
     if (groups.has(key)) groups.get(key).count++; else groups.set(key, { ...row, count: 1 });
   }
-  return [...groups.values()].sort((a, b) => (b.targetLine - a.targetLine) || a.ivs.localeCompare(b.ivs));
+  return [...groups.values()]
+    .map((r) => ({ ...r, subtotal: r.price === null ? null : r.price * r.count }))
+    .sort((a, b) => (b.targetLine - a.targetLine) || a.ivs.localeCompare(b.ivs));
 }
 
 export function renderPlan(root, ctx, genderCosts) {
@@ -355,6 +359,47 @@ export function renderPlan(root, ctx, genderCosts) {
   }));
 }
 
+
+// ======================= Prices for base Pokemon =======================
+// prices = { defaultPrice, target: { base }, groups: { [eggGroup]: { Female: {hp..spe}, Male: {hp..spe} } } }
+// Blank = not set -> falls back to defaultPrice -> otherwise "unpriced".
+
+const priceNum = (v) => {
+  if (v === "" || v === null || v === undefined) return null;
+  const n = Number(v);
+  return Number.isFinite(n) && n >= 0 ? n : null;
+};
+
+export function hasAnyPrice(prices) {
+  if (!prices) return false;
+  const scan = (o) => Object.values(o || {}).some((v) => (v && typeof v === "object" ? scan(v) : priceNum(v) !== null));
+  return scan(prices);
+}
+
+// Price of one base Pokemon (a leaf), or null if nothing applies.
+export function makePricer(prices, group) {
+  const p = prices || {};
+  const fallback = priceNum(p.defaultPrice);
+  return (leaf) => {
+    const trait = leaf.traits[0];
+    // The target line only has ONE base Pokemon to buy, so it gets one price (.base).
+    const t = p.target || {};
+    const specific = leaf.isTargetLine
+      ? (priceNum(t.base) !== null ? t.base : t[trait])
+      : (((p.groups || {})[group] || {})[leaf.requiredGender] || {})[trait];
+    const v = priceNum(specific);
+    return v !== null ? v : fallback;
+  };
+}
+
+export function pokemonCost(root, pricer) {
+  let total = 0, unpriced = 0;
+  for (const leaf of leaves(root)) {
+    const price = pricer(leaf);
+    if (price === null) unpriced++; else total += price;
+  }
+  return { total, unpriced };
+}
 
 // ======================= Pokemon on hand =======================
 
@@ -453,10 +498,14 @@ function attempt(db, o, units) {
   });
   propagateSpecies(root, db, o.hatch, o.fodder);
   const costs = costReport(root, o.config);
+  const buy = pokemonCost(root, makePricer(o.prices, o.group));
+  costs.pokemon_cost = buy.total;
+  costs.unpriced = buy.unpriced;
+  costs.grand_total += buy.total;
   return { root, costs, nodes: allNodes(root).length, buys: leaves(root).length, breedCount: breeds(root).length };
 }
 
-// o = { target, ivs: [stats], natureName|null, onHand: [entries], config }
+// o = { target, ivs: [stats], natureName|null, onHand: [entries], config, prices }
 export function buildFullPlan(db, o) {
   const hatch = db.hatchSpecies(o.target);
   const groups = o.target.eggGroupsRaw.filter((g) => g !== "ditto" && g !== "no-eggs");
@@ -471,8 +520,11 @@ export function buildFullPlan(db, o) {
     const args = { ...o, hatch, group, fodder };
     const fresh = units.map((u) => ({ ...u, placedNodeId: null }));
     const result = attempt(db, args, fresh);
-    const better = !best || result.nodes < best.result.nodes ||
-      (result.nodes === best.result.nodes && result.costs.grand_total < best.result.costs.grand_total);
+    const rank = (r) => [r.costs.unpriced > 0 ? 1 : 0, r.costs.grand_total, r.nodes];
+    const better = !best || rank(result).some((v, i, a) => {
+      const b = rank(best.result);
+      return a.slice(0, i).every((x, j) => x === b[j]) && v < b[i];
+    });
     if (better) best = { result, group, fodder, units: fresh, args };
   }
   if (!best) throw lastErr || new Error(`No usable egg group found for ${o.target.name}.`);
@@ -483,6 +535,7 @@ export function buildFullPlan(db, o) {
   const ctx = {
     targetName: o.target.name, natureName: o.natureName,
     fodderLabel: `Any (${groupText})`,
+    priceFn: makePricer(o.prices, best.group),
   };
 
   // Where did each Pokemon end up?
@@ -505,12 +558,18 @@ export function buildFullPlan(db, o) {
   });
 
   const notes = [groups.length > 1
-    ? `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg groups. Mix egg groups with caution as breeds may not stay compatible with each other.`
+    ? `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg groups. Pick them all from the same group (this plan assumes ${eggGroupName(best.group)}) so they stay compatible with each other.`
     : `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg group.`];
   const warnings = speciesWarnings(o.target, hatch, best.fodder);
   if (best.result.costs.impossible.length) warnings.push(`${best.result.costs.impossible.length} breed(s) need a gender this species can't produce.`);
+  const priced = hasAnyPrice(o.prices);
+  if (priced && best.result.costs.unpriced > 0) {
+    warnings.push(`${best.result.costs.unpriced} base Pokémon have no price, so the total leaves them out. Fill the blanks or set a default price.`);
+  }
+  if (priced && groups.length > 1) notes.push(`Prices from the ${eggGroupName(best.group)} column were used because it gave the cheapest plan.`);
 
   return {
+    groups: groups.map((g) => ({ id: g, name: eggGroupName(g) })), priced,
     root: best.result.root, ctx, costs: best.result.costs, hatch, fodder: best.fodder, group: best.group,
     placements, notes, warnings,
     savings: {
