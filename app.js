@@ -284,12 +284,15 @@ const app = createApp({
 
         const price = (v, fallback) => (v === '' || v === null || Number.isNaN(Number(v)) ? fallback : Number(v));
 
-        const generatePlan = async ({ reset = false, refit = true } = {}) => {
+        const generatePlan = async ({ reset = false, refit = true, quiet = false } = {}) => {
             if (!db) return;
             const targetName = speciesInput.value.trim();
             if (!targetName) { warnings.value = ["Please enter a species name (e.g. Larvitar)."]; return; }
 
-            loading.value = true;
+            if (!quiet) {
+                loading.value = true;
+                await new Promise((r) => setTimeout(r, 0));   // let "Computing..." paint before the heavy part
+            }
             warnings.value = [];
             try {
                 const target = db.find(targetName);
@@ -428,10 +431,10 @@ const app = createApp({
         watch(prices, (v) => {
             saveJSON(PRICES_KEY, v);
             clearTimeout(priceTimer);
-            priceTimer = setTimeout(() => { if (db && treeData.value) generatePlan({ refit: false }); }, 300);
+            priceTimer = setTimeout(() => { if (db && treeData.value) generatePlan({ refit: false, quiet: true }); }, 300);
         }, { deep: true });
 
-        watch(onHand, (v) => { saveJSON(ONHAND_KEY, v); if (db && treeData.value) generatePlan(); }, { deep: true });
+        watch(onHand, (v) => { saveJSON(ONHAND_KEY, v); if (db && treeData.value) generatePlan({ quiet: true }); }, { deep: true });
         const resetProgress = () => {
             if (confirm('Reset the tree? This un-ticks everything you marked as bred or acquired.')) store.progress = {};
         };

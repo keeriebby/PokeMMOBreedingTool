@@ -93,8 +93,10 @@ function buildInternal(traits, counter) {
   });
 }
 
-export function buildTree(ivStatsWanted, wantNature) {
-  const wanted = IV_STATS.filter((stat) => ivStatsWanted.includes(stat));
+// order (optional): the order of the IV stats in the tree. The first stat needs the most base
+// Pokemon, the last the fewest, so the order decides how many of each stat you have to buy.
+export function buildTree(ivStatsWanted, wantNature, order = null) {
+  const wanted = (order || IV_STATS).filter((stat) => ivStatsWanted.includes(stat));
   if (wanted.length === 0 && !wantNature) throw new Error("Nothing requested: pick at least one IV stat or a nature.");
   return buildInternal(wantNature ? [...wanted, NATURE] : wanted, { value: 0 });
 }
@@ -429,7 +431,7 @@ export function expandOnHand(db, entries) {
 }
 
 // Can this Pokemon stand in for this node (and replace everything beneath it)?
-function fits(node, u, rules) {
+export function fits(node, u, rules) {
   if (u.isDitto) {
     // Ditto is genderless and can't be a mother: only a male-parent leaf outside the target line
     if (node.isTargetLine || !node.isLeaf || node.requiredGender !== Gender.MALE) return false;
@@ -444,40 +446,117 @@ function fits(node, u, rules) {
   return u.species.canBreed && !u.species.genderless && u.species.eggGroupsRaw.includes(rules.group);
 }
 
-// Best-fit, biggest savings first: each Pokemon goes where it removes the most of the tree,
-// and where several fit equally, the one with the fewest "wasted" extra IVs is used.
-function placeOnHand(root, units, rules) {
+// Placement of Pokemon on hand. Goal, in priority order:
+//   1) remove as much of the tree as possible, 2) waste as few spare IVs as possible.
+// Start greedy (biggest savings first, tightest fit first), then keep improving:
+//   A) put an unused Pokemon somewhere it removes more of the tree
+//   C) move a placed Pokemon aside so a leftover one can take its spot
+//   B) swap Pokemon between spots when that wastes fewer spare IVs
+export function placeOnHand(root, units, rules) {
+  if (!units.length) return 0;
   const nodes = allNodesFull(root);
+  const byId = new Map(nodes.map((n) => [n.nodeId, n]));
+  // Node ids are assigned in post-order, so a node's whole subtree is the contiguous id range
+  // [id - size + 1, id - 1]. That makes "is X below Y" a simple number comparison.
   const size = new Map();
-  const desc = new Map();
-  (function calc(n) {
-    if (n.isLeaf) { size.set(n.nodeId, 1); desc.set(n.nodeId, []); return; }
-    calc(n.parent1); calc(n.parent2);
-    size.set(n.nodeId, 1 + size.get(n.parent1.nodeId) + size.get(n.parent2.nodeId));
-    desc.set(n.nodeId, [n.parent1.nodeId, n.parent2.nodeId, ...desc.get(n.parent1.nodeId), ...desc.get(n.parent2.nodeId)]);
-  })(root);
+  for (const n of nodes) size.set(n.nodeId, n.isLeaf ? 1 : 1 + size.get(n.parent1.nodeId) + size.get(n.parent2.nodeId));
+  const lo = (id) => id - size.get(id) + 1;
 
+  const need = (n) => n.traits.filter((t) => t !== NATURE).length;
+  const waste = (n, u) => u.traits.length - need(n) + (u.nature && !n.traits.includes(NATURE) ? 1 : 0);
+  // Whether a Pokemon fits a spot only depends on the spot's role (target line?, gender, traits),
+  // so the answer is cached across every stat order that gets tried.
+  const cache = rules.fitCache || new Map();
+  const roleKey = new Map(nodes.map((n) => [n.nodeId, `${n.isTargetLine ? "T" : "F"}|${n.requiredGender || "-"}|${n.traits.join(",")}`]));
+  const fit = (n, u) => {
+    let m = cache.get(u.unitId);
+    if (!m) { m = new Map(); cache.set(u.unitId, m); }
+    const k = roleKey.get(n.nodeId);
+    let v = m.get(k);
+    if (v === undefined) { v = fits(n, u, rules); m.set(k, v); }
+    return v;
+  };
+
+  const assign = new Map();   // nodeId -> unit
+  const where = new Map();    // unitId -> nodeId
+  const place = (n, u) => { assign.set(n.nodeId, u); where.set(u.unitId, n.nodeId); };
+  const unplace = (nodeId) => { const u = assign.get(nodeId); assign.delete(nodeId); where.delete(u.unitId); };
+  const underTaken = (n) => { for (const a of assign.keys()) if (a > n.nodeId && lo(a) <= n.nodeId) return true; return false; };
+  const takenBelow = (n) => { const from = lo(n.nodeId); return [...assign.keys()].filter((id) => id >= from && id < n.nodeId); };
+
+  // greedy start
   const pairs = [];
-  for (const n of nodes) {
-    const need = n.traits.filter((t) => t !== NATURE).length;
-    for (const u of units) {
-      if (!fits(n, u, rules)) continue;
-      const wasted = u.traits.length - need + (u.nature && !n.traits.includes(NATURE) ? 1 : 0);
-      pairs.push({ n, u, saving: size.get(n.nodeId), wasted });
+  for (const n of nodes) for (const u of units) if (fit(n, u)) pairs.push({ n, u, saving: size.get(n.nodeId), w: waste(n, u) });
+  pairs.sort((a, b) => b.saving - a.saving || a.w - b.w || a.n.nodeId - b.n.nodeId);
+  for (const { n, u } of pairs) {
+    if (where.has(u.unitId) || assign.has(n.nodeId) || underTaken(n) || takenBelow(n).length) continue;
+    place(n, u);
+  }
+
+  // improve until nothing changes (saving never goes down, and waste only goes down at equal saving)
+  for (let changed = true, guard = 0; changed && guard < 200; guard++) {
+    changed = false;
+    if (where.size === units.length && !assign.size) break;
+
+    for (const u of units) {                               // A) use leftover Pokemon better
+      if (where.has(u.unitId)) continue;
+      let move = null;
+      for (const n of nodes) {
+        if (!fit(n, u) || assign.has(n.nodeId) || underTaken(n)) continue;
+        const below = takenBelow(n);
+        const gain = size.get(n.nodeId) - below.reduce((t, id) => t + size.get(id), 0);
+        if (gain <= 0) continue;
+        const w = waste(n, u);
+        if (!move || gain > move.gain || (gain === move.gain && w < move.w)) move = { n, gain, w, below };
+      }
+      if (move) { move.below.forEach(unplace); place(move.n, u); changed = true; }
+    }
+
+    for (const v of units) {                               // C) free a spot for a leftover Pokemon by moving its occupant
+      if (where.has(v.unitId)) continue;
+      for (const [nid, u] of [...assign]) {
+        const n = byId.get(nid);
+        if (assign.get(nid) !== u || !fit(n, v)) continue;
+        unplace(nid); place(n, v);                         // try: v takes this spot, u looks for a new home
+        let move = null;
+        for (const n2 of nodes) {
+          if (!fit(n2, u) || assign.has(n2.nodeId) || underTaken(n2)) continue;
+          const below = takenBelow(n2);
+          const gain = size.get(n2.nodeId) - below.reduce((t, id) => t + size.get(id), 0);
+          if (gain <= 0) continue;
+          const w = waste(n2, u);
+          if (!move || gain > move.gain || (gain === move.gain && w < move.w)) move = { n: n2, gain, w, below };
+        }
+        if (move) { move.below.forEach(unplace); place(move.n, u); changed = true; break; }
+        unplace(nid); place(n, u);                         // no better home for u: undo
+      }
+    }
+
+    for (const [nid, u] of [...assign]) {                  // B) swap to waste fewer spare IVs
+      if (assign.get(nid) !== u) continue;
+      const n = byId.get(nid);
+      for (const v of units) {
+        if (v === u || !fit(n, v)) continue;
+        const wu = waste(n, u), wv = waste(n, v);
+        if (wv >= wu) continue;
+        if (!where.has(v.unitId)) { unplace(nid); place(n, v); changed = true; break; }
+        const n2 = byId.get(where.get(v.unitId));
+        if (fit(n2, u) && wv + waste(n2, u) < wu + waste(n2, v)) {
+          unplace(nid); unplace(n2.nodeId); place(n, v); place(n2, u); changed = true; break;
+        }
+      }
     }
   }
-  pairs.sort((a, b) => b.saving - a.saving || a.wasted - b.wasted || a.n.nodeId - b.n.nodeId);
 
-  const used = new Set(), blocked = new Set(), taken = new Set();
-  for (const { n, u } of pairs) {
-    if (used.has(u.unitId) || blocked.has(n.nodeId) || taken.has(n.nodeId)) continue;
-    if (desc.get(n.nodeId).some((id) => taken.has(id))) continue;
+  let total = 0;
+  for (const [nid, u] of assign) {
+    const n = byId.get(nid);
     n.owned = u;
-    u.placedNodeId = n.nodeId;
-    used.add(u.unitId);
-    taken.add(n.nodeId);
-    desc.get(n.nodeId).forEach((id) => blocked.add(id));
+    u.placedNodeId = nid;
+    u.waste = waste(n, u);
+    total += u.waste;
   }
+  return total;
 }
 
 // A bred fodder Pokemon hatches as its mother's species, so gender-lock prices follow the mother chain.
@@ -489,11 +568,12 @@ function propagateSpecies(n, db, hatch, fodder) {
 }
 
 function attempt(db, o, units) {
-  const root = buildTree(o.ivs, o.natureName !== null);
+  const us = units.map((u) => ({ ...u, placedNodeId: null, waste: 0 }));
+  const root = buildTree(o.ivs, o.natureName !== null, o.order);
   assignSpecies(root, o.hatch, o.fodder);
   const lineRoot = db.chain(o.target)[0].identifier;
-  placeOnHand(root, units, {
-    group: o.group, natureName: o.natureName,
+  const waste = placeOnHand(root, us, {
+    group: o.group, natureName: o.natureName, fitCache: o.fitCache,
     sameLine: (sp) => db.chain(sp)[0].identifier === lineRoot,
   });
   propagateSpecies(root, db, o.hatch, o.fodder);
@@ -502,7 +582,49 @@ function attempt(db, o, units) {
   costs.pokemon_cost = buy.total;
   costs.unpriced = buy.unpriced;
   costs.grand_total += buy.total;
-  return { root, costs, nodes: allNodes(root).length, buys: leaves(root).length, breedCount: breeds(root).length };
+  return { root, costs, units: us, waste, order: o.order, nodes: allNodes(root).length, buys: leaves(root).length, breedCount: breeds(root).length };
+}
+
+function permutations(arr) {
+  if (arr.length <= 1) return [arr.slice()];
+  const out = [];
+  arr.forEach((x, i) => {
+    for (const rest of permutations([...arr.slice(0, i), ...arr.slice(i + 1)])) out.push([x, ...rest]);
+  });
+  return out;
+}
+
+// Lower is better: fully priced first, then cheapest, then smallest tree, then least wasted IVs.
+const rank = (r) => [r.costs.unpriced > 0 ? 1 : 0, r.costs.grand_total, r.nodes, r.waste];
+function isBetter(a, b) {
+  const ra = rank(a), rb = rank(b);
+  for (let i = 0; i < ra.length; i++) if (ra[i] !== rb[i]) return ra[i] < rb[i];
+  return false;
+}
+
+// Try the orders of the wanted IV stats (at most 720) and keep the best. Only worth doing when
+// prices or Pokemon on hand can make one order better than another.
+//  1) rank every order quickly WITHOUT your Pokemon (item, gender-lock and purchase costs)
+//  2) if Pokemon are on hand, test the best-ranked orders properly with them, within a time
+//     budget so the page never feels stuck (typical plans finish well inside it)
+function searchOrders(db, args, units, search, budgetMs = 1500) {
+  const base = IV_STATS.filter((st) => args.ivs.includes(st));
+  const orders = search && base.length > 1 ? permutations(base) : [base];
+  if (orders.length === 1) return attempt(db, { ...args, order: orders[0] }, units);
+
+  // stage 1 keeps only each order's rank (not the whole plan) so memory stays small
+  const cmp = (a, b) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] - b[i]; return 0; };
+  const scored = orders.map((order) => ({ order, key: rank(attempt(db, { ...args, order }, [])) }));
+  scored.sort((x, y) => cmp(x.key, y.key));          // stable: ties keep default-first order
+  if (!units.length) return attempt(db, { ...args, order: scored[0].order }, []);
+  const t0 = Date.now();
+  let best = null;
+  for (let i = 0; i < scored.length; i++) {
+    if (i > 0 && Date.now() - t0 > budgetMs) break;
+    const r = attempt(db, { ...args, order: scored[i].order }, units);
+    if (!best || isBetter(r, best)) best = r;
+  }
+  return best;
 }
 
 // o = { target, ivs: [stats], natureName|null, onHand: [entries], config, prices }
@@ -513,23 +635,18 @@ export function buildFullPlan(db, o) {
 
   // All non-target Pokemon must share ONE egg group with the target (and so with each other).
   // Try each of the target's groups and keep whichever uses your Pokemon best.
+  const priced = hasAnyPrice(o.prices);
   let best = null, lastErr = null;
   for (const group of groups) {
     let fodder;
     try { fodder = db.pickFodder(o.target, group); } catch (e) { lastErr = e; continue; }
-    const args = { ...o, hatch, group, fodder };
-    const fresh = units.map((u) => ({ ...u, placedNodeId: null }));
-    const result = attempt(db, args, fresh);
-    const rank = (r) => [r.costs.unpriced > 0 ? 1 : 0, r.costs.grand_total, r.nodes];
-    const better = !best || rank(result).some((v, i, a) => {
-      const b = rank(best.result);
-      return a.slice(0, i).every((x, j) => x === b[j]) && v < b[i];
-    });
-    if (better) best = { result, group, fodder, units: fresh, args };
+    const args = { ...o, hatch, group, fodder, fitCache: new Map() };
+    const result = searchOrders(db, args, units, priced || units.length > 0);
+    if (!best || isBetter(result, best.result)) best = { result, group, fodder, units: result.units, args };
   }
   if (!best) throw lastErr || new Error(`No usable egg group found for ${o.target.name}.`);
 
-  const baseline = attempt(db, best.args, []);
+  const baseline = searchOrders(db, best.args, [], priced);
   // Show every egg group the target is in. (The plan itself is checked against ONE of them, see the note.)
   const groupText = groups.map(eggGroupName).join("/");
   const ctx = {
@@ -554,7 +671,8 @@ export function buildFullPlan(db, o) {
     const where = step === undefined
       ? "Used as your final Pokémon"
       : `${u.isDitto ? "Male parent" : `${u.gender} parent`} in step ${step}${item ? `, holding ${item}` : ""}`;
-    return { unitId: u.unitId, entryId: u.entryId, placed: true, where };
+    const spare = u.waste > 0 ? ` · ${u.waste} spare IV${u.waste > 1 ? "s" : ""} not needed here` : "";
+    return { unitId: u.unitId, entryId: u.entryId, placed: true, where: where + spare };
   });
 
   const notes = [groups.length > 1
@@ -562,9 +680,16 @@ export function buildFullPlan(db, o) {
     : `Every Pokémon that isn't ${o.target.name} must be in the ${groupText} egg group.`];
   const warnings = speciesWarnings(o.target, hatch, best.fodder);
   if (best.result.costs.impossible.length) warnings.push(`${best.result.costs.impossible.length} breed(s) need a gender this species can't produce.`);
-  const priced = hasAnyPrice(o.prices);
   if (priced && best.result.costs.unpriced > 0) {
     warnings.push(`${best.result.costs.unpriced} base Pokémon have no price, so the total leaves them out. Fill the blanks or set a default price.`);
+  }
+  // If the best stat order isn't the default, say how many of each stat you now need.
+  const defaultOrder = IV_STATS.filter((st) => o.ivs.includes(st));
+  const bestOrder = best.result.order || defaultOrder;
+  if (bestOrder.length > 1 && bestOrder.some((st, i) => st !== defaultOrder[i])) {
+    const counts = {};
+    for (const n of allNodesFull(best.result.root)) if (n.isLeaf && n.traits[0] !== NATURE) counts[n.traits[0]] = (counts[n.traits[0]] || 0) + 1;
+    notes.push(`Stats are arranged ${bestOrder.map((st) => `${STAT_LABEL[st]} ×${counts[st] || 0}`).join(", ")} (base Pokémon per stat) because that was ${priced ? "cheapest for your prices" : "the best fit for your Pokémon on hand"}.`);
   }
   if (priced && groups.length > 1) notes.push(`Prices from the ${eggGroupName(best.group)} column were used because it gave the cheapest plan.`);
 
